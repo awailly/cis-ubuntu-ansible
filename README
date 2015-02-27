@@ -1,0 +1,23 @@
+Super.Role
+===========================
+
+
+
+Usage
+-----
+
+ansible-galaxy install Super.Role
+
+LICENSE: 3-clause BSD license.
+
+CONTRIBUTING
+------------
+
+git clone git@github.com:/ansible-super-role
+
+please see CONTRIBUTING.rst
+
+
+
+---
+Copyright © 2014, Enrique Paredes
