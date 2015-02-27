@@ -1,2 +1,29 @@
 ---
 
+  - include: section01.yml
+    tags: section01
+
+  - include: section02.yml
+    tags: section02
+
+  - include: section03.yml
+    tags: section03
+
+  - include: section04.yml
+    tags: section04
+
+  - include: section05.yml
+    tags: section05
+
+  - include: section06.yml
+    tags: section06
+
+  - include: section07.yml
+    tags: section07
+
+  - include: section08.yml
+    tags: section08
+
+  - include: section09.yml
+    tags: section09
+
