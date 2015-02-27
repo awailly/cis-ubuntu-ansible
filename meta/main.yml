@@ -4,9 +4,9 @@ allow_duplicates: no
 
 
 galaxy_info:
-  author: Enrique Paredes
-  description: This Ansible Role infuses antigravity, you are warned
-  license: 3-clause BSD license.
+  author: Aurélien Wailly
+  description: Ansible role to meet CIS (Center for Internet Security) requirements on ubuntu
+  license: GPLv2
   min_ansible_version: 1.6
   platforms:
     - name: Ubuntu
@@ -22,10 +22,10 @@ galaxy_info:
     #- database:nosql
     #- database:sql
     #- development
-    #- monitoring
+    - monitoring
     #- networking
     #- packaging
-    #- system
+    - system
     #- web
 
 
