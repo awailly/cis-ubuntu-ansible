@@ -1,0 +1,8 @@
+---
+
+  - name: 1.1 Install Updates, Patches and Additional Security Software (Not Scored)
+    apt: update_cache=yes upgrade=yes
+    tags:
+      - section01
+      - section01.1
+
