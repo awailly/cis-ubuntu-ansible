@@ -1,0 +1,53 @@
+---
+
+  - name: 4.1.1 Restrict Core Dumps (Scored)
+    lineinfile: dest='core"' regexp='"hard'
+    tags:
+      - section4
+      - section4.1
+      - section4.1.1
+
+  - name: 4.1.2 Restrict Core Dumps (Scored)
+    action: command >
+      ' sysctl fs.suid_dumpable'
+    tags:
+      - section4
+      - section4.1
+      - section4.1.2
+
+  - name: 4.1.3 Restrict Core Dumps (Scored)
+    action: command >
+      ' initctl show-config apport'
+    tags:
+      - section4
+      - section4.1
+      - section4.1.3
+
+  - name: 4.1.4 Restrict Core Dumps (Scored)
+    action: command >
+      ' initctl show-config whoopsie'
+    tags:
+      - section4
+      - section4.1
+      - section4.1.4
+
+  - name: 4.2 Enable XD/NX Support on 32-bit x86 Systems (Not Scored)
+    action: command >
+      ' dmesg | grep NX'
+    tags:
+      - section4
+      - section4.2
+
+  - name: 4.3 Enable Randomized Virtual Memory Region Placement (Scored)
+    action: command >
+      ' sysctl kernel.randomize_va_space'
+    tags:
+      - section4
+      - section4.3
+
+  - name: 4.4 Disable Prelink (Scored)
+    action: command >
+      ' dpkg -s prelink'
+    tags:
+      - section4
+      - section4.4

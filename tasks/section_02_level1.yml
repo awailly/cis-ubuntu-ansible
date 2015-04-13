@@ -1,0 +1,183 @@
+---
+
+  - name: 2.1 Create Separate Partition for /tmp (Scored)
+    lineinfile: dest='/etc/fstab' regexp='"[[:space:]]/tmp[[:space:]]"'
+    tags:
+      - section2
+      - section2.1
+
+  - name: 2.2.1 Set nodev option for /tmp Partition (Scored)
+    lineinfile: dest='/etc/fstab' regexp='/tmp'
+    tags:
+      - section2
+      - section2.2
+      - section2.2.1
+
+  - name: 2.2.2 Set nodev option for /tmp Partition (Scored)
+    action: command >
+      ' mount | grep /tmp | grep nodev'
+    tags:
+      - section2
+      - section2.2
+      - section2.2.2
+
+  - name: 2.3.1 Set nosuid option for /tmp Partition (Scored)
+    lineinfile: dest='/etc/fstab' regexp='/tmp'
+    tags:
+      - section2
+      - section2.3
+      - section2.3.1
+
+  - name: 2.3.2 Set nosuid option for /tmp Partition (Scored)
+    action: command >
+      ' mount | grep /tmp | grep nosuid'
+    tags:
+      - section2
+      - section2.3
+      - section2.3.2
+
+  - name: 2.4.1 Set noexec option for /tmp Partition (Scored)
+    lineinfile: dest='/etc/fstab' regexp='/tmp'
+    tags:
+      - section2
+      - section2.4
+      - section2.4.1
+
+  - name: 2.4.2 Set noexec option for /tmp Partition (Scored)
+    action: command >
+      ' mount | grep /tmp | grep noexec'
+    tags:
+      - section2
+      - section2.4
+      - section2.4.2
+
+  - name: 2.5 Create Separate Partition for /var (Scored)
+    lineinfile: dest='/etc/fstab' regexp='"[[:space:]]/var[[:space:]]"'
+    tags:
+      - section2
+      - section2.5
+
+  - name: 2.6.1 Bind Mount the /var/tmp directory to /tmp (Scored)
+    lineinfile: dest='"^/tmp"' regexp='-e'
+    tags:
+      - section2
+      - section2.6
+      - section2.6.1
+
+  - name: 2.6.2 Bind Mount the /var/tmp directory to /tmp (Scored)
+    action: command >
+      ' mount | grep -e "^/tmp" | grep /var/tmp'
+    tags:
+      - section2
+      - section2.6
+      - section2.6.2
+
+  - name: 2.7 Create Separate Partition for /var/log (Scored)
+    lineinfile: dest='/etc/fstab' regexp='"[[:space:]]/var/log[[:space:]]"'
+    tags:
+      - section2
+      - section2.7
+
+  - name: 2.8 Create Separate Partition for /var/log/audit (Scored)
+    lineinfile: dest='/etc/fstab' regexp='"[[:space:]]/var/log/audit[[:space:]]"'
+    tags:
+      - section2
+      - section2.8
+
+  - name: 2.9 Create Separate Partition for /home (Scored)
+    lineinfile: dest='/etc/fstab' regexp='"[[:space:]]/home[[:space:]]"'
+    tags:
+      - section2
+      - section2.9
+
+  - name: 2.10.1 Add nodev Option to /home (Scored)
+    lineinfile: dest='/etc/fstab' regexp='/home'
+    tags:
+      - section2
+      - section2.10
+      - section2.10.1
+
+  - name: 2.10.2 Add nodev Option to /home (Scored)
+    action: command >
+      ' mount | grep /home | grep nodev'
+    tags:
+      - section2
+      - section2.10
+      - section2.10.2
+
+  - name: 2.11 Add nodev Option to Removable Media Partitions (Not Scored)
+    lineinfile: dest='removable' regexp='<each'
+    tags:
+      - section2
+      - section2.11
+
+  - name: 2.12 Add noexec Option to Removable Media Partitions (Not Scored)
+    lineinfile: dest='removable' regexp='<each'
+    tags:
+      - section2
+      - section2.12
+
+  - name: 2.13 Add nosuid Option to Removable Media Partitions (Not Scored)
+    lineinfile: dest='removable' regexp='<each'
+    tags:
+      - section2
+      - section2.13
+
+  - name: 2.14.1 Add nodev Option to /run/shm Partition (Scored)
+    lineinfile: dest='/etc/fstab' regexp='/run/shm'
+    tags:
+      - section2
+      - section2.14
+      - section2.14.1
+
+  - name: 2.14.2 Add nodev Option to /run/shm Partition (Scored)
+    action: command >
+      ' mount | grep /run/shm | grep nodev'
+    tags:
+      - section2
+      - section2.14
+      - section2.14.2
+
+  - name: 2.15.1 Add nosuid Option to /run/shm Partition (Scored)
+    lineinfile: dest='/etc/fstab' regexp='/run/shm'
+    tags:
+      - section2
+      - section2.15
+      - section2.15.1
+
+  - name: 2.15.2 Add nosuid Option to /run/shm Partition (Scored)
+    action: command >
+      ' mount | grep /run/shm | grep nosuid'
+    tags:
+      - section2
+      - section2.15
+      - section2.15.2
+
+  - name: 2.16.1 Add noexec Option to /run/shm Partition (Scored)
+    lineinfile: dest='/etc/fstab' regexp='/run/shm'
+    tags:
+      - section2
+      - section2.16
+      - section2.16.1
+
+  - name: 2.16.2 Add noexec Option to /run/shm Partition (Scored)
+    action: command >
+      ' mount | grep /run/shm | grep noexec'
+    tags:
+      - section2
+      - section2.16
+      - section2.16.2
+
+  - name: 2.17 Set Sticky Bit on All World-Writable Directories (Scored)
+    action: command >
+      ' df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d'
+    tags:
+      - section2
+      - section2.17
+
+  - name: 2.25 Disable Automounting (Scored)
+    action: command >
+      ' initctl show-config autofs'
+    tags:
+      - section2
+      - section2.25

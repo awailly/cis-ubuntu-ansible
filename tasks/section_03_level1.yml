@@ -1,0 +1,35 @@
+---
+
+  - name: 3.1 Set User/Group Owner on bootloader config (Scored)
+    action: command >
+      ' stat -c "%u %g" /boot/grub/grub.cfg | egrep "^0 0"'
+    tags:
+      - section3
+      - section3.1
+
+  - name: 3.2 Set Permissions on bootloader config (Scored)
+    action: command >
+      ' stat -L -c "%a" /boot/grub/grub.cfg | egrep ".00"'
+    tags:
+      - section3
+      - section3.2
+
+  - name: 3.3.1 Set Boot Loader Password (Scored)
+    lineinfile: dest='superusers"' regexp='"^set'
+    tags:
+      - section3
+      - section3.3
+      - section3.3.1
+
+  - name: 3.3.2 Set Boot Loader Password (Scored)
+    lineinfile: dest='/boot/grub/grub.cfg' regexp='"^password"'
+    tags:
+      - section3
+      - section3.3
+      - section3.3.2
+
+  - name: 3.4 Require Authentication for Single-User Mode (Scored)
+    lineinfile: dest='/etc/shadow' regexp='^root:[*\!]:'
+    tags:
+      - section3
+      - section3.4

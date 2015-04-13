@@ -1,0 +1,8 @@
+---
+
+  - name: 4.5 Activate AppArmor (Scored)
+    action: command >
+      ' apparmor_status'
+    tags:
+      - section4
+      - section4.5

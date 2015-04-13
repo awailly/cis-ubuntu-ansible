@@ -1,0 +1,313 @@
+---
+
+  - name: 9.1 Configure cron
+    action: command >
+      ' crontab -u root -l | grep aide'
+    tags:
+      - section9
+      - section9.1
+
+  - name: 9.1.1 Enable cron Daemon (Scored)
+    action: command >
+      ' /sbin/initctl show-config cron'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.1
+
+  - name: 9.1.2 Set User/Group Owner and Permission on /etc/crontab (Scored)
+    action: command >
+      ' stat -c "%a %u %g" /etc/crontab | egrep ".00 0 0"'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.2
+
+  - name: 9.1.3 Set User/Group Owner and Permission on /etc/cron.hourly (Scored)
+    action: command >
+      ' stat -c "%a %u %g" /etc/cron.hourly | egrep ".00 0 0"'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.3
+
+  - name: 9.1.4 Set User/Group Owner and Permission on /etc/cron.daily (Scored)
+    action: command >
+      ' stat -c "%a %u %g" /etc/cron.daily | egrep ".00 0 0"'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.4
+
+  - name: 9.1.5 Set User/Group Owner and Permission on /etc/cron.weekly(Scored)
+    action: command >
+      ' stat -c "%a %u %g" /etc/cron.weekly | egrep ".00 0 0"'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.5
+
+  - name: 9.1.6 Set User/Group Owner and Permission on /etc/cron.monthly(Scored)
+    action: command >
+      ' stat -c "%a %u %g" /etc/cron.monthly | egrep ".00 0 0"'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.6
+
+  - name: 9.1.7 Set User/Group Owner and Permission on /etc/cron.d (Scored)
+    action: command >
+      ' stat -c "%a %u %g" /etc/cron.d | egrep ".00 0 0"'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.7
+
+  - name: 9.1.8.1 Restrict at/cron to Authorized Users (Scored)
+    action: command >
+      ' ls -l /etc/cron.deny'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.8
+      - section9.1.8.1
+
+  - name: 9.1.8.2 Restrict at/cron to Authorized Users (Scored)
+    action: command >
+      ' ls -l /etc/at.deny'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.8
+      - section9.1.8.2
+
+  - name: 9.1.8.3 Restrict at/cron to Authorized Users (Scored)
+    action: command >
+      ' ls -l /etc/cron.allow'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.8
+      - section9.1.8.3
+
+  - name: 9.1.8.4 Restrict at/cron to Authorized Users (Scored)
+    action: command >
+      ' ls -l /etc/at.allow'
+    tags:
+      - section9
+      - section9.1
+      - section9.1.8
+      - section9.1.8.4
+
+  - name: 9.2.1 Configure PAM
+    action: command >
+      ' ls -l /etc/cron.deny'
+    tags:
+      - section9
+      - section9.2
+      - section9.2.1
+
+  - name: 9.2.2 Configure PAM
+    action: command >
+      ' ls -l /etc/at.deny'
+    tags:
+      - section9
+      - section9.2
+      - section9.2.2
+
+  - name: 9.2.3 Configure PAM
+    action: command >
+      ' ls -l /etc/cron.allow'
+    tags:
+      - section9
+      - section9.2
+      - section9.2.3
+
+  - name: 9.2.4 Configure PAM
+    action: command >
+      ' ls -l /etc/at.allow'
+    tags:
+      - section9
+      - section9.2
+      - section9.2.4
+
+  - name: 9.2.1 Set Password Creation Requirement Parameters Usingpam_cracklib (Scored)
+    lineinfile: dest='/etc/pam.d/common-password' regexp='pam_cracklib.so'
+    tags:
+      - section9
+      - section9.2
+      - section9.2.1
+
+  - name: 9.2.2 Set Lockout for Failed Password Attempts (Not Scored)
+    lineinfile: dest='/etc/pam.d/login' regexp='"pam_tally2"'
+    tags:
+      - section9
+      - section9.2
+      - section9.2.2
+
+  - name: 9.2.3 Limit Password Reuse (Scored)
+    lineinfile: dest='/etc/pam.d/common-password' regexp='"remember"'
+    tags:
+      - section9
+      - section9.2
+      - section9.2.3
+
+  - name: 9.3 Configure SSH
+    lineinfile: dest='/etc/pam.d/common-password' regexp='"remember"'
+    tags:
+      - section9
+      - section9.3
+
+  - name: 9.3.1 Set SSH Protocol to 2 (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^Protocol"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.1
+
+  - name: 9.3.2 Set LogLevel to INFO (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^LogLevel"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.2
+
+  - name: 9.3.3 Set Permissions on /etc/ssh/sshd_config (Scored)
+    action: command >
+      ' /bin/ls -l /etc/ssh/sshd_config'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.3
+
+  - name: 9.3.4 Disable SSH X11 Forwarding (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^X11Forwarding"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.4
+
+  - name: 9.3.5 Set SSH MaxAuthTries to 4 or Less (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^MaxAuthTries"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.5
+
+  - name: 9.3.6 Set SSH IgnoreRhosts to Yes (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^IgnoreRhosts"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.6
+
+  - name: 9.3.7 Set SSH HostbasedAuthentication to No (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^HostbasedAuthentication"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.7
+
+  - name: 9.3.8 Disable SSH Root Login (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^PermitRootLogin"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.8
+
+  - name: 9.3.9 Set SSH PermitEmptyPasswords to No (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^PermitEmptyPasswords"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.9
+
+  - name: 9.3.10 Do Not Allow Users to Set Environment Options (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='PermitUserEnvironment'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.10
+
+  - name: 9.3.11 Use Only Approved Cipher in Counter Mode (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"Ciphers"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.11
+
+  - name: 9.3.12.1 Set Idle Timeout Interval for User Login (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^ClientAliveInterval"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.12
+      - section9.3.12.1
+
+  - name: 9.3.12.2 Set Idle Timeout Interval for User Login (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^ClientAliveCountMax"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.12
+      - section9.3.12.2
+
+  - name: 9.3.13.1 Limit Access via SSH (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^AllowUsers"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.13
+      - section9.3.13.1
+
+  - name: 9.3.13.2 Limit Access via SSH (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^AllowGroups"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.13
+      - section9.3.13.2
+
+  - name: 9.3.13.3 Limit Access via SSH (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^DenyUsers"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.13
+      - section9.3.13.3
+
+  - name: 9.3.13.4 Limit Access via SSH (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^DenyGroups"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.13
+      - section9.3.13.4
+
+  - name: 9.3.14 Set SSH Banner (Scored)
+    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^Banner"'
+    tags:
+      - section9
+      - section9.3
+      - section9.3.14
+
+  - name: 9.4 Restrict root Login to System Console (Not Scored)
+    action: command >
+      ' cat /etc/securetty'
+    tags:
+      - section9
+      - section9.4
+
+  - name: 9.5.1 Restrict Access to the su Command (Scored)
+    lineinfile: dest='/etc/pam.d/su' regexp='pam_wheel.so'
+    tags:
+      - section9
+      - section9.5
+      - section9.5.1
+
+  - name: 9.5.2 Restrict Access to the su Command (Scored)
+    lineinfile: dest='/etc/group' regexp='wheel'
+    tags:
+      - section9
+      - section9.5
+      - section9.5.2

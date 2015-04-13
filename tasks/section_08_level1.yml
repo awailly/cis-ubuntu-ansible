@@ -1,0 +1,91 @@
+---
+
+  - name: 8.1 Configure System Accounting (auditd)
+    action: command >
+      ' ufw status'
+    tags:
+      - section8
+      - section8.1
+
+  - name: 8.2 Configure rsyslog
+    action: command >
+      ' tail -n 1 /etc/audit/audit.rules'
+    tags:
+      - section8
+      - section8.2
+
+  - name: 8.2.1 Install the rsyslog package (Scored)
+    action: command >
+      ' dpkg -s rsyslog'
+    tags:
+      - section8
+      - section8.2
+      - section8.2.1
+
+  - name: 8.2.2 Ensure the rsyslog Service is activated (Scored)
+    action: command >
+      ' initctl show-config rsyslog'
+    tags:
+      - section8
+      - section8.2
+      - section8.2.2
+
+  - name: 8.2.3 Configure /etc/rsyslog.conf (Not Scored)
+    action: command >
+      ' ls -l /var/log/'
+    tags:
+      - section8
+      - section8.2
+      - section8.2.3
+
+  - name: 8.2.4 Create and Set Permissions on rsyslog Log Files (Scored)
+    action: command >
+      ' ls -l <logfile>'
+    tags:
+      - section8
+      - section8.2
+      - section8.2.4
+
+  - name: 8.2.5 Configure rsyslog to Send Logs to a Remote Log Host (Scored)
+    lineinfile: dest='/etc/rsyslog.conf' regexp='"^*.*[^I][^I]*@"'
+    tags:
+      - section8
+      - section8.2
+      - section8.2.5
+
+  - name: 8.2.6.1 Accept Remote rsyslog Messages Only on Designated Log Hosts(Not Scored)
+    lineinfile: dest='imtcp.so'' regexp=''$ModLoad'
+    tags:
+      - section8
+      - section8.2
+      - section8.2.6
+      - section8.2.6.1
+
+  - name: 8.2.6.2 Accept Remote rsyslog Messages Only on Designated Log Hosts(Not Scored)
+    lineinfile: dest='/etc/rsyslog.conf' regexp=''$InputTCPServerRun''
+    tags:
+      - section8
+      - section8.2
+      - section8.2.6
+      - section8.2.6.2
+
+  - name: 8.3.1 Advanced Intrusion Detection Environment (AIDE)
+    lineinfile: dest='imtcp.so'' regexp=''$ModLoad'
+    tags:
+      - section8
+      - section8.3
+      - section8.3.1
+
+  - name: 8.3.2 Advanced Intrusion Detection Environment (AIDE)
+    lineinfile: dest='/etc/rsyslog.conf' regexp=''$InputTCPServerRun''
+    tags:
+      - section8
+      - section8.3
+      - section8.3.2
+
+  - name: 8.4 Configure logrotate (Not Scored)
+    action: command >
+      ' crontab -u root -l | grep aide'
+    tags:
+      - section8
+      - section8.4

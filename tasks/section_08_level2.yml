@@ -1,0 +1,251 @@
+---
+
+  - name: 8.1.1.1 Configure Data Retention
+    lineinfile: dest='/etc/audit/auditd.conf' regexp='max_log_file'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.1
+      - section8.1.1.1
+
+  - name: 8.1.1.2 Configure Data Retention
+    lineinfile: dest='/etc/audit/auditd.conf' regexp='space_left_action'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.1
+      - section8.1.1.2
+
+  - name: 8.1.1.3 Configure Data Retention
+    lineinfile: dest='/etc/audit/auditd.conf' regexp='action_mail_acct'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.1
+      - section8.1.1.3
+
+  - name: 8.1.1.4 Configure Data Retention
+    lineinfile: dest='/etc/audit/auditd.conf' regexp='admin_space_left_action'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.1
+      - section8.1.1.4
+
+  - name: 8.1.1.5 Configure Data Retention
+    lineinfile: dest='/etc/audit/auditd.conf' regexp='max_log_file_action'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.1
+      - section8.1.1.5
+
+  - name: 8.1.2.1 Install and Enable auditd Service (Scored)
+    action: command >
+      ' dpkg -s auditd'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.2
+      - section8.1.2.1
+
+  - name: 8.1.2.2 Install and Enable auditd Service (Scored)
+    action: command >
+      ' ls /etc/rc*.d/S*auditd'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.2
+      - section8.1.2.2
+
+  - name: 8.1.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
+    lineinfile: dest='/boot/grub/grub.cfg' regexp='"linux"'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.3
+
+  - name: 8.1.4.1 Record Events That Modify Date and Time Information (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='time-change'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.4
+      - section8.1.4.1
+
+  - name: 8.1.4.2 Record Events That Modify Date and Time Information (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='time-change'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.4
+      - section8.1.4.2
+
+  - name: 8.1.5 Record Events That Modify User/Group Information (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='identity'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.5
+
+  - name: 8.1.6.1 Record Events That Modify the System's Network Environment(Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='system-locale'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.6
+      - section8.1.6.1
+
+  - name: 8.1.6.2 Record Events That Modify the System's Network Environment(Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='system-locale'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.6
+      - section8.1.6.2
+
+  - name: 8.1.7 Record Events That Modify the System's Mandatory AccessControls (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='MAC-policy'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.7
+
+  - name: 8.1.8 Collect Login and Logout Events (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='logins'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.8
+
+  - name: 8.1.9 Collect Session Initiation Information (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='session'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.9
+
+  - name: 8.1.10.1 Collect Discretionary Access Control Permission ModificationEvents (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='perm_mod'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.10
+      - section8.1.10.1
+
+  - name: 8.1.10.2 Collect Discretionary Access Control Permission ModificationEvents (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='perm_mod'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.10
+      - section8.1.10.2
+
+  - name: 8.1.11.1 Collect Unsuccessful Unauthorized Access Attempts to Files(Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='access'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.11
+      - section8.1.11.1
+
+  - name: 8.1.11.2 Collect Unsuccessful Unauthorized Access Attempts to Files(Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='access'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.11
+      - section8.1.11.2
+
+  - name: 8.1.12.1 Collect Use of Privileged Commands (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='access'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.12
+      - section8.1.12.1
+
+  - name: 8.1.12.2 Collect Use of Privileged Commands (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='access'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.12
+      - section8.1.12.2
+
+  - name: 8.1.13.1 Collect Successful File System Mounts (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='mounts'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.13
+      - section8.1.13.1
+
+  - name: 8.1.13.2 Collect Successful File System Mounts (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='mounts'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.13
+      - section8.1.13.2
+
+  - name: 8.1.14.1 Collect File Deletion Events by User (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='delete'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.14
+      - section8.1.14.1
+
+  - name: 8.1.14.2 Collect File Deletion Events by User (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='delete'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.14
+      - section8.1.14.2
+
+  - name: 8.1.15 Collect Changes to System Administration Scope (sudoers)(Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='scope'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.15
+
+  - name: 8.1.16 Collect System Administrator Actions (sudolog) (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='actions'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.16
+
+  - name: 8.1.17 Collect Kernel Module Loading and Unloading (Scored)
+    lineinfile: dest='/etc/audit/audit.rules' regexp='modules'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.17
+
+  - name: 8.1.18 Make the Audit Configuration Immutable (Scored)
+    action: command >
+      ' tail -n 1 /etc/audit/audit.rules'
+    tags:
+      - section8
+      - section8.1
+      - section8.1.18
+
+  - name: 8.3.1 Install AIDE (Scored)
+    action: command >
+      ' dpkg -s aide'
+    tags:
+      - section8
+      - section8.3
+      - section8.3.1
+
+  - name: 8.3.2 Implement Periodic Execution of File Integrity (Scored)
+    action: command >
+      ' crontab -u root -l | grep aide'
+    tags:
+      - section8
+      - section8.3
+      - section8.3.2

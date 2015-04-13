@@ -1,0 +1,134 @@
+---
+
+  - name: 5.1 Ensure Legacy Services are Not Enabled
+    action: command >
+      ' apparmor_status'
+    tags:
+      - section5
+      - section5.1
+
+  - name: 5.1.1 Ensure NIS is not installed (Scored)
+    action: command >
+      ' dpkg -s nis'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.1
+
+  - name: 5.1.2.1 Ensure rsh server is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^shell'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.2
+      - section5.1.2.1
+
+  - name: 5.1.2.2 Ensure rsh server is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^login'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.2
+      - section5.1.2.2
+
+  - name: 5.1.2.3 Ensure rsh server is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^exec'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.2
+      - section5.1.2.3
+
+  - name: 5.1.3.1 Ensure rsh client is not installed (Scored)
+    action: command >
+      ' dpkg -s rsh-client'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.3
+      - section5.1.3.1
+
+  - name: 5.1.3.2 Ensure rsh client is not installed (Scored)
+    action: command >
+      ' dpkg -s rsh-redone-client'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.3
+      - section5.1.3.2
+
+  - name: 5.1.4.1 Ensure talk server is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^talk'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.4
+      - section5.1.4.1
+
+  - name: 5.1.4.2 Ensure talk server is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^ntalk'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.4
+      - section5.1.4.2
+
+  - name: 5.1.5 Ensure talk client is not installed (Scored)
+    action: command >
+      ' dpkg -s talk'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.5
+
+  - name: 5.1.6 Ensure telnet server is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^telnet'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.6
+
+  - name: 5.1.7 Ensure tftp-server is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^tftp'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.7
+
+  - name: 5.1.8 Ensure xinetd is not enabled (Scored)
+    action: command >
+      ' initctl show-config xinetd'
+    tags:
+      - section5
+      - section5.1
+      - section5.1.8
+
+  - name: 5.2 Ensure chargen is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^chargen'
+    tags:
+      - section5
+      - section5.2
+
+  - name: 5.3 Ensure daytime is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^daytime'
+    tags:
+      - section5
+      - section5.3
+
+  - name: 5.4 Ensure echo is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^echo'
+    tags:
+      - section5
+      - section5.4
+
+  - name: 5.5 Ensure discard is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^discard'
+    tags:
+      - section5
+      - section5.5
+
+  - name: 5.6 Ensure time is not enabled (Scored)
+    lineinfile: dest='/etc/inetd.conf' regexp='^time'
+    tags:
+      - section5
+      - section5.6

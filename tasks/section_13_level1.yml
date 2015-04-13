@@ -1,0 +1,149 @@
+---
+
+  - name: 13.1 Ensure Password Fields are Not Empty (Scored)
+    action: command>
+      '/usr/bin/awk -F':' '($2 == "" ) { print $1 " does not have apassword "}' /etc/shadow'
+    tags:
+      - section13
+      - section13.1
+
+  - name: 13.2 Verify No Legacy "+" Entries Exist in /etc/passwd File (Scored)
+    action: command >
+      ' /bin/grep '^+:' /etc/passwd'
+    tags:
+      - section13
+      - section13.2
+
+  - name: 13.3 Verify No Legacy "+" Entries Exist in /etc/shadow File (Scored)
+    action: command >
+      ' /bin/grep '^+:' /etc/shadow'
+    tags:
+      - section13
+      - section13.3
+
+  - name: 13.4 Verify No Legacy "+" Entries Exist in /etc/group File (Scored)
+    action: command >
+      ' /bin/grep '^+:' /etc/group'
+    tags:
+      - section13
+      - section13.4
+
+  - name: 13.5 Verify No UID 0 Accounts Exist Other Than root (Scored)
+    action: command>
+      '/usr/bin/awk -F':' '($3 == 0) { print $1 }' /etc/passwd'
+    tags:
+      - section13
+      - section13.5
+
+  - name: 13.6 Ensure root PATH Integrity (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.6
+
+  - name: 13.7 Check Permissions on User Home Directories (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.7
+
+  - name: 13.8 Check User Dot File Permissions (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.8
+
+  - name: 13.9 Check Permissions on User .netrc Files (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.9
+
+  - name: 13.10 Check for Presence of User .rhosts Files (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.10
+
+  - name: 13.11 Check Groups in /etc/passwd (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.11
+
+  - name: 13.12 Check That Users Are Assigned Valid Home Directories (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.12
+
+  - name: 13.13 Check User Home Directory Ownership (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.13
+
+  - name: 13.14 Check for Duplicate UIDs (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.14
+
+  - name: 13.15 Check for Duplicate GIDs (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.15
+
+  - name: 13.16 Check for Duplicate User Names (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.16
+
+  - name: 13.17 Check for Duplicate Group Names (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.17
+
+  - name: 13.18 Check for Presence of User .netrc Files (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.18
+
+  - name: 13.19 Check for Presence of User .forward Files (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section13
+      - section13.19
+
+  - name: 13.20.1 Ensure shadow group is empty (Scored)
+    lineinfile: dest='/etc/group' regexp='^shadow'
+    tags:
+      - section13
+      - section13.20
+      - section13.20.1
+
+  - name: 13.20.2 Ensure shadow group is empty (Scored)
+    action: command >
+      'awk -F: '($4 == "<shadow-gid>") { print }' /etc/passwd'
+    tags:
+      - section13
+      - section13.20
+      - section13.20.2

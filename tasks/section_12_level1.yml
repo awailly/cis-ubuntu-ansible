@@ -1,0 +1,78 @@
+---
+
+  - name: 12.1 Verify Permissions on /etc/passwd (Scored)
+    action: command >
+      ' /bin/ls -l /etc/passwd'
+    tags:
+      - section12
+      - section12.1
+
+  - name: 12.2 Verify Permissions on /etc/shadow (Scored)
+    action: command >
+      ' /bin/ls -l /etc/shadow'
+    tags:
+      - section12
+      - section12.2
+
+  - name: 12.3 Verify Permissions on /etc/group (Scored)
+    action: command >
+      ' /bin/ls -l /etc/group'
+    tags:
+      - section12
+      - section12.3
+
+  - name: 12.4 Verify User/Group Ownership on /etc/passwd (Scored)
+    action: command >
+      ' /bin/ls -l /etc/passwd'
+    tags:
+      - section12
+      - section12.4
+
+  - name: 12.5 Verify User/Group Ownership on /etc/shadow (Scored)
+    action: command >
+      ' /bin/ls -l /etc/shadow'
+    tags:
+      - section12
+      - section12.5
+
+  - name: 12.6 Verify User/Group Ownership on /etc/group (Scored)
+    action: command >
+      ' /bin/ls -l /etc/group'
+    tags:
+      - section12
+      - section12.6
+
+  - name: 12.7 Find World Writable Files (Not Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section12
+      - section12.7
+
+  - name: 12.8 Find Un-owned Files and Directories (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section12
+      - section12.8
+
+  - name: 12.9 Find Un-grouped Files and Directories (Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section12
+      - section12.9
+
+  - name: 12.10 Find SUID System Executables (Not Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section12
+      - section12.10
+
+  - name: 12.11 Find SGID System Executables (Not Scored)
+    action: command >
+      '!/bin/bash'
+    tags:
+      - section12
+      - section12.11

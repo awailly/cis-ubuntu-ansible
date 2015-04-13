@@ -1,0 +1,159 @@
+---
+
+  - name: 6.1 Ensure the X Window system is not installed (Scored)
+    action: command >
+      ' dpkg -l xserver-xorg-core*'
+    tags:
+      - section6
+      - section6.1
+
+  - name: 6.2 Ensure Avahi Server is not enabled (Scored)
+    action: command >
+      ' initctl show-config avahi-daemon'
+    tags:
+      - section6
+      - section6.2
+
+  - name: 6.3 Ensure print server is not enabled (Not Scored)
+    action: command >
+      ' initctl show-config cups'
+    tags:
+      - section6
+      - section6.3
+
+  - name: 6.4.1 Ensure DHCP Server is not enabled (Scored)
+    action: command >
+      ' initctl show-config isc-dhcp-server'
+    tags:
+      - section6
+      - section6.4
+      - section6.4.1
+
+  - name: 6.4.2 Ensure DHCP Server is not enabled (Scored)
+    action: command >
+      ' initctl show-config isc-dhcp-server6'
+    tags:
+      - section6
+      - section6.4
+      - section6.4.2
+
+  - name: 6.5.1 Configure Network Time Protocol (NTP) (Scored)
+    action: command >
+      ' dpkg -s ntp'
+    tags:
+      - section6
+      - section6.5
+      - section6.5.1
+
+  - name: 6.5.2 Configure Network Time Protocol (NTP) (Scored)
+    lineinfile: dest='.*' regexp='"restrict'
+    tags:
+      - section6
+      - section6.5
+      - section6.5.2
+
+  - name: 6.5.3 Configure Network Time Protocol (NTP) (Scored)
+    lineinfile: dest='/etc/ntp.conf' regexp='"^server"'
+    tags:
+      - section6
+      - section6.5
+      - section6.5.3
+
+  - name: 6.5.4 Configure Network Time Protocol (NTP) (Scored)
+    lineinfile: dest='/etc/init.d/ntp' regexp='"RUNASUSER=ntp"'
+    tags:
+      - section6
+      - section6.5
+      - section6.5.4
+
+  - name: 6.6 Ensure LDAP is not enabled (Not Scored)
+    action: command >
+      ' dpkg -s slapd'
+    tags:
+      - section6
+      - section6.6
+
+  - name: 6.7.1 Ensure NFS and RPC are not enabled (Not Scored)
+    action: command >
+      ' initctl show-config rpcbind-boot'
+    tags:
+      - section6
+      - section6.7
+      - section6.7.1
+
+  - name: 6.7.2 Ensure NFS and RPC are not enabled (Not Scored)
+    action: command >
+      ' ls /etc/rc*.d/S*nfs-kernel-server'
+    tags:
+      - section6
+      - section6.7
+      - section6.7.2
+
+  - name: 6.8 Ensure DNS Server is not enabled (Not Scored)
+    action: command >
+      ' ls /etc/rc*.d/S*bind9'
+    tags:
+      - section6
+      - section6.8
+
+  - name: 6.9 Ensure FTP Server is not enabled (Not Scored)
+    action: command >
+      ' initctl show-config vsftpd'
+    tags:
+      - section6
+      - section6.9
+
+  - name: 6.10 Ensure HTTP Server is not enabled (Not Scored)
+    action: command >
+      ' ls /etc/rc*.d/S*apache2'
+    tags:
+      - section6
+      - section6.10
+
+  - name: 6.11 Ensure IMAP and POP server is not enabled (Not Scored)
+    action: command >
+      ' initctl show-config dovecot'
+    tags:
+      - section6
+      - section6.11
+
+  - name: 6.12 Ensure Samba is not enabled (Not Scored)
+    action: command >
+      ' initctl show-config smbd'
+    tags:
+      - section6
+      - section6.12
+
+  - name: 6.13 Ensure HTTP Proxy Server is not enabled (Not Scored)
+    action: command >
+      ' initctl show-config squid3'
+    tags:
+      - section6
+      - section6.13
+
+  - name: 6.14 Ensure SNMP Server is not enabled (Not Scored)
+    action: command >
+      ' ls /etc/rc*.d/S*snmpd'
+    tags:
+      - section6
+      - section6.14
+
+  - name: 6.15 Configure Mail Transfer Agent for Local-Only Mode (Scored)
+    action: command >
+      ' netstat -an | grep LIST | grep ":25[[:space:]]"'
+    tags:
+      - section6
+      - section6.15
+
+  - name: 6.16 Ensure rsync service is not enabled (Scored)
+    lineinfile: dest='/etc/default/rsync' regexp='^RSYNC_ENABLE'
+    tags:
+      - section6
+      - section6.16
+
+  - name: 6.17 Ensure Biosdevname is not enabled (Scored)
+    action: command >
+      ' dpkg -s biosdevname'
+    tags:
+      - section6
+      - section6.17

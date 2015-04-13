@@ -1,0 +1,113 @@
+---
+
+  - name: 2.18.1 Disable Mounting of cramfs Filesystems (Not Scored)
+    action: command >
+      ' /sbin/modprobe -n -v cramfs'
+    tags:
+      - section2
+      - section2.18
+      - section2.18.1
+
+  - name: 2.18.2 Disable Mounting of cramfs Filesystems (Not Scored)
+    action: command >
+      ' /sbin/lsmod | grep cramfs'
+    tags:
+      - section2
+      - section2.18
+      - section2.18.2
+
+  - name: 2.19.1 Disable Mounting of freevxfs Filesystems (Not Scored)
+    action: command >
+      ' /sbin/modprobe -n -v freevxfs'
+    tags:
+      - section2
+      - section2.19
+      - section2.19.1
+
+  - name: 2.19.2 Disable Mounting of freevxfs Filesystems (Not Scored)
+    action: command >
+      ' /sbin/lsmod | grep freexvfs'
+    tags:
+      - section2
+      - section2.19
+      - section2.19.2
+
+  - name: 2.20.1 Disable Mounting of jffs2 Filesystems (Not Scored)
+    action: command >
+      ' /sbin/modprobe -n -v jffs2'
+    tags:
+      - section2
+      - section2.20
+      - section2.20.1
+
+  - name: 2.20.2 Disable Mounting of jffs2 Filesystems (Not Scored)
+    action: command >
+      ' /sbin/lsmod | grep jffs2'
+    tags:
+      - section2
+      - section2.20
+      - section2.20.2
+
+  - name: 2.21.1 Disable Mounting of hfs Filesystems (Not Scored)
+    action: command >
+      ' /sbin/modprobe -n -v hfs'
+    tags:
+      - section2
+      - section2.21
+      - section2.21.1
+
+  - name: 2.21.2 Disable Mounting of hfs Filesystems (Not Scored)
+    action: command >
+      ' /sbin/lsmod | grep hfs'
+    tags:
+      - section2
+      - section2.21
+      - section2.21.2
+
+  - name: 2.22.1 Disable Mounting of hfsplus Filesystems (Not Scored)
+    action: command >
+      ' /sbin/modprobe -n -v hfsplus'
+    tags:
+      - section2
+      - section2.22
+      - section2.22.1
+
+  - name: 2.22.2 Disable Mounting of hfsplus Filesystems (Not Scored)
+    action: command >
+      ' /sbin/lsmod | grep hfsplus'
+    tags:
+      - section2
+      - section2.22
+      - section2.22.2
+
+  - name: 2.23.1 Disable Mounting of squashfs Filesystems (Not Scored)
+    action: command >
+      ' /sbin/modprobe -n -v squashfs'
+    tags:
+      - section2
+      - section2.23
+      - section2.23.1
+
+  - name: 2.23.2 Disable Mounting of squashfs Filesystems (Not Scored)
+    action: command >
+      ' /sbin/lsmod | grep squashfs'
+    tags:
+      - section2
+      - section2.23
+      - section2.23.2
+
+  - name: 2.24.1 Disable Mounting of udf Filesystems (Not Scored)
+    action: command >
+      ' /sbin/modprobe -n -v udf'
+    tags:
+      - section2
+      - section2.24
+      - section2.24.1
+
+  - name: 2.24.2 Disable Mounting of udf Filesystems (Not Scored)
+    action: command >
+      ' /sbin/lsmod | grep udf'
+    tags:
+      - section2
+      - section2.24
+      - section2.24.2
