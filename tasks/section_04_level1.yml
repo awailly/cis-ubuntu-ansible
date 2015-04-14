@@ -1,53 +1,98 @@
 ---
 
   - name: 4.1.1 Restrict Core Dumps (Scored)
-    lineinfile: dest='core"' regexp='"hard'
+    lineinfile: dest='/etc/security/limits.conf' line="* hard core 0" state=present
     tags:
       - section4
       - section4.1
       - section4.1.1
 
   - name: 4.1.2 Restrict Core Dumps (Scored)
-    action: command >
-      ' sysctl fs.suid_dumpable'
+    sysctl: >
+        name=fs.suid_dumpable
+        value=0
+        state=present
     tags:
       - section4
       - section4.1
       - section4.1.2
 
-  - name: 4.1.3 Restrict Core Dumps (Scored)
-    action: command >
-      ' initctl show-config apport'
-    tags:
-      - section4
-      - section4.1
-      - section4.1.3
-
-  - name: 4.1.4 Restrict Core Dumps (Scored)
-    action: command >
-      ' initctl show-config whoopsie'
+  - name: 4.1.4 Restrict Core Dumps (stat file) (Scored)
+    stat: path='/etc/init/apport.conf'
+    register: apport_present
     tags:
       - section4
       - section4.1
       - section4.1.4
 
-  - name: 4.2 Enable XD/NX Support on 32-bit x86 Systems (Not Scored)
-    action: command >
-      ' dmesg | grep NX'
+  - name: 4.1.5 Restrict Core Dumps (Scored)
+    lineinfile: >
+        dest='/etc/init/apport.conf'
+        line='#start on runlevel [2345]'
+        state=present
+        regexp='^start on runlevel'
+    when: apport_present.stat.exists == True
+    tags:
+      - section4
+      - section4.1
+      - section4.1.3
+
+  - name: 4.1.6 Restrict Core Dumps (stat file) (Scored)
+    stat: path='/etc/init/whoopsie.conf'
+    register: whoopsie_present
+    tags:
+      - section4
+      - section4.1
+      - section4.1.4
+
+  - name: 4.1.7 Restrict Core Dumps (Scored)
+    lineinfile: >
+        dest='/etc/init/whoopsie.conf'
+        line='#start on runlevel [2345]'
+        state=present
+        regexp='^start on runlevel'
+    when: whoopsie_present.stat.exists == True
+    tags:
+      - section4
+      - section4.1
+      - section4.1.4
+
+  - name: 4.2 Enable XD/NX Support on 32-bit x86 Systems (read dmesg) (Not Scored)
+    shell: 'dmesg | grep NX'
+    register: nx_result
+    failed_when: nx_result.rc == 1
+    ignore_errors: True
     tags:
       - section4
       - section4.2
 
   - name: 4.3 Enable Randomized Virtual Memory Region Placement (Scored)
-    action: command >
-      ' sysctl kernel.randomize_va_space'
+    sysctl: >
+       name=kernel.randomize_va_space
+       value=2
+       state=present
     tags:
       - section4
       - section4.3
 
-  - name: 4.4 Disable Prelink (Scored)
-    action: command >
-      ' dpkg -s prelink'
+  - name: 4.4 Disable Prelink (check) (Scored)
+    command: 'dpkg -s prelink'
+    register: prelink_rc
+    ignore_errors: True
+    tags:
+      - section4
+      - section4.4
+
+  - name: 4.4 Disable Prelink (restore) (Scored)
+    command: '/usr/bin/prelink -ua'
+    when: prelink_rc.rc == 0
+    tags:
+      - section4
+      - section4.4
+
+  - name: 4.4 Disable Prelink (remove) (Scored)
+    apt: purge=yes name='prelink'
+    when: prelink_rc.rc == 0
     tags:
       - section4
       - section4.4
