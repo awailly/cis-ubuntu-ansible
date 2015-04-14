@@ -1,66 +1,133 @@
 ---
 
   - name: 6.1 Ensure the X Window system is not installed (Scored)
-    action: command >
-      ' dpkg -l xserver-xorg-core*'
+    apt: name=xserver-xorg-core* purge=yes state=absent
     tags:
       - section6
       - section6.1
 
-  - name: 6.2 Ensure Avahi Server is not enabled (Scored)
-    action: command >
-      ' initctl show-config avahi-daemon'
+  - name: 6.2 Ensure Avahi Server is not enabled (check) (Scored)
+    stat: path='/etc/init/avahi-daemon.conf'
+    register: avahi_stat
     tags:
       - section6
       - section6.2
 
-  - name: 6.3 Ensure print server is not enabled (Not Scored)
-    action: command >
-      ' initctl show-config cups'
+  - name: 6.2 Ensure Avahi Server is not enabled (Scored)
+    lineinfile: >
+        line='#start on (filesystem'
+        state=present
+        regexp='start on (filesystem'
+        dest=/etc/init/.conf
+    when: avahi_stat.stat.exists == True
+    tags:
+      - section6
+      - section6.2
+
+  - name: 6.3 Ensure print server is not enabled (check) (Not Scored)
+    stat: path='/etc/init/cups.conf'
+    register: cups_stat
     tags:
       - section6
       - section6.3
 
-  - name: 6.4.1 Ensure DHCP Server is not enabled (Scored)
-    action: command >
-      ' initctl show-config isc-dhcp-server'
+  - name: 6.3 Ensure print server is not enabled (Not Scored)
+    lineinfile: >
+        line='#start on (filesystem'
+        state=present
+        regexp='start on (filesystem'
+        dest=/etc/init/cups.conf
+    when: cups_stat.stat.exists == True
+    tags:
+      - section6
+      - section6.3
+
+  - name: 6.4.1 Ensure DHCP Server is not enabled (check) (Scored)
+    stat: path='/etc/init/isc-dhcp-server.conf'
+    register: dhcp_stat
     tags:
       - section6
       - section6.4
       - section6.4.1
 
-  - name: 6.4.2 Ensure DHCP Server is not enabled (Scored)
-    action: command >
-      ' initctl show-config isc-dhcp-server6'
+  - name: 6.4.1 Ensure DHCP Server is not enabled (Scored)
+    lineinfile: >
+        line='#start on runlevel [2345]'
+        state=present
+        regexp='start on runlevel'
+        dest=/etc/init/isc-dhcp-server.conf
+    when: dhcp_stat.stat.exists == True
+    tags:
+      - section6
+      - section6.4
+      - section6.4.1
+
+  - name: 6.4.2 Ensure DHCP Server is not enabled (check) (Scored)
+    stat: path='/etc/init/isc-dhcp-server6.conf'
+    register: dhcp6_stat
     tags:
       - section6
       - section6.4
       - section6.4.2
 
-  - name: 6.5.1 Configure Network Time Protocol (NTP) (Scored)
-    action: command >
-      ' dpkg -s ntp'
+  - name: 6.4.2 Ensure DHCP Server is not enabled (Scored)
+    lineinfile: >
+        line='#start on runlevel [2345]'
+        state=present
+        regexp='start on runlevel'
+        dest=/etc/init/isc-dhcp-server6.conf
+    when: dhcp6_stat.stat.exists == True
+    tags:
+      - section6
+      - section6.4
+      - section6.4.2
+
+  - name: 6.5.1 Configure Network Time Protocol (install) (NTP) (Scored)
+    apt: name=ntp state=present
     tags:
       - section6
       - section6.5
       - section6.5.1
 
-  - name: 6.5.2 Configure Network Time Protocol (NTP) (Scored)
-    lineinfile: dest='.*' regexp='"restrict'
+  - name: 6.5.2 Configure Network Time Protocol (restrict4) (NTP) (Scored)
+    lineinfile: >
+        dest='/etc/ntp.conf'
+        line='restrict default kod nomodify notrap nopeer noquery'
+        regexp='^restrict -4 default'
+        state=present
     tags:
       - section6
       - section6.5
       - section6.5.2
 
-  - name: 6.5.3 Configure Network Time Protocol (NTP) (Scored)
-    lineinfile: dest='/etc/ntp.conf' regexp='"^server"'
+  - name: 6.5.3 Configure Network Time Protocol (restrict6) (NTP) (Scored)
+    lineinfile: >
+        dest='/etc/ntp.conf'
+        line='restrict -6 default kod nomodify notrap nopeer noquery'
+        regexp='^restrict -6 default'
+        state=present
     tags:
       - section6
       - section6.5
       - section6.5.3
 
-  - name: 6.5.4 Configure Network Time Protocol (NTP) (Scored)
-    lineinfile: dest='/etc/init.d/ntp' regexp='"RUNASUSER=ntp"'
+  - name: 6.5.4 Configure Network Time Protocol (server check) (NTP) (Scored)
+    command: 'grep "^server" /etc/ntp.conf'
+    register: ntp_server_rc
+    tags:
+      - section6
+      - section6.5
+      - section6.5.4
+
+  - name: bla
+    debug: var=ntp_server_rc
+
+  - name: 6.5.4 Configure Network Time Protocol (server add) (NTP) (Scored)
+    lineinfile: >
+        dest='/etc/ntp.conf'
+        line='server 0.fr.pool.ntp.org'
+        state=present
+    when: ntp_server_rc.rc == 1
     tags:
       - section6
       - section6.5
