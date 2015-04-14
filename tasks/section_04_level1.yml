@@ -30,7 +30,7 @@
         dest='/etc/init/apport.conf'
         line='#start on runlevel [2345]'
         state=present
-        regexp='^start on runlevel'
+        regexp='start on runlevel'
     when: apport_present.stat.exists == True
     tags:
       - section4
@@ -50,7 +50,7 @@
         dest='/etc/init/whoopsie.conf'
         line='#start on runlevel [2345]'
         state=present
-        regexp='^start on runlevel'
+        regexp='start on runlevel'
     when: whoopsie_present.stat.exists == True
     tags:
       - section4
@@ -61,6 +61,7 @@
     shell: 'dmesg | grep NX'
     register: nx_result
     failed_when: nx_result.rc == 1
+    changed_when: False
     ignore_errors: True
     tags:
       - section4
@@ -76,23 +77,22 @@
       - section4.3
 
   - name: 4.4 Disable Prelink (check) (Scored)
-    command: 'dpkg -s prelink'
+    stat: path=/usr/bin/prelink
     register: prelink_rc
-    ignore_errors: True
     tags:
       - section4
       - section4.4
 
   - name: 4.4 Disable Prelink (restore) (Scored)
     command: '/usr/bin/prelink -ua'
-    when: prelink_rc.rc == 0
+    when: prelink_rc.stat.exists == True
     tags:
       - section4
       - section4.4
 
   - name: 4.4 Disable Prelink (remove) (Scored)
     apt: purge=yes name='prelink'
-    when: prelink_rc.rc == 0
+    when: prelink_rc.stat.exists == True
     tags:
       - section4
       - section4.4
