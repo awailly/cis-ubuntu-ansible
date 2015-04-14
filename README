@@ -1,23 +1,38 @@
-Super.Role
-===========================
-
-
+CIS for Ubuntu 14.04
+====================
 
 Usage
 -----
 
-ansible-galaxy install Super.Role
+Create a placeholder:
 
-LICENSE: 3-clause BSD license.
+    mkdir ansible
+    cd ansible
+    git clone https://github.com/awailly/cis-ubuntu-ansible.git
+    mkdir roles-ubuntu
+    cd roles-ubuntu
+    mkdir roles
+    ln -s ~/ansible/cis-ubuntu-ansible roles/cis
+
+Create a playbook:
+
+    cat playbook.yml
+    ---
+    - hosts: all
+      roles:
+        - cis
+
+Create a file containing hosts:
+
+    cat inventory.txt
+    [projet]
+    172.30.3.7
+
+Run the playbook:
+
+    ansible-playbook -e "pipelining=True" -s -u ubuntu --private-key=~/.ssh/id_rsa -i ./inventory.txt playbook.yml
 
 CONTRIBUTING
 ------------
 
-git clone git@github.com:/ansible-super-role
-
-please see CONTRIBUTING.rst
-
-
-
----
-Copyright © 2014, Enrique Paredes
+I need you github handle!
