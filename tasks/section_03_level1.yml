@@ -1,35 +1,104 @@
 ---
 
   - name: 3.1 Set User/Group Owner on bootloader config (Scored)
-    action: command >
-      ' stat -c "%u %g" /boot/grub/grub.cfg | egrep "^0 0"'
+    file: path=/boot/grub/grub.cfg owner=root group=root
     tags:
       - section3
       - section3.1
 
   - name: 3.2 Set Permissions on bootloader config (Scored)
-    action: command >
-      ' stat -L -c "%a" /boot/grub/grub.cfg | egrep ".00"'
+    file: path=/boot/grub/grub.cfg mode="og-rwx"
     tags:
       - section3
       - section3.2
 
-  - name: 3.3.1 Set Boot Loader Password (Scored)
-    lineinfile: dest='superusers"' regexp='"^set'
+  - name: 3.3.1.1 Set Boot Loader Superuser (check) (Scored)
+    shell: 'grep "^set superusers" /boot/grub/grub.cfg'
+    register: boot_superusers 
+    changed_when: False
+    failed_when: False
     tags:
       - section3
       - section3.3
       - section3.3.1
+      - section3.3.1.1
 
-  - name: 3.3.2 Set Boot Loader Password (Scored)
-    lineinfile: dest='/boot/grub/grub.cfg' regexp='"^password"'
+  - name: 3.3.1.2 Set Boot Loader Superuser (Scored)
+    lineinfile: >
+        dest='/boot/grub/grub.cfg'
+        regexp='^set superusers'
+        line='set superusers="root"'
+        state=present
+    when: boot_superusers.rc == 1
+    tags:
+      - section3
+      - section3.3
+      - section3.3.1
+      - section3.3.1.2
+    
+  - name: 3.3.2.1 Set Boot Loader Password (check) (Scored)
+    shell: 'grep "^password" /boot/grub/grub.cfg'
+    register: boot_password
+    changed_when: False
+    failed_when: False
+    tags:
+      - section3
+      - section3.3
+      - section3.3.1
+      - section3.3.2.1
+
+  - name: 3.3.2.2 Set Boot Loader Password (Scored)
+    lineinfile: >
+        dest='/boot/grub/grub.cfg' 
+        regexp='^password'
+        line='password_pbkdf2 root grub.pbkdf2.sha512.10000.529DB4AF052F170948C1DB2A754CEA8A286804DA2D9A4EB5A7CCE4B8636775C83EAF8A1093CBDBC256954BCE789A58EFB3B75D23DFC76583C703922D5DADB69E.4D5BD1EC6736057095CA2EBF55C2DA02DFB0B0784F2105A396F1CEF11FEB1483D5C420F412E2E817E2570DDFC22ABCC329C5FF44091A0ACDE67171FF72E96CFD'
+        state=present
+    when: boot_password.rc == 1
     tags:
       - section3
       - section3.3
       - section3.3.2
+      - section3.3.2.2
 
-  - name: 3.4 Require Authentication for Single-User Mode (Scored)
-    lineinfile: dest='/etc/shadow' regexp='^root:[*\!]:'
+  - name: 3.3.3 Disable password protection booting
+    lineinfile: >
+        dest='/etc/grub.d/10_linux'
+        regexp='^CLASS='
+        line='CLASS="--class gnu-linux --class gnu --class os --unrestricted"'
+    tags:
+      - section3
+      - section3.3
+      - section3.3.3
+
+
+  - name: 3.3.4 Update Grub configuration (Scored)
+    command: update-grub
+    when: boot_superusers.rc == 1 or boot_password.rc == 1
+    tags:
+      - section3
+      - section3.3
+      - section3.3.4
+
+
+  - name: 3.4.1 Require Authentication for Single-User Mode (Scored)
+    shell: 'grep "^root:[*\!]:" /etc/shadow'
+    register: root_password_set
+    changed_when: False
+    failed_when: False
     tags:
       - section3
       - section3.4
+      - section3.4.1
+
+  - name: 3.4.2 Require Authentication for Single-User Mode (Scored)
+    user: name=root state=present password={{ root_password }}
+    when: root_password_set.rc == 1
+    tags:
+      - section3
+      - section3.4
+      - section3.4.2
+
+
+
+
+
