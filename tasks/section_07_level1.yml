@@ -1,23 +1,20 @@
 ---
 
-  - name: 7.1 Modify Network Parameters (Host Only)
-    action: command >
-      ' dpkg -s biosdevname'
-    tags:
-      - section7
-      - section7.1
-
   - name: 7.1.1 Disable IP Forwarding (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.ip_forward'
+    sysctl: >
+      name=net.ipv4.ip_forward
+      value=0
+      state=present
     tags:
       - section7
       - section7.1
       - section7.1.1
 
   - name: 7.1.2.1 Disable Send Packet Redirects (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.all.send_redirects'
+    sysctl: >
+      name=net.ipv4.conf.all.send_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.1
@@ -25,8 +22,10 @@
       - section7.1.2.1
 
   - name: 7.1.2.2 Disable Send Packet Redirects (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.default.send_redirects'
+    sysctl: >
+      name=net.ipv4.conf.default.send_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.1
@@ -34,24 +33,30 @@
       - section7.1.2.2
 
   - name: 7.2.1 Modify Network Parameters (Host and Router)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.all.send_redirects'
+    sysctl: >
+      name=net.ipv4.conf.all.send_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
       - section7.2.1
 
   - name: 7.2.2 Modify Network Parameters (Host and Router)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.default.send_redirects'
+    sysctl: >
+      name=net.ipv4.conf.default.send_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
       - section7.2.2
 
   - name: 7.2.1.1 Disable Source Routed Packet Acceptance (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.all.accept_source_route'
+    sysctl: >
+      name=net.ipv4.conf.all.accept_source_route
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -59,8 +64,10 @@
       - section7.2.1.1
 
   - name: 7.2.1.2 Disable Source Routed Packet Acceptance (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.default.accept_source_route'
+    sysctl: >
+      name=net.ipv4.conf.default.accept_source_route
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -68,8 +75,10 @@
       - section7.2.1.2
 
   - name: 7.2.2.1 Disable ICMP Redirect Acceptance (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.all.accept_redirects'
+    sysctl: >
+      name=net.ipv4.conf.all.accept_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -77,8 +86,10 @@
       - section7.2.2.1
 
   - name: 7.2.2.2 Disable ICMP Redirect Acceptance (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.default.accept_redirects'
+    sysctl: >
+      name=net.ipv4.conf.default.accept_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -86,8 +97,10 @@
       - section7.2.2.2
 
   - name: 7.2.3.1 Disable Secure ICMP Redirect Acceptance (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.all.secure_redirects'
+    sysctl: >
+      name=net.ipv4.conf.all.secure_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -95,8 +108,10 @@
       - section7.2.3.1
 
   - name: 7.2.3.2 Disable Secure ICMP Redirect Acceptance (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.default.secure_redirects'
+    sysctl: >
+      name=net.ipv4.conf.default.secure_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -104,8 +119,10 @@
       - section7.2.3.2
 
   - name: 7.2.4.1 Log Suspicious Packets (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.all.log_martians'
+    sysctl: >
+      name=net.ipv4.conf.all.log_martians
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -113,8 +130,10 @@
       - section7.2.4.1
 
   - name: 7.2.4.2 Log Suspicious Packets (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.default.log_martians'
+    sysctl: >
+      name=net.ipv4.conf.default.log_martians
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -122,24 +141,30 @@
       - section7.2.4.2
 
   - name: 7.2.5 Enable Ignore Broadcast Requests (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.icmp_echo_ignore_broadcasts'
+    sysctl: >
+      name=net.ipv4.icmp_echo_ignore_broadcasts
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
       - section7.2.5
 
   - name: 7.2.6 Enable Bad Error Message Protection (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.icmp_ignore_bogus_error_responses'
+    sysctl: >
+      name=net.ipv4.icmp_ignore_bogus_error_responses
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
       - section7.2.6
 
   - name: 7.2.7.1 Enable RFC-recommended Source Route Validation (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.all.rp_filter'
+    sysctl: >
+      name=net.ipv4.conf.all.rp_filter
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -147,8 +172,10 @@
       - section7.2.7.1
 
   - name: 7.2.7.2 Enable RFC-recommended Source Route Validation (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.conf.default.rp_filter'
+    sysctl: >
+      name=net.ipv4.conf.default.rp_filter
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
@@ -156,23 +183,29 @@
       - section7.2.7.2
 
   - name: 7.2.8 Enable TCP SYN Cookies (Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv4.tcp_syncookies'
+    sysctl: >
+      name=net.ipv4.tcp_syncookies
+      value=0
+      state=present
     tags:
       - section7
       - section7.2
       - section7.2.8
 
   - name: 7.3 Configure IPv6
-    action: command >
-      ' /sbin/sysctl net.ipv4.tcp_syncookies'
+    sysctl: >
+      name=net.ipv4.tcp_syncookies
+      value=0
+      state=present
     tags:
       - section7
       - section7.3
 
   - name: 7.3.1.1 Disable IPv6 Router Advertisements (Not Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv6.conf.all.accept_ra'
+    sysctl: >
+      name=net.ipv6.conf.all.accept_ra
+      value=0
+      state=present
     tags:
       - section7
       - section7.3
@@ -180,8 +213,10 @@
       - section7.3.1.1
 
   - name: 7.3.1.2 Disable IPv6 Router Advertisements (Not Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv6.conf.default.accept_ra'
+    sysctl: >
+      name=net.ipv6.conf.default.accept_ra
+      value=0
+      state=present
     tags:
       - section7
       - section7.3
@@ -189,8 +224,10 @@
       - section7.3.1.2
 
   - name: 7.3.2.1 Disable IPv6 Redirect Acceptance (Not Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv6.conf.all.accept_redirects'
+    sysctl: >
+      name=net.ipv6.conf.all.accept_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.3
@@ -198,8 +235,10 @@
       - section7.3.2.1
 
   - name: 7.3.2.2 Disable IPv6 Redirect Acceptance (Not Scored)
-    action: command >
-      ' /sbin/sysctl net.ipv6.conf.default.accept_redirects'
+    sysctl: >
+      name=net.ipv6.conf.default.accept_redirects
+      value=0
+      state=present
     tags:
       - section7
       - section7.3
@@ -207,54 +246,57 @@
       - section7.3.2.2
 
   - name: 7.3.3 Disable IPv6 (Not Scored)
-    action: command >
-      ' ip addr | grep inet6'
+    sysctl: >
+      name={{ item }}
+      value=1
+      state=present
+    with_item:
+      - net.ipv6.conf.all.disable_ipv6
+      - net.ipv6.conf.default.disable_ipv6
+      - net.ipv6.conf.lo.disable_ipv6
     tags:
       - section7
       - section7.3
       - section7.3.3
 
-  - name: 7.4 Install TCP Wrappers
-    action: command >
-      ' ip addr | grep inet6'
-    tags:
-      - section7
-      - section7.4
-
   - name: 7.4.1 Install TCP Wrappers (Scored)
-    action: command >
-      ' dpkg -s tcpd'
+    apt: name=tcpd state=present
     tags:
       - section7
       - section7.4
       - section7.4.1
 
   - name: 7.4.2 Create /etc/hosts.allow (Not Scored)
-    action: command >
-      ' cat /etc/hosts.allow'
+    debug: "*** Verify /etc/hosts.allow ***"
     tags:
       - section7
       - section7.4
       - section7.4.2
 
   - name: 7.4.3 Verify Permissions on /etc/hosts.allow (Scored)
-    action: command >
-      ' /bin/ls -l /etc/hosts.allow'
+    file: >
+        path=/etc/hosts.allow
+        owner=root
+        group=root
+        mode=0644
     tags:
       - section7
       - section7.4
       - section7.4.3
 
   - name: 7.4.4 Create /etc/hosts.deny (Not Scored)
-    lineinfile: dest='ALL"' regexp='"ALL:'
+    debug: "*** Verify /etc/hosts.deny ***"
     tags:
       - section7
       - section7.4
       - section7.4.4
 
   - name: 7.4.5 Verify Permissions on /etc/hosts.deny (Scored)
-    action: command >
-      ' /bin/ls -l /etc/hosts.deny'
+    file: >
+        path=/etc/hosts.deny
+        owner=root
+        group=root
+        mode=0644
     tags:
       - section7
       - section7.4
