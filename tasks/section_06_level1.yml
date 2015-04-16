@@ -92,7 +92,7 @@
   - name: 6.5.2 Configure Network Time Protocol (restrict4) (NTP) (Scored)
     lineinfile: >
         dest='/etc/ntp.conf'
-        line='restrict default kod nomodify notrap nopeer noquery'
+        line='restrict -4 default kod nomodify notrap nopeer noquery'
         regexp='^restrict -4 default'
         state=present
     tags:
@@ -114,13 +114,11 @@
   - name: 6.5.4 Configure Network Time Protocol (server check) (NTP) (Scored)
     command: 'grep "^server" /etc/ntp.conf'
     register: ntp_server_rc
+    changed_when: False
     tags:
       - section6
       - section6.5
       - section6.5.4
-
-  - name: bla
-    debug: var=ntp_server_rc
 
   - name: 6.5.4 Configure Network Time Protocol (server add) (NTP) (Scored)
     lineinfile: >
@@ -134,93 +132,119 @@
       - section6.5.4
 
   - name: 6.6 Ensure LDAP is not enabled (Not Scored)
-    action: command >
-      ' dpkg -s slapd'
+    apt: name=slapd purge=yes
     tags:
       - section6
       - section6.6
 
-  - name: 6.7.1 Ensure NFS and RPC are not enabled (Not Scored)
-    action: command >
-      ' initctl show-config rpcbind-boot'
+  - name: 6.7.1 Ensure NFS and RPC are not enabled (stat) (Not Scored)
+    stat: path=/etc/init/rpcbind-boot.conf
+    register: nfs_rpc_rc
     tags:
       - section6
       - section6.7
       - section6.7.1
 
   - name: 6.7.2 Ensure NFS and RPC are not enabled (Not Scored)
-    action: command >
-      ' ls /etc/rc*.d/S*nfs-kernel-server'
+    lineinfile: >
+        dest=/etc/init/rpcbind-boot.conf
+        line='#start on virtual-filesystems and net-device-up IFACE=lo'
+        state=present
+        regexp='start on virtual-filesystems and net'
+    when: nfs_rpc_rc.stat.exists == True
+    tags:
+      - section6
+      - section6.7
+      - section6.7.2
+
+  - name: 6.7.2 Ensure NFS and RPC are not enabled (rc.d) (Not Scored)
+    service: >
+        name=nfs-kernel-server
+        enabled=no
+    when: nfs_rpc_rc.stat.exists == True
+    register: nfs_service_result
+    failed_when: "nfs_service_result|failed and 'service not found' not in nfs_service_result.msg"
     tags:
       - section6
       - section6.7
       - section6.7.2
 
   - name: 6.8 Ensure DNS Server is not enabled (Not Scored)
-    action: command >
-      ' ls /etc/rc*.d/S*bind9'
+    service: >
+        name=bind9
+        enabled=no
     tags:
       - section6
       - section6.8
 
   - name: 6.9 Ensure FTP Server is not enabled (Not Scored)
-    action: command >
-      ' initctl show-config vsftpd'
+    service: >
+      name=vsftpd
+      enabled=no
     tags:
       - section6
       - section6.9
 
   - name: 6.10 Ensure HTTP Server is not enabled (Not Scored)
-    action: command >
-      ' ls /etc/rc*.d/S*apache2'
+    service: >
+        name=apache2
+        enabled=no
     tags:
       - section6
       - section6.10
 
   - name: 6.11 Ensure IMAP and POP server is not enabled (Not Scored)
-    action: command >
-      ' initctl show-config dovecot'
+    service: >
+      name=dovecot
+      enabled=no
     tags:
       - section6
       - section6.11
 
   - name: 6.12 Ensure Samba is not enabled (Not Scored)
-    action: command >
-      ' initctl show-config smbd'
+    service: >
+      name=smbd
+      enabled=no
     tags:
       - section6
       - section6.12
 
   - name: 6.13 Ensure HTTP Proxy Server is not enabled (Not Scored)
-    action: command >
-      ' initctl show-config squid3'
+    service: >
+      name=squid3
+      enabled=no
     tags:
       - section6
       - section6.13
 
   - name: 6.14 Ensure SNMP Server is not enabled (Not Scored)
-    action: command >
-      ' ls /etc/rc*.d/S*snmpd'
+    service: >
+        name=snmpd
+        enabled=no
     tags:
       - section6
       - section6.14
 
   - name: 6.15 Configure Mail Transfer Agent for Local-Only Mode (Scored)
-    action: command >
-      ' netstat -an | grep LIST | grep ":25[[:space:]]"'
+    lineinfile: >
+        dest=/etc/postfix/main.cf
+        line='inet_interfaces = localhost'
+        state=present
     tags:
       - section6
       - section6.15
 
   - name: 6.16 Ensure rsync service is not enabled (Scored)
-    lineinfile: dest='/etc/default/rsync' regexp='^RSYNC_ENABLE'
+    lineinfile: >
+        dest='/etc/default/rsync'
+        regexp='RSYNC_ENABLE'
+        line='RSYNC_ENABLE=false'
     tags:
       - section6
       - section6.16
 
   - name: 6.17 Ensure Biosdevname is not enabled (Scored)
-    action: command >
-      ' dpkg -s biosdevname'
+    apt: name=biosdevname purge=yes
     tags:
       - section6
       - section6.17
