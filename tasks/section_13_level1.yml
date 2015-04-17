@@ -141,8 +141,7 @@
       - section13.20.1
 
   - name: 13.20.2 Ensure shadow group is empty (Scored)
-    action: command >
-      'awk -F: '($4 == "<shadow-gid>") { print }' /etc/passwd'
+    shell: awk -F':' '($4 == "<shadow-gid>") { print }' /etc/passwd
     tags:
       - section13
       - section13.20
