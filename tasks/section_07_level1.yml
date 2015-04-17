@@ -250,7 +250,7 @@
       name={{ item }}
       value=1
       state=present
-    with_item:
+    with_items:
       - net.ipv6.conf.all.disable_ipv6
       - net.ipv6.conf.default.disable_ipv6
       - net.ipv6.conf.lo.disable_ipv6
@@ -267,7 +267,7 @@
       - section7.4.1
 
   - name: 7.4.2 Create /etc/hosts.allow (Not Scored)
-    debug: "*** Verify /etc/hosts.allow ***"
+    debug: msg="*** Verify /etc/hosts.allow ***"
     tags:
       - section7
       - section7.4
@@ -285,7 +285,7 @@
       - section7.4.3
 
   - name: 7.4.4 Create /etc/hosts.deny (Not Scored)
-    debug: "*** Verify /etc/hosts.deny ***"
+    debug: msg='*** Verify /etc/hosts.deny ***'
     tags:
       - section7
       - section7.4
@@ -302,51 +302,37 @@
       - section7.4
       - section7.4.5
 
-  - name: 7.5 Uncommon Network Protocols
-    action: command >
-      ' /bin/ls -l /etc/hosts.deny'
-    tags:
-      - section7
-      - section7.5
-
-  - name: 7.5.1 Disable DCCP (Not Scored)
-    lineinfile: dest='dccp' regexp='"install'
+  - name: 7.5.1-4 Disable DCCP, SCTP, RDS, TIPC (Not Scored)
+    lineinfile: >
+        dest=/etc/modprobe.d/CIS.conf
+        line='install {{ item }} /bin/true'
+        state=present
+    with_items:
+        - dccp
+        - sctp
+        - rds
+        - tipc
     tags:
       - section7
       - section7.5
       - section7.5.1
-
-  - name: 7.5.2 Disable SCTP (Not Scored)
-    lineinfile: dest='sctp' regexp='"install'
-    tags:
-      - section7
-      - section7.5
       - section7.5.2
-
-  - name: 7.5.3 Disable RDS (Not Scored)
-    lineinfile: dest='rds' regexp='"install'
-    tags:
-      - section7
-      - section7.5
       - section7.5.3
-
-  - name: 7.5.4 Disable TIPC (Not Scored)
-    lineinfile: dest='tipc' regexp='"install'
-    tags:
-      - section7
-      - section7.5
       - section7.5.4
 
   - name: 7.6 Deactivate Wireless Interfaces (Not Scored)
-    action: command >
-      ' ifconfig -a'
+    shell: 'lspci -k | grep -i wifi'
+    changed_when: False
+    register: lspci_wifi
+    failed_when: lspci_wifi.rc == 0
     tags:
       - section7
       - section7.6
 
   - name: 7.7 Ensure Firewall is active (Scored)
-    action: command >
-      ' ufw status'
+    service: >
+        name=ufw
+        state=started
     tags:
       - section7
       - section7.7
