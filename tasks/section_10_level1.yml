@@ -1,92 +1,71 @@
 ---
 
-  - name: 10.1.1 Set Shadow Password Suite Parameters (/etc/login.defs)
-    lineinfile: dest='/etc/pam.d/su' regexp='pam_wheel.so'
+  - name: 10.1.1 Set Password Expiration Days (Scored)
+    lineinfile: >
+        dest='/etc/login.defs'
+        line='PASS_MAX_DAYS 90'
+        state=present
+        regexp='^PASS_MAX_DAYS'
     tags:
       - section10
       - section10.1
       - section10.1.1
 
-  - name: 10.1.2 Set Shadow Password Suite Parameters (/etc/login.defs)
-    lineinfile: dest='/etc/group' regexp='wheel'
+  - name: 10.1.2 Set Password Change Minimum Number of Days (Scored)
+    lineinfile: >
+        dest='/etc/login.defs'
+        line='PASS_MIN_DAYS 7'
+        regexp='^PASS_MIN_DAYS'
     tags:
       - section10
       - section10.1
       - section10.1.2
 
-  - name: 10.1.1.1 Set Password Expiration Days (Scored)
-    lineinfile: dest='/etc/login.defs' regexp='PASS_MAX_DAYS'
-    tags:
-      - section10
-      - section10.1
-      - section10.1.1
-      - section10.1.1.1
-
-  - name: 10.1.1.2 Set Password Expiration Days (Scored)
-    action: command >
-      ' chage --list <user>'
-    tags:
-      - section10
-      - section10.1
-      - section10.1.1
-      - section10.1.1.2
-
-  - name: 10.1.2.1 Set Password Change Minimum Number of Days (Scored)
-    lineinfile: dest='/etc/login.defs' regexp='PASS_MIN_DAYS'
-    tags:
-      - section10
-      - section10.1
-      - section10.1.2
-      - section10.1.2.1
-
-  - name: 10.1.2.2 Set Password Change Minimum Number of Days (Scored)
-    action: command >
-      ' chage --list <user>'
-    tags:
-      - section10
-      - section10.1
-      - section10.1.2
-      - section10.1.2.2
-
-  - name: 10.1.3.1 Set Password Expiring Warning Days (Scored)
-    lineinfile: dest='/etc/login.defs' regexp='PASS_WARN_AGE'
+  - name: 10.1.3 Set Password Expiring Warning Days (Scored)
+    lineinfile: >
+        dest='/etc/login.defs'
+        line='PASS_WARN_AGE'
+        regexp='^PASS_WARN_AGE'
     tags:
       - section10
       - section10.1
       - section10.1.3
-      - section10.1.3.1
 
-  - name: 10.1.3.2 Set Password Expiring Warning Days (Scored)
-    action: command >
-      ' chage --list <user>'
+  - name: 10.2 Disable System Accounts (check) (Scored)
+    shell: awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" &&$1!="halt" && $3<500 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print}' /etc/passwd
+    register: awk_etc_passwd
+    changed_when: False
     tags:
       - section10
-      - section10.1
-      - section10.1.3
-      - section10.1.3.2
+      - section10.2
 
   - name: 10.2 Disable System Accounts (Scored)
-    action: command>
-      'awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" &&$1!="halt" && $3<500 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print}' /etc/passwd'
+    command: /usr/sbin/usermod -s /sbin/nologin {{ item }}
+    with_items: awk_etc_passwd.stdout_lines
     tags:
       - section10
       - section10.2
 
   - name: 10.3 Set Default Group for root Account (Scored)
-    lineinfile: dest='/etc/passwd' regexp='"^root:"'
+    user: >
+        name=root
+        group=root
     tags:
       - section10
       - section10.3
 
   - name: 10.4 Set Default umask for Users (Scored)
-    lineinfile: dest='/etc/login.defs' regexp='"^UMASK"'
+    lineinfile: >
+        dest=/etc/login.defs
+        line='UMASK\t077'
+        regexp='^UMASK'
+        state=present
     tags:
       - section10
       - section10.4
 
   - name: 10.5 Lock Inactive User Accounts (Scored)
-    action: command >
-      ' useradd -D | grep INACTIVE'
+    shell: 'useradd -D -f 35'
     tags:
       - section10
       - section10.5
