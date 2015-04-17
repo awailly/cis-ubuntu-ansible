@@ -65,6 +65,7 @@
         dest='/etc/grub.d/10_linux'
         regexp='^CLASS='
         line='CLASS="--class gnu-linux --class gnu --class os --unrestricted"'
+        state=present
     tags:
       - section3
       - section3.3
