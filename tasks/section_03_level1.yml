@@ -81,7 +81,7 @@
       - section3.3.4
 
 
-  - name: 3.4.1 Require Authentication for Single-User Mode (Scored)
+  - name: 3.4.1 Require Authentication for Single-User Mode (check) (Scored)
     shell: 'grep "^root:[*\!]:" /etc/shadow'
     register: root_password_set
     changed_when: False
