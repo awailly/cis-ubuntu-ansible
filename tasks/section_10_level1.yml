@@ -32,7 +32,7 @@
       - section10.1.3
 
   - name: 10.2 Disable System Accounts (check) (Scored)
-    shell: awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" &&$1!="halt" && $3<500 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print}' /etc/passwd
+    shell: awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" &&$1!="halt" && $3<500 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print $1}' /etc/passwd
     register: awk_etc_passwd
     changed_when: False
     tags:
@@ -40,7 +40,7 @@
       - section10.2
 
   - name: 10.2 Disable System Accounts (Scored)
-    command: /usr/sbin/usermod -s /sbin/nologin {{ item }}
+    command: /usr/sbin/usermod -s /usr/sbin/nologin {{ item }}
     with_items: awk_etc_passwd.stdout_lines
     tags:
       - section10
@@ -64,8 +64,22 @@
       - section10
       - section10.4
 
-  - name: 10.5 Lock Inactive User Accounts (Scored)
-    shell: 'useradd -D -f 35'
+  - name: 10.5 Lock Inactive User Accounts (check) (Scored)
+    shell: 'grep INACTIVE /etc/login.defs'
+    changed_when: False
+    failed_when: False
+    register: lock_inactive_rc
     tags:
       - section10
       - section10.5
+        
+  - name: 10.5 Lock Inactive User Accounts (Scored)
+    lineinfile: >
+        dest=/etc/login.defs
+        line='INACTIVE=35'
+        state=present
+    when: lock_inactive_rc.rc == 1
+    tags:
+      - section10
+      - section10.5
+
