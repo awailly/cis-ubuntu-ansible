@@ -1,113 +1,64 @@
 ---
 
-  - name: 2.18.1 Disable Mounting of cramfs Filesystems (Not Scored)
-    action: command >
-      ' /sbin/modprobe -n -v cramfs'
+  - name: 2.18 Disable Mounting of cramfs Filesystems (Not Scored)
+    lineinfile: >
+        dest=/etc/modprobe.d/CIS.conf
+        line='install cramfs /bin/true'
+        state=present
     tags:
       - section2
       - section2.18
-      - section2.18.1
 
-  - name: 2.18.2 Disable Mounting of cramfs Filesystems (Not Scored)
-    action: command >
-      ' /sbin/lsmod | grep cramfs'
-    tags:
-      - section2
-      - section2.18
-      - section2.18.2
-
-  - name: 2.19.1 Disable Mounting of freevxfs Filesystems (Not Scored)
-    action: command >
-      ' /sbin/modprobe -n -v freevxfs'
+  - name: 2.19 Disable Mounting of freevxfs Filesystems (Not Scored)
+    lineinfile: >
+        dest=/etc/modprobe.d/CIS.conf
+        line='install freevxfs /bin/true'
+        state=present
     tags:
       - section2
       - section2.19
-      - section2.19.1
 
-  - name: 2.19.2 Disable Mounting of freevxfs Filesystems (Not Scored)
-    action: command >
-      ' /sbin/lsmod | grep freexvfs'
-    tags:
-      - section2
-      - section2.19
-      - section2.19.2
-
-  - name: 2.20.1 Disable Mounting of jffs2 Filesystems (Not Scored)
-    action: command >
-      ' /sbin/modprobe -n -v jffs2'
+  - name: 2.20 Disable Mounting of jffs2 Filesystems (Not Scored)
+    lineinfile: >
+        dest=/etc/modprobe.d/CIS.conf
+        line='install jffs2 /bin/true'
+        state=present
     tags:
       - section2
       - section2.20
-      - section2.20.1
 
-  - name: 2.20.2 Disable Mounting of jffs2 Filesystems (Not Scored)
-    action: command >
-      ' /sbin/lsmod | grep jffs2'
-    tags:
-      - section2
-      - section2.20
-      - section2.20.2
-
-  - name: 2.21.1 Disable Mounting of hfs Filesystems (Not Scored)
-    action: command >
-      ' /sbin/modprobe -n -v hfs'
+  - name: 2.21 Disable Mounting of hfs Filesystems (Not Scored)
+    lineinfile: >
+        dest=/etc/modprobe.d/CIS.conf
+        line='install hfs /bin/true'
+        state=present
     tags:
       - section2
       - section2.21
-      - section2.21.1
 
-  - name: 2.21.2 Disable Mounting of hfs Filesystems (Not Scored)
-    action: command >
-      ' /sbin/lsmod | grep hfs'
-    tags:
-      - section2
-      - section2.21
-      - section2.21.2
-
-  - name: 2.22.1 Disable Mounting of hfsplus Filesystems (Not Scored)
-    action: command >
-      ' /sbin/modprobe -n -v hfsplus'
+  - name: 2.22 Disable Mounting of hfsplus Filesystems (Not Scored)
+    lineinfile: >
+        dest=/etc/modprobe.d/CIS.conf
+        line='install hfsplus /bin/true'
+        state=present
     tags:
       - section2
       - section2.22
-      - section2.22.1
 
-  - name: 2.22.2 Disable Mounting of hfsplus Filesystems (Not Scored)
-    action: command >
-      ' /sbin/lsmod | grep hfsplus'
-    tags:
-      - section2
-      - section2.22
-      - section2.22.2
-
-  - name: 2.23.1 Disable Mounting of squashfs Filesystems (Not Scored)
-    action: command >
-      ' /sbin/modprobe -n -v squashfs'
+  - name: 2.23 Disable Mounting of squashfs Filesystems (Not Scored)
+    lineinfile: >
+        dest=/etc/modprobe.d/CIS.conf
+        line='install squashfs /bin/true'
+        state=present
     tags:
       - section2
       - section2.23
-      - section2.23.1
 
-  - name: 2.23.2 Disable Mounting of squashfs Filesystems (Not Scored)
-    action: command >
-      ' /sbin/lsmod | grep squashfs'
-    tags:
-      - section2
-      - section2.23
-      - section2.23.2
-
-  - name: 2.24.1 Disable Mounting of udf Filesystems (Not Scored)
-    action: command >
-      ' /sbin/modprobe -n -v udf'
+  - name: 2.24 Disable Mounting of udf Filesystems (Not Scored)
+    lineinfile: >
+        dest=/etc/modprobe.d/CIS.conf
+        line='install udf /bin/true'
+        state=present
     tags:
       - section2
       - section2.24
-      - section2.24.1
-
-  - name: 2.24.2 Disable Mounting of udf Filesystems (Not Scored)
-    action: command >
-      ' /sbin/lsmod | grep udf'
-    tags:
-      - section2
-      - section2.24
-      - section2.24.2
