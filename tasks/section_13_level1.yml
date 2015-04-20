@@ -12,7 +12,7 @@
   - name: 13.1 Ensure Password Fields are Not Empty (locking accounts) (Scored)
     command: passwd -l {{ item }}
     with_items:
-      - awk_empty_shadow.stdout_lines
+        awk_empty_shadow.stdout_lines
     when: lock_shadow_accounts
     tags:
       - section13
@@ -88,7 +88,7 @@
         owner=root
         mode='o-w,g-w'
     with_items:
-      - dot_in_path.stdout_lines
+        dot_in_path.stdout_lines
     tags:
       - section13
       - section13.6
@@ -108,7 +108,7 @@
         mode='g-w,o-rwx'
         state=directory
     with_items:
-      - home_users.stdout_lines
+        home_users.stdout_lines
     tags:
       - section13
       - section13.7
@@ -128,7 +128,7 @@
         mode='o-w,g-w'
         state=touch
     with_items:
-      - home_dot_files.stdout_lines
+        home_dot_files.stdout_lines
     tags:
       - section13
       - section13.8
@@ -140,7 +140,7 @@
         recurse=yes
         state=directory
     with_items:
-      - home_users
+        home_users.stdout_lines
     tags:
       - section13
       - section13.9
@@ -150,7 +150,7 @@
         state=absent
         path={{ item }}/.rhosts
     with_items:
-      - home_users.stdout_lines
+        home_users.stdout_lines
     tags:
       - section13
       - section13.10
@@ -164,85 +164,113 @@
 
   - name: 13.11 Check Groups in /etc/passwd (Scored)
     command: grep -q -P "^.*?:[^:]*:{{ item }}:" /etc/group
+    with_items:
+        groups_id_cut.stdout_lines
     register: groups_present
     changed_when: False
-    failed_when: groups_present.rc == 0
-    with_items:
-      - groups_id_cut.stdout_lines
     tags:
       - section13
       - section13.11
 
   - name: 13.12 Check That Users Are Assigned Valid Home Directories (Scored)
     stat: path={{ item }}
-    register: rstat
     with_items:
-      - home_users.stdout_lines
+        home_users.stdout_lines
+    register: rstat
+    failed_when: rstat.stat.isdir == false
     tags:
       - section13
       - section13.12
 
-  - name: bla
-    debug: var=rstat
-
   - name: 13.13 Check User Home Directory Ownership (Scored)
-    action: command >
-      '!/bin/bash'
+    debug: msg="*** Hardcore ***"
     tags:
       - section13
       - section13.13
 
   - name: 13.14 Check for Duplicate UIDs (Scored)
-    action: command >
-      '!/bin/bash'
+    shell: cut -f3 -d':' /etc/passwd | sort | uniq -d
+    register: uids_list
+    failed_when: uids_list.stdout != ''
+    changed_when: False
     tags:
       - section13
       - section13.14
 
   - name: 13.15 Check for Duplicate GIDs (Scored)
-    action: command >
-      '!/bin/bash'
+    shell: cut -f3 -d':' /etc/group | sort | uniq -d
+    register: gids_list
+    failed_when: gids_list.stdout != ''
+    changed_when: False
     tags:
       - section13
       - section13.15
 
   - name: 13.16 Check for Duplicate User Names (Scored)
-    action: command >
-      '!/bin/bash'
+    shell: cut -f1 -d':' /etc/passwd | sort | uniq -d
+    register: uids_list
+    failed_when: uids_list.stdout != ''
+    changed_when: False
     tags:
       - section13
       - section13.16
 
   - name: 13.17 Check for Duplicate Group Names (Scored)
-    action: command >
-      '!/bin/bash'
+    shell: cut -f1 -d':' /etc/group | sort | uniq -d
+    register: uids_list
+    failed_when: uids_list.stdout != ''
+    changed_when: False
     tags:
       - section13
       - section13.17
 
   - name: 13.18 Check for Presence of User .netrc Files (Scored)
-    action: command >
-      '!/bin/bash'
+    file: >
+        path={{ item }}/.netrc
+        state=absent
+    with_items:
+        home_users.stdout_lines
     tags:
       - section13
       - section13.18
 
   - name: 13.19 Check for Presence of User .forward Files (Scored)
-    action: command >
-      '!/bin/bash'
+    file: >
+        path={{ item }}/.forward
+        state=absent
+    with_items:
+        home_users.stdout_lines
     tags:
       - section13
       - section13.19
 
   - name: 13.20.1 Ensure shadow group is empty (Scored)
-    lineinfile: dest='/etc/group' regexp='^shadow'
+    shell: grep '^shadow' /etc/group | cut -f4 -d':'
+    register: shadow_group_empty
+    failed_when: shadow_group_empty.stdout != ''
+    changed_when: False
+    tags:
+      - section13
+      - section13.20
+      - section13.20.1
+
+  - name: 13.20.2 Ensure shadow group is empty (preparation) (Scored)
+    shell: grep '^shadow' /etc/group | cut -f1 -d':'
+    register: shadow_group_id
+    failed_when: False
+    changed_when: False
     tags:
       - section13
       - section13.20
       - section13.20.1
 
   - name: 13.20.2 Ensure shadow group is empty (Scored)
-    shell: awk -F':' '($4 == "<shadow-gid>") { print }' /etc/passwd
+    shell: awk -F':' '($4 == "{{ item }}") { print }' /etc/passwd
+    register: awk_passwd_shadow
+    with_items:
+        shadow_group_id.stdout_lines
+    changed_when: False
+    failed_when: awk_passwd_shadow.stdout != ''
     tags:
       - section13
       - section13.20
