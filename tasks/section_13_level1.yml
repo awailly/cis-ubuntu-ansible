@@ -1,88 +1,189 @@
 ---
 
   - name: 13.1 Ensure Password Fields are Not Empty (Scored)
-    action: command>
-      '/usr/bin/awk -F':' '($2 == "" ) { print $1 " does not have apassword "}' /etc/shadow'
+    command: awk -F':' '($2 == "" ) { print $1 }' /etc/shadow
+    register: awk_empty_shadow
+    changed_when: False
+    failed_when: awk_empty_shadow.stdout != '' and lock_shadow_accounts == 'no'
+    tags:
+      - section13
+      - section13.1
+
+  - name: 13.1 Ensure Password Fields are Not Empty (locking accounts) (Scored)
+    command: passwd -l {{ item }}
+    with_items:
+      - awk_empty_shadow.stdout_lines
+    when: lock_shadow_accounts
     tags:
       - section13
       - section13.1
 
   - name: 13.2 Verify No Legacy "+" Entries Exist in /etc/passwd File (Scored)
-    action: command >
-      ' /bin/grep '^+:' /etc/passwd'
+    command: grep '^+:' /etc/passwd
+    register: plus_pass
+    failed_when: plus_pass.rc == 0
+    changed_when: plus_pass.rc == 0
     tags:
       - section13
       - section13.2
 
   - name: 13.3 Verify No Legacy "+" Entries Exist in /etc/shadow File (Scored)
-    action: command >
-      ' /bin/grep '^+:' /etc/shadow'
+    command: grep '^+:' /etc/shadow
+    register: plus_shadow
+    failed_when: plus_shadow.rc == 0
+    changed_when: plus_shadow.rc == 0
     tags:
       - section13
       - section13.3
 
   - name: 13.4 Verify No Legacy "+" Entries Exist in /etc/group File (Scored)
-    action: command >
-      ' /bin/grep '^+:' /etc/group'
+    command: grep '^+:' /etc/group
+    register: plus_group
+    failed_when: plus_group.rc == 0
+    changed_when: plus_group.rc == 0
     tags:
       - section13
       - section13.4
 
   - name: 13.5 Verify No UID 0 Accounts Exist Other Than root (Scored)
-    action: command>
-      '/usr/bin/awk -F':' '($3 == 0) { print $1 }' /etc/passwd'
+    command: awk -F':' '($3 == 0) { print $1 }' /etc/passwd
+    register: uid_zero_root
+    changed_when: False
+    failed_when: uid_zero_root.stdout != 'root'
     tags:
       - section13
       - section13.5
 
-  - name: 13.6 Ensure root PATH Integrity (Scored)
-    action: command >
-      '!/bin/bash'
+  - name: 13.6.1 Ensure root PATH Integrity (empty value) (Scored)
+    shell: 'echo $PATH | grep ::'
+    register: path_colon
+    changed_when: False
+    failed_when: path_colon.rc == 0
     tags:
       - section13
       - section13.6
 
-  - name: 13.7 Check Permissions on User Home Directories (Scored)
-    action: command >
-      '!/bin/bash'
+  - name: 13.6.2 Ensure root PATH Integrity (colon end) (Scored)
+    shell: 'echo $PATH | grep :$'
+    register: path_colon_end
+    changed_when: False
+    failed_when: path_colon_end.rc == 0
+    tags:
+      - section13
+      - section13.6
+
+  - name: 13.6.3 Ensure root PATH Integrity (dot in path) (Scored)
+    shell: "echo $PATH | sed -e 's/::/:/' -e 's/:$//' -e 's/:/\\n/g'"
+    register: dot_in_path
+    changed_when: False
+    failed_when: '"." in dot_in_path.stdout_lines'
+    tags:
+      - section13
+      - section13.6
+
+  - name: 13.6.4 Ensure root PATH Integrity (Scored)
+    file: >
+        path={{ item }}
+        state=directory
+        owner=root
+        mode='o-w,g-w'
+    with_items:
+      - dot_in_path.stdout_lines
+    tags:
+      - section13
+      - section13.6
+
+  - name: 13.7.1 Check Permissions on User Home Directories (gather users) (Scored)
+    shell: /bin/egrep -v '(root|halt|sync|shutdown)' /etc/passwd | /usr/bin/awk -F':' '($7 != "/usr/sbin/nologin") { print $6 }'
+    register: home_users
+    changed_when: False
+    failed_when: False
     tags:
       - section13
       - section13.7
 
-  - name: 13.8 Check User Dot File Permissions (Scored)
-    action: command >
-      '!/bin/bash'
+  - name: 13.7.2 Check Permissions on User Home Directories (Scored)
+    file: >
+        path={{ item }}
+        mode='g-w,o-rwx'
+        state=directory
+    with_items:
+      - home_users.stdout_lines
+    tags:
+      - section13
+      - section13.7
+
+  - name: 13.8.1 Check User Dot File Permissions (gather dotfiles) (Scored)
+    shell: ls -a ~ | egrep '^\.'
+    changed_when: False
+    failed_when: False
+    register: home_dot_files
+    tags:
+      - section13
+      - section13.8
+
+  - name: 13.8.2 Check User Dot File Permissions (Scored)
+    file: >
+        path={{ item }}
+        mode='o-w,g-w'
+        state=touch
+    with_items:
+      - home_dot_files.stdout_lines
     tags:
       - section13
       - section13.8
 
   - name: 13.9 Check Permissions on User .netrc Files (Scored)
-    action: command >
-      '!/bin/bash'
+    file: >
+        path={{ item }}/.netrc
+        mode='g-rwx,o-rwx'
+        recurse=yes
+        state=directory
+    with_items:
+      - home_users
     tags:
       - section13
       - section13.9
 
   - name: 13.10 Check for Presence of User .rhosts Files (Scored)
-    action: command >
-      '!/bin/bash'
+    file: >
+        state=absent
+        path={{ item }}/.rhosts
+    with_items:
+      - home_users.stdout_lines
     tags:
       - section13
       - section13.10
 
+  - name: 13.11 Check Groups in /etc/passwd (preparation) (Scored)
+    command: cut -s -d':' -f4 /etc/passwd
+    register: groups_id_cut
+    tags:
+      - section13
+      - section13.11
+
   - name: 13.11 Check Groups in /etc/passwd (Scored)
-    action: command >
-      '!/bin/bash'
+    command: grep -q -P "^.*?:[^:]*:{{ item }}:" /etc/group
+    register: groups_present
+    changed_when: False
+    failed_when: groups_present.rc == 0
+    with_items:
+      - groups_id_cut.stdout_lines
     tags:
       - section13
       - section13.11
 
   - name: 13.12 Check That Users Are Assigned Valid Home Directories (Scored)
-    action: command >
-      '!/bin/bash'
+    stat: path={{ item }}
+    register: rstat
+    with_items:
+      - home_users.stdout_lines
     tags:
       - section13
       - section13.12
+
+  - name: bla
+    debug: var=rstat
 
   - name: 13.13 Check User Home Directory Ownership (Scored)
     action: command >
