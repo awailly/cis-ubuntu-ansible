@@ -1,5 +1,23 @@
 ---
 
+  - name: Check the presence of the file "cis.conf" under modprobe.d
+    stat: >
+        path=/etc/modprobe.d/CIS.conf
+    register: cis_conf_file
+    tags:
+      - section2
+      - section2.18
+
+  - debug: var=cis_conf_file
+
+  - name: Create the file "cis.conf" under modprobe.d if doesn't exist
+    file: >
+        dest=/etc/modprobe.d/CIS.conf state=touch
+    when: not cis_conf_file.stat.exists
+    tags:
+      - section2
+      - section2.18
+
   - name: 2.18 Disable Mounting of cramfs Filesystems (Not Scored)
     lineinfile: >
         dest=/etc/modprobe.d/CIS.conf
