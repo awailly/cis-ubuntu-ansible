@@ -8,6 +8,14 @@
       - section4
       - section4.5
 
+  - name: 4.5 Activate AppArmor (start) (Scored)
+    service: >
+        name=apparmor
+        state=started
+    tags:
+      - section4
+      - section4.5
+
   - name: 4.5 Activate AppArmor (profiles loaded) (Scored)
     shell: 'apparmor_status | grep "0 profiles are loaded"'
     register: profiles_loaded
