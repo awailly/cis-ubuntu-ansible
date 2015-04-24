@@ -1,14 +1,14 @@
 ---
 language: python
 python: "2.7"
-sudo: false
+#sudo: false
 
 notifications:
     irc: "chat.freenode.net#hdbot"
 
 before_install:
-  # Make sure everything's up to date.
-  #- sudo apt-get update -qq
+  # Make sure everything's up to date. Not possible with sudo: false
+  - sudo apt-get update -qq
 
 install:
   # Install Ansible.
@@ -20,3 +20,9 @@ install:
 script:
   # We'll add some commands to test the role here.
   - ansible-playbook -i tests/inventory tests/playbook.yml --syntax-check
+  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo
+  - >
+    ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
