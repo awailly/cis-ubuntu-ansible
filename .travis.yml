@@ -9,6 +9,7 @@ notifications:
 before_install:
   # Make sure everything's up to date. Not possible with sudo: false
   - sudo apt-get update -qq
+  - sudo apt-get install aptitude
 
 install:
   # Install Ansible.
