@@ -63,21 +63,15 @@
       - section9.1
       - section9.1.7
 
-  - name: 9.1.8.1 Restrict at/cron to Authorized Users (Scored)
-    file: path=/etc/cron.deny state=absent
+  - name: 9.1.8 Restrict at/cron to Authorized Users (Scored)
+    file: path={{ item }} state=absent
+    with_items:
+        - /etc/cron.deny
+        - /etc/at.deny
     tags:
       - section9
       - section9.1
       - section9.1.8
-      - section9.1.8.1
-
-  - name: 9.1.8.2 Restrict at/cron to Authorized Users (Scored)
-    file: path=/etc/at.deny state=absent
-    tags:
-      - section9
-      - section9.1
-      - section9.1.8
-      - section9.1.8.2
   
   - name: 9.1.8.3 Restrict at/cron to Authorized Users (Scored)
     file: path=/etc/cron.allow owner=root group=root mode="og-rwx" state=touch
@@ -95,93 +89,106 @@
       - section9.1.8
       - section9.1.8.4
  
-  - name: 9.2.1 Configure PAM
-    action: command >
-      ' ls -l /etc/cron.deny'
-    tags:
-      - section9
-      - section9.2
-      - section9.2.1
-
-  - name: 9.2.2 Configure PAM
-    action: command >
-      ' ls -l /etc/at.deny'
-    tags:
-      - section9
-      - section9.2
-      - section9.2.2
-
-  - name: 9.2.3 Configure PAM
-    action: command >
-      ' ls -l /etc/cron.allow'
-    tags:
-      - section9
-      - section9.2
-      - section9.2.3
-
-  - name: 9.2.4 Configure PAM
-    action: command >
-      ' ls -l /etc/at.allow'
-    tags:
-      - section9
-      - section9.2
-      - section9.2.4
-
   - name: 9.2.1 Set Password Creation Requirement Parameters Usingpam_cracklib (Scored)
-    lineinfile: dest='/etc/pam.d/common-password' regexp='pam_cracklib.so'
+    lineinfile: >
+        dest='/etc/pam.d/common-password'
+        regexp="pam_cracklib.so"
+        line="password required pam_cracklib.so retry=3 minlen=14 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1"
+        state=present
     tags:
       - section9
       - section9.2
       - section9.2.1
 
+#Note for section 9.2.2:
+#If a user has been locked out because they have reached the maximum consecutive failure count 
+#defined by denied= in the pam_tally2.so module, the user can be unlocked by issuing the command
+#/sbin/pam_tally2 -u username --reset
+#This command sets the failed count to 0, effectively unlocking the user
   - name: 9.2.2 Set Lockout for Failed Password Attempts (Not Scored)
-    lineinfile: dest='/etc/pam.d/login' regexp='"pam_tally2"'
+    lineinfile: >
+        dest='/etc/pam.d/login' 
+        regexp='pam_tally2'
+        line="auth required pam_tally2.so onerr=fail audit silent deny=5 unlock_time=900"
+        state=present
     tags:
       - section9
       - section9.2
       - section9.2.2
 
   - name: 9.2.3 Limit Password Reuse (Scored)
-    lineinfile: dest='/etc/pam.d/common-password' regexp='"remember"'
+    lineinfile: >
+        dest='/etc/pam.d/common-password' 
+        regexp='remember=5'
+        line="password sufficient pam_unix.so remember=5"
+        state=present
     tags:
       - section9
       - section9.2
       - section9.2.3
 
-  - name: 9.3 Configure SSH
-    lineinfile: dest='/etc/pam.d/common-password' regexp='"remember"'
+  - name: 9.3 Check if ssh is installed (check)
+    stat: path='/etc/ssh/sshd_config'
+    register: ssh_config_file
     tags:
       - section9
       - section9.3
+      - section9.3.1
+
 
   - name: 9.3.1 Set SSH Protocol to 2 (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^Protocol"'
+    lineinfile: >
+        dest='/etc/ssh/sshd_config' 
+        regexp='^Protocol'
+        state=present
+        line='Protocol 2'
+    when: ssh_config_file.stat.exists == True
     tags:
       - section9
       - section9.3
       - section9.3.1
 
   - name: 9.3.2 Set LogLevel to INFO (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^LogLevel"'
+    lineinfile: >
+        dest='/etc/ssh/sshd_config' 
+        regexp='"^LogLevel"'
+        state=present
+        line='LogLevel INFO'
+    when: ssh_config_file.stat.exists == True
     tags:
       - section9
       - section9.3
       - section9.3.2
 
   - name: 9.3.3 Set Permissions on /etc/ssh/sshd_config (Scored)
-    action: command >
-      ' /bin/ls -l /etc/ssh/sshd_config'
+    file: path='/etc/ssh/sshd_config' owner=root group=root mode=600
+    when: ssh_config_file.stat.exists == True
     tags:
       - section9
       - section9.3
       - section9.3.3
 
-  - name: 9.3.4 Disable SSH X11 Forwarding (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^X11Forwarding"'
+#Regroups sections 9.3.4 9.3.7 9.3.8 9.3.9 9.3.10
+  - name: 9.3.{4,7,8,9,10} Disable some SSH options (Scored)
+    lineinfile: >
+        dest='/etc/ssh/sshd_config'
+        regexp='^{{ item }}'
+        line='{{ item }} no'
+        state=present
+    with_items: 
+      - X11Forwarding
+      - HostbasedAuthentication
+      - PermitRootLogin
+      - PermitEmptyPasswords
+      - PermitUserEnvironment
     tags:
       - section9
       - section9.3
       - section9.3.4
+      - section9.3.7
+      - section9.3.8
+      - section9.3.9
+      - section9.3.10
 
   - name: 9.3.5 Set SSH MaxAuthTries to 4 or Less (Scored)
     lineinfile: dest='/etc/ssh/sshd_config' regexp='"^MaxAuthTries"'
@@ -196,34 +203,6 @@
       - section9
       - section9.3
       - section9.3.6
-
-  - name: 9.3.7 Set SSH HostbasedAuthentication to No (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^HostbasedAuthentication"'
-    tags:
-      - section9
-      - section9.3
-      - section9.3.7
-
-  - name: 9.3.8 Disable SSH Root Login (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^PermitRootLogin"'
-    tags:
-      - section9
-      - section9.3
-      - section9.3.8
-
-  - name: 9.3.9 Set SSH PermitEmptyPasswords to No (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^PermitEmptyPasswords"'
-    tags:
-      - section9
-      - section9.3
-      - section9.3.9
-
-  - name: 9.3.10 Do Not Allow Users to Set Environment Options (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='PermitUserEnvironment'
-    tags:
-      - section9
-      - section9.3
-      - section9.3.10
 
   - name: 9.3.11 Use Only Approved Cipher in Counter Mode (Scored)
     lineinfile: dest='/etc/ssh/sshd_config' regexp='"Ciphers"'
