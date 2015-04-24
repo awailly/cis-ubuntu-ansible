@@ -1,7 +1,9 @@
 ---
+
+
   - name: 8.1.1.1 Configure Data Retention
     lineinfile: >
-        dest='/etc/audit/auditd.conf'
+        dest= /etc/audit/auditd.conf
 	regexp='max_log_file'
 	line='max_log_file = 200'
 	state=present
