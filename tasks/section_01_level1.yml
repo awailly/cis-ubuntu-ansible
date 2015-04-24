@@ -9,6 +9,7 @@
 
   - name: 1.1.2 Install Updates, Patches and Additional Security Software (NotScored)
     apt: upgrade=yes
+    when: travis_env == False
     tags:
       - section1
       - section1.1

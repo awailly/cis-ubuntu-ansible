@@ -52,6 +52,7 @@
   - name: 3.3.3 Disable password protection booting
     lineinfile: >
         dest='/etc/grub.d/10_linux'
+        create=yes
         regexp='^CLASS='
         line='CLASS="--class gnu-linux --class gnu --class os --unrestricted"'
         state=present

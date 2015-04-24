@@ -126,17 +126,28 @@
       - section8.2
       - section8.2.5
 
-  - name: 8.2.6 Accept Remote rsyslog Messages Only on Designated Log Hosts (Not Scored)
+  - name: 8.2.6.1 Accept Remote rsyslog Messages Only on Designated Log Hosts (Not Scored)
+    shell: grep '^$ModLoad imtcp' /etc/rsyslog.conf
+    register: moadloadpresent
+    changed_when: False
+    failed_when: False
+    tags:
+      - section8
+      - section8.2
+      - section8.2.6
+
+  - debug: var=moadloadpresent 
+
+  - name: 8.2.6.2 Accept Remote rsyslog Messages Only on Designated Log Hosts (Not Scored)
     lineinfile: >
         dest=/etc/rsyslog.conf
-        regexp='^#({{ item }}.*)'
-        line='({{ item }}.*)'
+        regexp='^#({{ item }})'
+        line='{{ item }}'
         state=present
-        backrefs=yes
-        backup=yes
     with_items:
         - '$ModLoad imtcp'
         - '$InputTCPServerRun 514'
+    when: moadloadpresent.rc == 1
     changed_when: False
     tags:
       - section8
