@@ -12,6 +12,7 @@
         name=fs.suid_dumpable
         value=0
         state=present
+    when: travis_env == False
     tags:
       - section4
       - section4.1
