@@ -1,9 +1,16 @@
 ---
 #sections 3.3 and 3.4 have to happen before as the latter overwrite 3.1 and 3.2
 
+  - name: 3 Check for /boot/grub/grub.cfg file
+    stat: path=/boot/grub/grub.cfg
+    register: grub_cfg_file
+    tags:
+      - section3
+
   - name: 3.3.1.1 Set Boot Loader Superuser (check) (Scored)
     shell: 'grep "^set superusers" /boot/grub/grub.cfg'
     register: boot_superusers 
+    when: grub_cfg_file.stat.exists == True
     changed_when: False
     failed_when: False
     tags:
@@ -28,6 +35,7 @@
   - name: 3.3.2.1 Set Boot Loader Password (check) (Scored)
     shell: 'grep "^password" /boot/grub/grub.cfg'
     register: boot_password
+    when: grub_cfg_file.stat.exists == True
     changed_when: False
     failed_when: False
     tags:
@@ -91,17 +99,15 @@
 
   - name: 3.1 Set User/Group Owner on bootloader config (Scored)
     file: path=/boot/grub/grub.cfg owner=root group=root
+    when: grub_cfg_file.stat.exists == True
     tags:
       - section3
       - section3.1
 
   - name: 3.2 Set Permissions on bootloader config (Scored)
     file: path=/boot/grub/grub.cfg mode="o-rwx,g-rwx"
+    when: grub_cfg_file.stat.exists == True
     sudo: yes
     tags:
       - section3
       - section3.2
-
-
-
-
