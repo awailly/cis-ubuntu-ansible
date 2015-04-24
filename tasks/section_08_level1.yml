@@ -33,7 +33,7 @@
        line='start on filesystem'
        insertafter=EOF
        state=present
-    when: startonfilesystem.rc == 0
+    when: startonfilesystem.rc == 1
     tags:
       - section8
       - section8.2
@@ -120,7 +120,7 @@
        line="*.* @@{{Remote_Logs_Host_Address}}"
        insertafter=EOF
        state=present
-    when: remoteloghost.rc == 0
+    when: remoteloghost.rc == 1
     tags:
       - section8
       - section8.2
@@ -129,14 +129,14 @@
   - name: 8.2.6 Accept Remote rsyslog Messages Only on Designated Log Hosts (Not Scored)
     lineinfile: >
         dest=/etc/rsyslog.conf
-        regexp='^({{ item }}.*)'
-        line='#\1'
+        regexp='^#({{ item }}.*)'
+        line='({{ item }}.*)'
         state=present
         backrefs=yes
         backup=yes
     with_items:
-        - '#$ModLoad imtcp'
-        - '#$InputTCPServerRun 514'
+        - '$ModLoad imtcp'
+        - '$InputTCPServerRun 514'
     changed_when: False
     tags:
       - section8
