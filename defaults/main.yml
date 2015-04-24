@@ -1,3 +1,6 @@
 # This variable defines if accounts without password have to be locked
 lock_shadow_accounts: no
 partitioning: false
+
+# Avoid time-consuming operation while in CI environment
+travis_env: false
