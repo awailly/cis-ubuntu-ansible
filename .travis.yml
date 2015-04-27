@@ -21,7 +21,7 @@ install:
 script:
   # We'll add some commands to test the role here.
   - ansible-playbook -i tests/inventory tests/playbook.yml --syntax-check --extra-vars "travis_env=True"
-  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo --extra-vars "travis_env=True"
+  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -v --extra-vars "travis_env=True"
   - >
     ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo --extra-vars "travis_env=True"
     | grep -q 'changed=0.*failed=0'
