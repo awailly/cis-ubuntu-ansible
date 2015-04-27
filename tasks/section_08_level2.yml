@@ -277,7 +277,9 @@
 
   - name: 8.3.1 Install AIDE (Scored)
     copy: src=/var/lib/aide/aide.db.new dest=/var/lib/aide/aide.db
-    when: aide_installed.changed == True
+    when:
+      - aide_installed.changed == True
+      - travis_env == False
     tags:
       - section8
       - section8.3
