@@ -1,10 +1,42 @@
 ---
 
+  - name: Check if the file auditd.conf exists
+    stat: >
+        path=/etc/audit/auditd.conf
+    register: auditd_file
+    tags:
+      - section8
+      - section8.1
+      - section8.1.1
+      - section8.1.1.1
+
+  - name: Create the audit directory if it does not exists
+    file: >
+        path=/etc/audit/
+        state=directory
+    when: not auditd_file.stat.exists
+    tags:
+      - section8
+      - section8.1
+      - section8.1.1
+      - section8.1.1.1
+
+  - name: Create the file auditd.conf if it does not exists
+    file: >
+        path=/etc/audit/auditd.conf
+        state=touch
+    when: not auditd_file.stat.exists
+    tags:
+      - section8
+      - section8.1
+      - section8.1.1
+      - section8.1.1.1
+
   - name: 8.1.1.1 Configure Data Retention
     lineinfile: >
         dest=/etc/audit/auditd.conf
-        regexp="max_log_file"
-        line="max_log_file = "{{Max_Log_File}}
+        regexp="^max_log_file"
+        line="max_log_file = "{{ Max_Log_File }}
         state=present
     tags:
       - section8
@@ -16,7 +48,7 @@
     lineinfile: >
         dest=/etc/audit/auditd.conf 
         state=present 
-        regexp="space_left_action = email"
+        regexp="^space_left_action = email"
         line="space_left_action = email"
     tags:
       - section8
@@ -60,25 +92,65 @@
       - section8.1.1
       - section8.1.1.3
 
-  - name: 8.1.2.1 Install and Enable auditd Service (Scored)
+  - name: 8.1.2 Install and Enable auditd Service (Scored)
     apt: name=auditd state=present
     tags:
       - section8
       - section8.1
       - section8.1.2
-      - section8.1.2.1
+      - section8.1.2
 
-  - name: 8.1.2.2 Install and Enable auditd Service (Scored)
-    action: command >
-      ' ls /etc/rc*.d/S*auditd'
+  - name: debug facts
+    debug: var={{ ansible_userspace_bits }}
+
+  - name: Check if the file grub.cfg exists
+    stat: >
+        path=/etc/default/grub.cfg
+    register: grubcfg_file
     tags:
       - section8
       - section8.1
-      - section8.1.2
-      - section8.1.2.2
+      - section8.1.3
+
+  - name: Create the file grub.cfg if it does not exists
+    file: >
+        path=/etc/default/grub.cfg
+        state=touch
+    when: not grubcfg_file.stat.exists
+    tags:
+      - section8
+      - section8.1
+      - section8.1.3
 
   - name: 8.1.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
-    lineinfile: dest='/boot/grub/grub.cfg' regexp='"linux"'
+    lineinfile: >
+      dest="/etc/default/grub.cfg"
+      regexp="^{{ item }}"
+      line="{{ item }}"
+      state=present
+    with_items:
+    - "-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change"
+    - "-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change"
+    - "-a always,exit -F arch=b64 -S clock_settime -k time-change"
+    - "-a always,exit -F arch=b32 -S clock_settime -k time-change"
+    - "-w /etc/localtime -p wa -k time-change"
+    when: "{{ ansible_userspace_bits }}" == "64"
+    tags:
+      - section8
+      - section8.1
+      - section8.1.3
+
+  - name: 8.1.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
+    lineinfile: >
+      dest='/etc/default/grub.cfg'
+      regexp='^{{ item }}'
+      line='{{ item }}'
+      state=present
+    with_items:
+    - -a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change
+    - -a always,exit -F arch=b32 -S clock_settime -k time-change
+    - -w /etc/localtime -p wa -k time-change
+    when: "{{ ansible_userspace_bits }}" == "32"
     tags:
       - section8
       - section8.1
