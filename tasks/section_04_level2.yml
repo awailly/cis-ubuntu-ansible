@@ -16,30 +16,13 @@
       - section4
       - section4.5
 
-  - name: 4.5 Activate AppArmor (profiles loaded) (Scored)
-    shell: 'apparmor_status | grep "0 profiles are loaded"'
-    register: profiles_loaded
-    failed_when: profiles_loaded.rc == 0
+  - name: 4.5 Activate AppArmor (Scored)
+    command: apparmor_status
+    register: aa_status_lines
+    failed_when: '"0 profiles are loaded" in aa_status_lines.stdout_lines or "0 processes are in complain mode." not in aa_status_lines.stdout_lines or "0 processes are unconfined but have a profile defined." not in aa_status_lines.stdout_lines'
+        # - '"0 processes are unconfined but have a profile defined." not in aa_status_lines.stdout_lines'
     changed_when: False
-    tags:
-      - section4
-      - section4.5
-
-  - name: 4.5 Activate AppArmor (complain) (Scored)
-    shell: 'apparmor_status | grep "0 processes are in complain mode."'
-    register: complain_processes
-    failed_when: complain_processes.rc == 1
-    changed_when: False
-    tags:
-      - section4
-      - section4.5
-
-    #"The unconfined processes should be restarted after enforce"
-  - name: 4.5 Activate AppArmor (unconfined) (Scored)
-    shell: 'apparmor_status | grep "0 processes are unconfined but have a profile defined."'
-    register: unconfined_processes
-    failed_when: unconfined_processes.rc == 1
-    changed_when: False
+    when: travis_env == False
     tags:
       - section4
       - section4.5
