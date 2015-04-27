@@ -192,20 +192,36 @@
       - section6.13
       - section6.14
 
+  - name: 6.15 Configure Mail Transfer Agent for Local-Only Mode (stat) (Scored)
+    stat: path=/etc/postfix/main.cf
+    register: postfix_main_cf
+    tags:
+      - section6
+      - section6.15
+
   - name: 6.15 Configure Mail Transfer Agent for Local-Only Mode (Scored)
     lineinfile: >
         dest=/etc/postfix/main.cf
         line='inet_interfaces = localhost'
         state=present
+    when: postfix_main_cf.stat.exists == True
     tags:
       - section6
       - section6.15
 
+  - name: 6.16 Ensure rsync service is not enabled (stat) (Scored)
+    stat: path=/etc/default/rsync
+    register: default_rsync
+    tags:
+      - section6
+      - section6.16
+
   - name: 6.16 Ensure rsync service is not enabled (Scored)
     lineinfile: >
         dest='/etc/default/rsync'
-        regexp='RSYNC_ENABLE'
+        regexp='^RSYNC_ENABLE'
         line='RSYNC_ENABLE=false'
+    when: default_rsync.stat.exists == True
     tags:
       - section6
       - section6.16
