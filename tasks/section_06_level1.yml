@@ -169,60 +169,27 @@
       - section6.7
       - section6.7.2
 
-  - name: 6.8 Ensure DNS Server is not enabled (Not Scored)
+  - name: 6.8-14 Ensure DNS,FTP,HTTP,IMAP,POP,Samba,Proxy,SNMP Servers are not enabled (Not Scored)
     service: >
-        name=bind9
+        name={{ item }}
         enabled=no
+    with_items:
+      - bind9
+      - vsftpd
+      - apache2
+      - dovecot
+      - smbd
+      - squid3
+      - snmpd
+    failed_when: False
     tags:
       - section6
       - section6.8
-
-  - name: 6.9 Ensure FTP Server is not enabled (Not Scored)
-    service: >
-      name=vsftpd
-      enabled=no
-    tags:
-      - section6
       - section6.9
-
-  - name: 6.10 Ensure HTTP Server is not enabled (Not Scored)
-    service: >
-        name=apache2
-        enabled=no
-    tags:
-      - section6
       - section6.10
-
-  - name: 6.11 Ensure IMAP and POP server is not enabled (Not Scored)
-    service: >
-      name=dovecot
-      enabled=no
-    tags:
-      - section6
       - section6.11
-
-  - name: 6.12 Ensure Samba is not enabled (Not Scored)
-    service: >
-      name=smbd
-      enabled=no
-    tags:
-      - section6
       - section6.12
-
-  - name: 6.13 Ensure HTTP Proxy Server is not enabled (Not Scored)
-    service: >
-      name=squid3
-      enabled=no
-    tags:
-      - section6
       - section6.13
-
-  - name: 6.14 Ensure SNMP Server is not enabled (Not Scored)
-    service: >
-        name=snmpd
-        enabled=no
-    tags:
-      - section6
       - section6.14
 
   - name: 6.15 Configure Mail Transfer Agent for Local-Only Mode (Scored)
