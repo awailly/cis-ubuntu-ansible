@@ -8,8 +8,6 @@
       - section2
       - section2.18
 
-  - debug: var=cis_conf_file
-
   - name: Create the file "cis.conf" under modprobe.d if doesn't exist
     file: >
         dest=/etc/modprobe.d/CIS.conf state=touch
