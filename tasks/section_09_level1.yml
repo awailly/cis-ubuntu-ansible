@@ -236,7 +236,7 @@
     lineinfile: >
         dest='/etc/ssh/sshd_config'
         regexp='^IgnoreRhosts'
-        line='IgnoreRhosts Yes'
+        line='IgnoreRhosts yes'
         state=present
     tags:
       - section9
