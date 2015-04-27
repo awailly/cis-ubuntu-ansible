@@ -42,7 +42,7 @@
   - name: 8.2.3.1 Configure /etc/rsyslog.conf (Not Scored)
     lineinfile:
        dest=/etc/rsyslog.conf
-       line="{{ item }}"
+       line={{ item }}
        insertafter=EOF
     with_items:
       - '*.emerg :omusrmsg:*'
