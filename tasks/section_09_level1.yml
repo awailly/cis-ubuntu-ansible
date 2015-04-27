@@ -73,21 +73,52 @@
       - section9.1
       - section9.1.8
   
-  - name: 9.1.8.3 Restrict at/cron to Authorized Users (Scored)
-    file: path=/etc/cron.allow owner=root group=root mode="og-rwx" state=touch
+  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation) (Scored)
+    stat: path=/etc/cron.allow
+    register: cron_allow_path
     tags:
       - section9
       - section9.1
       - section9.1.8
-      - section9.1.8.3
 
-  - name: 9.1.8.4 Restrict at/cron to Authorized Users (Scored)
-    file: path=/etc/at.allow owner=root group=root mode="og-rwx" state=touch
+
+  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation) (Scored)
+    shell: touch /etc/cron.allow
+    when: cron_allow_path.stat.exists == False
     tags:
       - section9
       - section9.1
       - section9.1.8
-      - section9.1.8.4
+
+  - name: 9.1.8 Restrict at/cron to Authorized Users (Scored)
+    file: path=/etc/cron.allow owner=root group=root mode="og-rwx"
+    tags:
+      - section9
+      - section9.1
+      - section9.1.8
+
+  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation) (Scored)
+    stat: path=/etc/at.allow
+    register: at_allow_path
+    tags:
+      - section9
+      - section9.1
+      - section9.1.8
+
+  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation) (Scored)
+    shell: touch /etc/at.allow
+    when: at_allow_path.stat.exists == False
+    tags:
+      - section9
+      - section9.1
+      - section9.1.8
+
+  - name: 9.1.8 Restrict at/cron to Authorized Users (Scored)
+    file: path=/etc/at.allow owner=root group=root mode="og-rwx"
+    tags:
+      - section9
+      - section9.1
+      - section9.1.8
  
   - name: 9.2.1 Set Password Creation Requirement Parameters Usingpam_cracklib (Scored)
     lineinfile: >
@@ -151,7 +182,7 @@
   - name: 9.3.2 Set LogLevel to INFO (Scored)
     lineinfile: >
         dest='/etc/ssh/sshd_config' 
-        regexp='"^LogLevel"'
+        regexp='^LogLevel'
         state=present
         line='LogLevel INFO'
     when: ssh_config_file.stat.exists == True
@@ -191,28 +222,44 @@
       - section9.3.10
 
   - name: 9.3.5 Set SSH MaxAuthTries to 4 or Less (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^MaxAuthTries"'
+    lineinfile: >
+        dest='/etc/ssh/sshd_config'
+        regexp='^MaxAuthTries'
+        line='MaxAuthTries 4'
+        state=present
     tags:
       - section9
       - section9.3
       - section9.3.5
 
   - name: 9.3.6 Set SSH IgnoreRhosts to Yes (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^IgnoreRhosts"'
+    lineinfile: >
+        dest='/etc/ssh/sshd_config'
+        regexp='^IgnoreRhosts'
+        line='IgnoreRhosts Yes'
+        state=present
     tags:
       - section9
       - section9.3
       - section9.3.6
 
   - name: 9.3.11 Use Only Approved Cipher in Counter Mode (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"Ciphers"'
+    lineinfile: >
+        dest='/etc/ssh/sshd_config'
+        regexp='^Ciphers'
+        line='Ciphers aes128-ctr,aes192-ctr,aes256-ctr'
+        state=present
     tags:
       - section9
       - section9.3
       - section9.3.11
 
   - name: 9.3.12.1 Set Idle Timeout Interval for User Login (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^ClientAliveInterval"'
+    lineinfile: >
+        dest='/etc/ssh/sshd_config'
+        regexp='^ClientAliveInterval'
+        line='ClientAliveInterval 300'
+        state=present
     tags:
       - section9
       - section9.3
@@ -220,7 +267,11 @@
       - section9.3.12.1
 
   - name: 9.3.12.2 Set Idle Timeout Interval for User Login (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^ClientAliveCountMax"'
+    lineinfile: >
+        dest='/etc/ssh/sshd_config'
+        regexp='^ClientAliveCountMax'
+        line='ClientAliveCountMax 0'
+        state=present
     tags:
       - section9
       - section9.3
@@ -228,7 +279,11 @@
       - section9.3.12.2
 
   - name: 9.3.13.1 Limit Access via SSH (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^AllowUsers"'
+    shell: grep AllowUsers /etc/ssh/sshd_config
+    register: allow_rc
+    failed_when: allow_rc.rc == 1
+    changed_when: False
+    ignore_errors: True
     tags:
       - section9
       - section9.3
@@ -236,7 +291,11 @@
       - section9.3.13.1
 
   - name: 9.3.13.2 Limit Access via SSH (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^AllowGroups"'
+    shell: grep AllowGroups /etc/ssh/sshd_config
+    register: allow_rc
+    failed_when: allow_rc.rc == 1
+    changed_when: False
+    ignore_errors: True
     tags:
       - section9
       - section9.3
@@ -244,7 +303,11 @@
       - section9.3.13.2
 
   - name: 9.3.13.3 Limit Access via SSH (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^DenyUsers"'
+    shell: grep DenyUsers /etc/ssh/sshd_config
+    register: allow_rc
+    failed_when: allow_rc.rc == 1
+    changed_when: False
+    ignore_errors: True
     tags:
       - section9
       - section9.3
@@ -252,7 +315,11 @@
       - section9.3.13.3
 
   - name: 9.3.13.4 Limit Access via SSH (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^DenyGroups"'
+    shell: grep DenyGroups /etc/ssh/sshd_config
+    register: allow_rc
+    failed_when: allow_rc.rc == 1
+    changed_when: False
+    ignore_errors: True
     tags:
       - section9
       - section9.3
@@ -260,29 +327,46 @@
       - section9.3.13.4
 
   - name: 9.3.14 Set SSH Banner (Scored)
-    lineinfile: dest='/etc/ssh/sshd_config' regexp='"^Banner"'
+    lineinfile: >
+        dest='/etc/ssh/sshd_config'
+        regexp='^Banner'
+        line='Banner /etc/issue.net'
+        state=present
+    tags:
+      - section9
+      - section9.3
+      - section9.3.14
+
+  - name: 9.3.14 Set SSH Banner File (Scored)
+    lineinfile: >
+        dest=/etc/ssh/sshd_config
+        line='Authorized uses only. All activity may be monitored and reported.'
+        state=present
     tags:
       - section9
       - section9.3
       - section9.3.14
 
   - name: 9.4 Restrict root Login to System Console (Not Scored)
-    action: command >
-      ' cat /etc/securetty'
+    stat: path=/etc/securetty
+    register: securetty_file
+    tags:
+      - section9
+      - section9.4
+
+  - name: 9.4 Restrict root Login to System Console (Not Scored)
+    debug: msg='*** Check /etc/securetty for console allowed for root access ***'
+    when: securetty_file.stat.exists == True
     tags:
       - section9
       - section9.4
 
   - name: 9.5.1 Restrict Access to the su Command (Scored)
-    lineinfile: dest='/etc/pam.d/su' regexp='pam_wheel.so'
+    lineinfile: >
+        dest='/etc/pam.d/su'
+        line='auth            required        pam_wheel.so use_uid'
+        state=present
     tags:
       - section9
       - section9.5
       - section9.5.1
-
-  - name: 9.5.2 Restrict Access to the su Command (Scored)
-    lineinfile: dest='/etc/group' regexp='wheel'
-    tags:
-      - section9
-      - section9.5
-      - section9.5.2
