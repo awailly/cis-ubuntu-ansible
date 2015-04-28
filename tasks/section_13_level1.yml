@@ -138,7 +138,7 @@
       - section13.8
 
   - name: 13.8.2 Check User Dot File Permissions (touch) (Scored)
-    file: path={{ item }} state=touch
+    file: path='~/{{ item }}' state=touch
     with_items: home_dot_stated.results
     when: item.stat.exists == False
     tags:
