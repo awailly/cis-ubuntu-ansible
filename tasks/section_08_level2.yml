@@ -267,7 +267,7 @@
       - section8.3
       - section8.3.1
 
-  - name: 8.3.1 Install AIDE (Scored)
+  - name: 8.3.1 Install AIDE (init) (Scored)
     command: aideinit
     when: aide_installed.changed == True
     tags:
@@ -276,10 +276,20 @@
       - section8.3.1
 
   - name: 8.3.1 Install AIDE (Scored)
-    copy: src=/var/lib/aide/aide.db.new dest=/var/lib/aide/aide.db
+    stat: path=/var/lib/aide/aide.db.new
+    register: aide_db_path
     when:
       - aide_installed.changed == True
-      - travis_env == False
+    tags:
+      - section8
+      - section8.3
+      - section8.3.1
+
+  - name: 8.3.1 Install AIDE (copy db) (Scored)
+    command: mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db
+    when:
+      - aide_installed.changed == True
+      - aide_db_path.stat.exists == True
     tags:
       - section8
       - section8.3
