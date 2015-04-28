@@ -92,7 +92,7 @@
       - section4.4
 
   - name: 4.4 Disable Prelink (remove) (Scored)
-    apt: purge=yes name='prelink'
+    apt: purge=yes name='prelink' state=absent
     when: prelink_rc.stat.exists == True
     tags:
       - section4
