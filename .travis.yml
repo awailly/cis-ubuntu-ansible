@@ -19,11 +19,11 @@ install:
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
 script:
-  # We'll add some commands to test the role here.
+    # The -t level1 enable quicker verification, and the level2 enables postfix when installing AIDE. Thus it is not idempotent on the second launch (but ok on the third). It may be a good idea to invert the section order in the future.
   - ansible-playbook -i tests/inventory tests/playbook.yml --syntax-check --extra-vars "travis_env=True"
-  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" --extra-vars "travis_env=True"
+  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" --extra-vars "travis_env=True" -t level1
   - >
-    ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" --extra-vars "travis_env=True"
-    #| grep -q 'changed=0.*failed=0'
-    #&& (echo 'Idempotence test: pass' && exit 0)
-    #|| (echo 'Idempotence test: fail' && exit 1)
+      ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" --extra-vars "travis_env=True" -t level1
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)

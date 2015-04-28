@@ -303,6 +303,22 @@
       - section7.4
       - section7.4.5
 
+  - name: Check the presence of the file "cis.conf" under modprobe.d
+    stat: >
+        path=/etc/modprobe.d/CIS.conf
+    register: cis_conf_file
+    tags:
+      - section7
+      - section7.5
+
+  - name: Create the file "cis.conf" under modprobe.d if doesn't exist
+    file: >
+        dest=/etc/modprobe.d/CIS.conf state=touch
+    when: not cis_conf_file.stat.exists
+    tags:
+      - section7
+      - section7.5
+
   - name: 7.5.1-4 Disable DCCP, SCTP, RDS, TIPC (Not Scored)
     lineinfile: >
         dest=/etc/modprobe.d/CIS.conf
