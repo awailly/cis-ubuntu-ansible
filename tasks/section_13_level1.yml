@@ -122,32 +122,9 @@
       - section13
       - section13.8
 
-  - name: 13.8.2 Check User Dot File Permissions (stat) (Scored)
-    stat: path={{ item }}
-    with_items:
-        home_dot_files.stdout_lines
-    register: home_dot_stated
-    tags:
-      - section13
-      - section13.8
-
-  - name: bla
-    debug: var=home_dot_stated
-    tags:
-      - section13
-      - section13.8
-
-  - name: 13.8.2 Check User Dot File Permissions (touch) (Scored)
-    file: path='~/{{ item }}' state=touch
-    with_items: home_dot_stated.results
-    when: item.stat.exists == False
-    tags:
-      - section13
-      - section13.8
-
   - name: 13.8.2 Check User Dot File Permissions (Scored)
     file: >
-        path={{ item }}
+        path='~/{{ item }}'
         mode='o-w,g-w'
     with_items:
         home_dot_files.stdout_lines
