@@ -132,7 +132,7 @@
       - section6.5.4
 
   - name: 6.6 Ensure LDAP is not enabled (Not Scored)
-    apt: name=slapd purge=yes
+    apt: name=slapd purge=yes state=absent
     tags:
       - section6
       - section6.6
@@ -227,7 +227,7 @@
       - section6.16
 
   - name: 6.17 Ensure Biosdevname is not enabled (Scored)
-    apt: name=biosdevname purge=yes
+    apt: name=biosdevname purge=yes state=absent
     tags:
       - section6
       - section6.17
