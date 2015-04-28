@@ -232,8 +232,6 @@
       - section13
       - section13.18
 
-  - debug: var=netrc_files
-
   - name: 13.18 Check for Presence of User .netrc Files (Scored)
     file: >
         path='{{ item }}'
