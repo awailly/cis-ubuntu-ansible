@@ -1,6 +1,8 @@
 CIS for Ubuntu 14.04
 ====================
 
+[![Build Status](https://travis-ci.org/awailly/cis-ubuntu-ansible.svg?branch=master)](https://travis-ci.org/awailly/cis-ubuntu-ansible)
+
 Usage
 -----
 
