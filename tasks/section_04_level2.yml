@@ -36,7 +36,8 @@
       - section4.5
 
   - name: 4.5 Activate AppArmor (enforce) (Scored)
-    shell: 'aa-enforce /etc/apparmor.d/*'
+    #shell: 'aa-enforce /etc/apparmor.d/*'
+    shell: for profile in /etc/apparmor.d/*; do aa-enforce $profile; done
     register: aaenforce_rc
     failed_when: aaenforce_rc.rc == 1
     changed_when: False
