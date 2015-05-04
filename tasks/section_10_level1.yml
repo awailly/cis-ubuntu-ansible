@@ -65,9 +65,10 @@
       - section10.4
 
   - name: 10.5 Lock Inactive User Accounts (check) (Scored)
-    shell: 'grep INACTIVE /etc/login.defs'
+    command: grep INACTIVE /etc/login.defs
     changed_when: False
     failed_when: False
+    always_run: True
     register: lock_inactive_rc
     tags:
       - section10
