@@ -117,6 +117,7 @@
     shell: for pth in `/bin/egrep -v '(root|halt|sync|shutdown)' /etc/passwd | /usr/bin/awk -F':' '($7 != "/usr/sbin/nologin") { print $6 }'`; do ls -d -A -1 $pth/.* | egrep -v '[..]$'; done
     changed_when: False
     failed_when: False
+    always_run: True
     register: home_dot_files
     tags:
       - section13
@@ -158,6 +159,7 @@
     command: cut -s -d':' -f4 /etc/passwd
     register: groups_id_cut
     changed_when: False
+    always_run: True
     tags:
       - section13
       - section13.11
@@ -168,6 +170,7 @@
         groups_id_cut.stdout_lines
     register: groups_present
     changed_when: False
+    always_run: True
     tags:
       - section13
       - section13.11
@@ -177,7 +180,8 @@
     with_items:
         home_users.stdout_lines
     register: rstat
-    failed_when: rstat.stat.isdir == false
+    failed_when: rstat is defined and rstat.stat.isdir == False
+    always_run: True
     tags:
       - section13
       - section13.12
@@ -193,6 +197,7 @@
     register: uids_list
     failed_when: uids_list.stdout != ''
     changed_when: False
+    always_run: True
     tags:
       - section13
       - section13.14
@@ -202,6 +207,7 @@
     register: gids_list
     failed_when: gids_list.stdout != ''
     changed_when: False
+    always_run: True
     tags:
       - section13
       - section13.15
@@ -211,6 +217,7 @@
     register: uids_list
     failed_when: uids_list.stdout != ''
     changed_when: False
+    always_run: True
     tags:
       - section13
       - section13.16
@@ -220,6 +227,7 @@
     register: uids_list
     failed_when: uids_list.stdout != ''
     changed_when: False
+    always_run: True
     tags:
       - section13
       - section13.17
@@ -257,6 +265,7 @@
     register: shadow_group_empty
     failed_when: shadow_group_empty.stdout != ''
     changed_when: False
+    always_run: True
     tags:
       - section13
       - section13.20
@@ -267,6 +276,7 @@
     register: shadow_group_id
     failed_when: False
     changed_when: False
+    always_run: True
     tags:
       - section13
       - section13.20
@@ -279,6 +289,7 @@
         shadow_group_id.stdout_lines
     changed_when: False
     failed_when: awk_passwd_shadow.stdout != ''
+    always_run: True
     tags:
       - section13
       - section13.20
