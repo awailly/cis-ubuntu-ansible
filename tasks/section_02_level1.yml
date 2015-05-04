@@ -83,6 +83,7 @@
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 -print 2>/dev/null
     failed_when: False
     changed_when: False
+    always_run: True
     register: sticky_bit_dirs
     tags:
       - section2

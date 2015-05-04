@@ -8,11 +8,12 @@
       - section3
 
   - name: 3.3.1.1 Set Boot Loader Superuser (check) (Scored)
-    shell: 'grep "^set superusers" /boot/grub/grub.cfg'
+    command: grep "^set superusers" /boot/grub/grub.cfg
     register: boot_superusers 
     when: grub_cfg_file.stat.exists == True
     changed_when: False
     failed_when: False
+    always_run: True
     tags:
       - section3
       - section3.3
@@ -33,11 +34,12 @@
       - section3.3.1.2
     
   - name: 3.3.2.1 Set Boot Loader Password (check) (Scored)
-    shell: 'grep "^password" /boot/grub/grub.cfg'
+    command: grep "^password" /boot/grub/grub.cfg
     register: boot_password
     when: grub_cfg_file.stat.exists == True
     changed_when: False
     failed_when: False
+    always_run: True
     tags:
       - section3
       - section3.3
@@ -84,6 +86,7 @@
     register: root_password_set
     changed_when: False
     failed_when: False
+    always_run: True
     tags:
       - section3
       - section3.4
