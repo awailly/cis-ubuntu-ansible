@@ -1,0 +1,5 @@
+site_name: cis-ubuntu-ansible
+pages:  
+  - [index.md, Home]
+  - [CIS_Ubuntu.md]
+  - [contacts.md, Contacts]
