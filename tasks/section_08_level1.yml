@@ -40,7 +40,7 @@
       - section8.2
       - section8.2.5
 
-  - name: 8.2.3.1 Configure /etc/rsyslog.conf (Not Scored)
+  - name: 8.2.3 Configure /etc/rsyslog.conf (Not Scored)
     lineinfile:
        dest=/etc/rsyslog.conf
        line="{{ item }}"
@@ -62,19 +62,12 @@
       - 'local4,local5.* -/var/log/localmessages'
       - 'local6,local7.* -/var/log/localmessages'
     changed_when: False
+    notify: restart rsyslog
     tags:
       - section8
       - section8.2
       - section8.2.3
   
-  - name: 8.2.3.2 Configure /etc/rsyslog.conf (Not Scored)
-    service: name=rsyslog state=restarted
-    changed_when: False
-    tags:
-      - section8
-      - section8.2
-      - section8.2.3
-
   - name: 8.2.4.1 Create and Set Permissions on rsyslog Log Files (Scored)
     shell: awk '{ print $NF }' /etc/rsyslog.d/* /etc/rsyslog.conf | grep /var/log | sed 's/^-//' | sed 's/)$//' 
     register: result
@@ -151,16 +144,8 @@
         - '$InputTCPServerRun 514'
     when: moadloadpresent.rc == 1
     changed_when: False
+    notify: restart rsyslog
     tags:
       - section8
       - section8.2
       - section8.2.6
-      
-  - name: 8.2.6 Accept Remote rsyslog Messages Only on Designated Log Hosts (Not Scored)
-    service: name=rsyslog state=restarted
-    changed_when: False
-    tags:
-      - section8
-      - section8.2
-      - section8.2.6
-
