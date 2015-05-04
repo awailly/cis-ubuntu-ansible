@@ -24,8 +24,7 @@ During execution the process offers a surface of vulnerability which must be red
 
 
 
-is generally used to determine
-why a program aborted but it can also be used to glean confidential information from a core file. The system provides the ability to set a soft limit for core dumps and prevent users from overriding variable.  
+
 
 ### 5 - OS Services 
 

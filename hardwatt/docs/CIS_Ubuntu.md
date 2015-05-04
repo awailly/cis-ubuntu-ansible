@@ -14,11 +14,18 @@ take advantage of the latest functionality.
 
 Directories that are used for system-wide functions can be further protected by placing them on separate partitions. This provides protection for resource exhaustion and enables the use of mounting options that are applicable to the directory's intended use. It is recommended to store user's data on separate partitions and have stricter mount options.
 
-
 ### 3 - Secure Boot Settings
 
+Malicious code try to start as early as possible during the boot process, so boot loader configuration files must be protected. Fixing permissions to read and write for root only prevents non-root users from seeing the boot parameters or changing them. Non-root users who read the boot parameters may be able to identify weaknesses in security upon boot and be able to exploit them. It is recommendated to protect boot loader with a boot password will prevent an unauthorized user from entering boot parameters or changing the boot partition. 
 
-### 4 - Additional Process Hardening 
+### 4 - Process Hardening
+
+During execution the process offers a surface of vulnerability which must be reduce. Core dump can be used to glean confidential information and must be restricted. Activating whenever possible processors function to prevent exploitation of buffer overflow vulnerabilities
+
+
+
+is generally used to determine
+why a program aborted but it can also be used to glean confidential information from a core file. The system provides the ability to set a soft limit for core dumps and prevent users from overriding variable.  
 
 ### 5 - OS Services 
 

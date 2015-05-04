@@ -1,4 +1,4 @@
-site_name: cis-ubuntu-ansible
+site_name: hardwatt
 pages:  
   - [index.md, Home]
   - [CIS_Ubuntu.md]
