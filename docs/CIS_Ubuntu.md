@@ -22,11 +22,6 @@ Malicious code try to start as early as possible during the boot process, so boo
 
 During execution the process offers a surface of vulnerability which must be reduce. Core dump can be used to glean confidential information and must be restricted. Activating whenever possible processors function to prevent exploitation of buffer overflow vulnerabilities
 
-
-
-is generally used to determine
-why a program aborted but it can also be used to glean confidential information from a core file. The system provides the ability to set a soft limit for core dumps and prevent users from overriding variable.  
-
 ### 5 - OS Services 
 
 
