@@ -18,10 +18,11 @@
       - section8.2.1
 
   - name: 8.2.2 Ensure the rsyslog Service is activated (Scored)
-    shell: grep 'start on filesystem' /etc/rsyslog.conf
+    command: grep 'start on filesystem' /etc/rsyslog.conf
     register: startonfilesystem
     changed_when: False
     failed_when: False
+    always_run: True
     tags:
       - section8
       - section8.2
@@ -78,6 +79,7 @@
     shell: awk '{ print $NF }' /etc/rsyslog.d/* /etc/rsyslog.conf | grep /var/log | sed 's/^-//' | sed 's/)$//' 
     register: result
     changed_when: False
+    always_run: True
     tags:
       - section8
       - section8.2
@@ -105,10 +107,11 @@
       - section8.2.4
 
   - name: 8.2.5.1 Configure rsyslog to Send Logs to a Remote Log Host (Scored)
-    shell: grep "^*.*[^I][^I]*@" /etc/rsyslog.conf
+    command: grep "^*.*[^I][^I]*@" /etc/rsyslog.conf
     register: remoteloghost 
     changed_when: False
     failed_when: False
+    always_run: True
     tags:
       - section8
       - section8.2
@@ -127,10 +130,11 @@
       - section8.2.5
 
   - name: 8.2.6.1 Accept Remote rsyslog Messages Only on Designated Log Hosts (Not Scored)
-    shell: grep '^$ModLoad imtcp' /etc/rsyslog.conf
+    command: grep '^$ModLoad imtcp' /etc/rsyslog.conf
     register: moadloadpresent
     changed_when: False
     failed_when: False
+    always_run: True
     tags:
       - section8
       - section8.2

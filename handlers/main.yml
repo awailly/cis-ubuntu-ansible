@@ -1,2 +1,6 @@
 ---
 
+  - name: restart auditd
+    service: name=auditd state=restarted
+    changed_when: False
+    ignore_errors: True
