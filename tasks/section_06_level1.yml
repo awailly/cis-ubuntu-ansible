@@ -2,6 +2,7 @@
 
   - name: 6.1 Ensure the X Window system is not installed (Scored)
     apt: name=xserver-xorg-core* purge=yes state=absent
+    when: remove_xserver == True
     tags:
       - section6
       - section6.1
