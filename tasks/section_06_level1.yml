@@ -2,6 +2,7 @@
 
   - name: 6.1 Ensure the X Window system is not installed (Scored)
     apt: name=xserver-xorg-core* purge=yes state=absent
+    when: remove_xserver == True
     tags:
       - section6
       - section6.1
@@ -18,7 +19,7 @@
         line='#start on (filesystem'
         state=present
         regexp='start on (filesystem'
-        dest=/etc/init/.conf
+        dest=/etc/init/avahi-daemon.conf
     when: avahi_stat.stat.exists == True
     tags:
       - section6
