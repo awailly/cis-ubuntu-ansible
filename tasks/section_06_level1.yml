@@ -19,7 +19,7 @@
         line='#start on (filesystem'
         state=present
         regexp='start on (filesystem'
-        dest=/etc/init/.conf
+        dest=/etc/init/avahi-daemon.conf
     when: avahi_stat.stat.exists == True
     tags:
       - section6
