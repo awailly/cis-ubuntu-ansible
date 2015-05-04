@@ -158,11 +158,21 @@
       - section6.7
       - section6.7.2
 
+  - name: 6.7.2 Ensure NFS and RPC are not enabled (check) (Not Scored)
+    command: dpkg -S nfs-kernel-server
+    changed_when: False
+    failed_when: False
+    register: nfs_present
+    tags:
+      - section6
+      - section6.7
+      - section6.7.2
+
   - name: 6.7.2 Ensure NFS and RPC are not enabled (rc.d) (Not Scored)
     service: >
         name=nfs-kernel-server
         enabled=no
-    when: nfs_rpc_rc.stat.exists == True
+    when: nfs_present.rc == 0
     register: nfs_service_result
     failed_when: "nfs_service_result|failed and 'service not found' not in nfs_service_result.msg"
     tags:
