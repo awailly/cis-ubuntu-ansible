@@ -26,10 +26,12 @@ Malicious code try to start as early as possible during the boot process, so boo
 ### 4 - Process Hardening
 
 During execution the process offers a surface of vulnerability, this section aims to reduce the risk to exploit vulnerabilty:
-	- Core dump can be used to glean confidential information and must be restricted.
-	- Activating whenever possible processors function to prevent exploitation of buffer overflow vulnerabilities.
-	- Make difficult to write memory page exploits using random placing virtual memory regions.
-	- Etc ...
+
+- Core dump can be used to glean confidential information and must be restricted.
+- Activating whenever possible processors function to prevent exploitation of buffer overflow vulnerabilities.
+- Make difficult to write memory page exploits using random placing virtual memory regions.
+- Etc ...
+
 
 
 ### 5 - OS Services 
@@ -43,8 +45,11 @@ It order to prevent the exploitation of vulnerabilities, it is highly adviced to
 
 ### 7 - Network Configuration and Firewalls
 
-This section tests aim to secure network and firewall configuration. If the system has at least two interfaces, it can act as a router, but the system must be considered as host only and not as a router, so, network parameters must be set to avoid any routing functions and all IP functionalities used on a router must be disable. The IPv6 networking protocol is replacing Ipv4, but it must be disable if IPv6 is not used. 
-It is recommended to filter network access using TCP Wrapper: Hosts authorized to connect to the system must be specified.  
+This section tests aim to secure network and firewall configuration. If the system has at least two interfaces, it can act as a router, but the system must be considered as host only and not as a router, so, network parameters must be set to avoid any routing functions and all IP functionalities used on a router must be disable. The IPv6 networking protocol is replacing Ipv4, but it must be disable if IPv6 is not used.  
+
+It is recommended to filter network access using TCP Wrapper: Hosts authorized and hosts not permitted to connect to the system must be specified.
+
+The Linux kernel modules support several network protocols that are not commonly used (ex: Datagram Congestion Control Protocol (DCCP), Stream Control Transmission Protocol (SCTP), etc...) . If these protocols are not needed, it is recommended that they be disabled in the kernel.
 
 
 ### 8 - Logging and Auditing 
