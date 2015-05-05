@@ -43,7 +43,9 @@ It order to prevent the exploitation of vulnerabilities, it is highly adviced to
 
 ### 7 - Network Configuration and Firewalls
 
-This section tests aim to secure network and firewall configuration. The system must be considered as host only and not as a router, so, all IP functionalities used on a router must be disable. If the system has at least two interfaces, it can act as a router, network parameters must be set to avoid any routing functions.  The IPv6 networking protocol 
+This section tests aim to secure network and firewall configuration. If the system has at least two interfaces, it can act as a router, but the system must be considered as host only and not as a router, so, network parameters must be set to avoid any routing functions and all IP functionalities used on a router must be disable. The IPv6 networking protocol is replacing Ipv4, but it must be disable if IPv6 is not used. 
+It is recommended to filter network access using TCP Wrapper: Hosts authorized to connect to the system must be specified.  
+
 
 ### 8 - Logging and Auditing 
 
