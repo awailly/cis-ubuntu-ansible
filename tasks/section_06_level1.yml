@@ -18,7 +18,7 @@
     lineinfile: >
         line='#start on (filesystem'
         state=present
-        regexp='start on (filesystem'
+        regexp='start on \(filesystem'
         dest=/etc/init/avahi-daemon.conf
     when: avahi_stat.stat.exists == True
     tags:
@@ -36,7 +36,7 @@
     lineinfile: >
         line='#start on (filesystem'
         state=present
-        regexp='start on (filesystem'
+        regexp='start on \(filesystem'
         dest=/etc/init/cups.conf
     when: cups_stat.stat.exists == True
     tags:
