@@ -17,3 +17,6 @@ activate_ufw: False
 
 # We focus a server installation, but we may be accept some desktops.
 remove_xserver: True
+
+# The modification of user homes may lock users and set the system in an errored state. Set to false if one of the user is using / as home.
+modify_user_homes: True
