@@ -15,7 +15,7 @@
     - section5.1
     - section5.1.2
 
-  - name: 5.1.2 Ensure rsh, rlogin, rexec, talk, telnet, chargen, daytime, echo, discard, time is not enabled (Scored)
+  - name: 5.1.2-.6 Ensure rsh, rlogin, rexec, talk, telnet, chargen, daytime, echo, discard, time is not enabled (Scored)
     lineinfile: >
         dest=/etc/inetd.conf
         regexp='^({{ item }}.*)'
