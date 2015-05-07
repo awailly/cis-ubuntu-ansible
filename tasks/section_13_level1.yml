@@ -94,7 +94,7 @@
       - section13.6
 
   - name: 13.7.1 Check Permissions on User Home Directories (gather users) (Scored)
-    shell: /bin/egrep -v '(root|halt|sync|shutdown)' /etc/passwd | /usr/bin/awk -F':' '($7 != "/usr/sbin/nologin") { print $6 }'
+    shell: /bin/egrep -v '(root|halt|sync|shutdown|false)' /etc/passwd | /usr/bin/awk -F':' '($7 != "/usr/sbin/nologin") { print $6 }'
     register: home_users
     changed_when: False
     failed_when: False
@@ -109,6 +109,7 @@
         state=directory
     with_items:
         home_users.stdout_lines
+    when: modify_user_homes == True
     tags:
       - section13
       - section13.7
