@@ -120,7 +120,7 @@
       - section9.1
       - section9.1.8
  
-  - name: 9.2.1 Set Password Creation Requirement Parameters Usingpam_cracklib (Scored)
+  - name: 9.2.1 Set Password Creation Requirement Parameters Using pam_cracklib (Scored)
     lineinfile: >
         dest='/etc/pam.d/common-password'
         regexp="pam_cracklib.so"
