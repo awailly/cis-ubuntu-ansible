@@ -337,16 +337,6 @@
       - section9.3
       - section9.3.14
 
-  - name: 9.3.14 Set SSH Banner File (Scored)
-    lineinfile: >
-        dest=/etc/ssh/sshd_config
-        line='Authorized uses only. All activity may be monitored and reported.'
-        state=present
-    tags:
-      - section9
-      - section9.3
-      - section9.3.14
-
   - name: 9.4 Restrict root Login to System Console (Not Scored)
     stat: path=/etc/securetty
     register: securetty_file
