@@ -22,7 +22,7 @@ Create a playbook:
     ---
     - hosts: all
       roles:
-        - cis
+        - { role:cis, when: "ansible_version.full | version_compare('1.8', '>=')" }
 
 Create a file containing hosts:
 
@@ -30,7 +30,7 @@ Create a file containing hosts:
     [projet]
     172.30.3.7
 
-Run the playbook:
+Run the playbook with a version of ansible higher than 1.8:
 
     ansible-playbook -e "pipelining=True" -s -u ubuntu --private-key=~/.ssh/id_rsa -i ./inventory.txt playbook.yml
 
