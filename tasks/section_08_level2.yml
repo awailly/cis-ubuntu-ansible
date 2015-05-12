@@ -233,13 +233,16 @@
       - section8.1.12
 
   - name: 8.1.12 Collect Use of Privileged Commands (infos) (Scored)
-    debug: msg="Add a line in auditd for the privileged program"
+    lineinfile: >
+        dest=/etc/audit/audit.rules
+        line={{ item }}
+        state=present
+        create=yes
     with_items: audit_lines_for_find.stdout_lines
     tags:
       - section8
       - section8.1
       - section8.1.12
-
 
   - name: 8.1.18 Make the Audit Configuration Immutable (Scored)
     lineinfile: >

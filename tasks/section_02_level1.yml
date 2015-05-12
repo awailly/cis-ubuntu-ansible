@@ -98,12 +98,21 @@
       - section2.17
       - section2.17.2
 
+  - name: 2.25 Disable Automounting (stat) (Scored)
+    stat: >
+        path=/etc/init/autofs.conf
+    register: autofs_file
+    tags:
+      - section2
+      - section2.25
+      
   - name: 2.25 Disable Automounting (Scored)
     lineinfile: >
         dest=/etc/init/autofs.conf
-        line='start on runlevel [2345]'
-        regexp='^start on runlevel [2345]'
-        state=absent
+        line='#start on runlevel [2345]'
+        regexp='start on runlevel'
+        state=present
+    when: autofs_file.stat.exists == True
     tags:
       - section2
       - section2.25
