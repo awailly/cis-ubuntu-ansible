@@ -67,7 +67,7 @@
       - section8
       - section8.2
       - section8.2.3
-  
+
   - name: 8.2.4.1 Create and Set Permissions on rsyslog Log Files (Scored)
     shell: awk '{ print $NF }' /etc/rsyslog.d/* /etc/rsyslog.conf | grep /var/log | sed 's/^-//' | sed 's/)$//' 
     register: result
@@ -89,7 +89,7 @@
 
   - name: 8.2.4.3 Create and Set Permissions on rsyslog Log Files (Scored)
     file: >
-        path={{item}}  
+        path='{{item}}' 
         owner=root 
         group=root 
         mode="og-rwx" 

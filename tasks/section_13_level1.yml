@@ -10,7 +10,7 @@
       - section13.1
 
   - name: 13.1 Ensure Password Fields are Not Empty (locking accounts) (Scored)
-    command: passwd -l {{ item }}
+    command: passwd -l '{{ item }}'
     with_items:
         awk_empty_shadow.stdout_lines
     when: lock_shadow_accounts
@@ -83,7 +83,7 @@
 
   - name: 13.6.4 Ensure root PATH Integrity (Scored)
     file: >
-        path={{ item }}
+        path='{{ item }}'
         state=directory
         owner=root
         mode='o-w,g-w'
@@ -104,7 +104,7 @@
 
   - name: 13.7.2 Check Permissions on User Home Directories (Scored)
     file: >
-        path={{ item }}
+        path='{{ item }}'
         mode='g-w,o-rwx'
         state=directory
     with_items:
@@ -126,7 +126,7 @@
 
   - name: 13.8.2 Check User Dot File Permissions (Scored)
     file: >
-        path={{ item }}
+        path='{{ item }}'
         mode='o-w,g-w'
     with_items:
         home_dot_files.stdout_lines
@@ -136,7 +136,7 @@
 
   - name: 13.9 Check Permissions on User .netrc Files (Scored)
     file: >
-        path={{ item }}/.netrc
+        path='{{ item }}/.netrc'
         mode='g-rwx,o-rwx'
         recurse=yes
         state=directory
@@ -149,7 +149,7 @@
   - name: 13.10 Check for Presence of User .rhosts Files (Scored)
     file: >
         state=absent
-        path={{ item }}/.rhosts
+        path='{{ item }}/.rhosts'
     with_items:
         home_users.stdout_lines
     tags:
@@ -177,7 +177,7 @@
       - section13.11
 
   - name: 13.12 Check That Users Are Assigned Valid Home Directories (Scored)
-    stat: path={{ item }}
+    stat: path='{{ item }}'
     with_items:
         home_users.stdout_lines
     register: rstat
