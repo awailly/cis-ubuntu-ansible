@@ -4,6 +4,7 @@
     apt: >
         name=apparmor
         state=present
+    when: use_apparmor == True
     tags:
       - section4
       - section4.5
@@ -12,6 +13,7 @@
     service: >
         name=apparmor
         state=started
+    when: use_apparmor == True
     tags:
       - section4
       - section4.5
@@ -22,7 +24,7 @@
     failed_when: '"0 profiles are loaded" in aa_status_lines.stdout_lines or "0 processes are in complain mode." not in aa_status_lines.stdout_lines or "0 processes are unconfined but have a profile defined." not in aa_status_lines.stdout_lines'
         # - '"0 processes are unconfined but have a profile defined." not in aa_status_lines.stdout_lines'
     changed_when: False
-    when: travis_env == False
+    when: travis_env == False and use_apparmor == True
     tags:
       - section4
       - section4.5
@@ -31,6 +33,7 @@
     apt: >
         name=apparmor-utils
         state=present
+    when: use_apparmor == True
     tags:
       - section4
       - section4.5
@@ -41,6 +44,7 @@
     register: aaenforce_rc
     failed_when: aaenforce_rc.rc == 1
     changed_when: False
+    when: use_apparmor == True
     tags:
       - section4
       - section4.5
