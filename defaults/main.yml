@@ -20,3 +20,6 @@ remove_xserver: True
 
 # The modification of user homes may lock users and set the system in an errored state. Set to false if one of the user is using / as home.
 modify_user_homes: True
+
+# Set this flag to use AppArmor. It is useful to disable it when the system does not support the kernel module.
+use_apparmor: True
