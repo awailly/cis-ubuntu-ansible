@@ -14,6 +14,7 @@
         name=apparmor
         state=started
     when: use_apparmor == True
+    notify: restart rsyslog
     tags:
       - section4
       - section4.5
