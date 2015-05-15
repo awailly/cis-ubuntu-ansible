@@ -10,10 +10,9 @@
       - section9.1.1.1
 
   - name: 9.1.1.2 Enable cron Daemon (Scored)
-    lineinfile: >
-        dest='/etc/init/cron.conf'
-        line='start on runlevel [2345]'
-        state=present
+    service: >
+        name=cron
+        state=enabled
     when: not cron_conf_stat.stat.exists
     tags:
       - section9
