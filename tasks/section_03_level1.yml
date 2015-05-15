@@ -93,7 +93,7 @@
       - section3.4.1
 
   - name: 3.4.2 Require Authentication for Single-User Mode (Scored)
-    user: name=root state=present password={{ root_password }}
+    user: name=root state=present password='{{ root_password }}'
     when: root_password_set.rc == 1
     tags:
       - section3

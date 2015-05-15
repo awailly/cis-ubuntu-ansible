@@ -91,7 +91,7 @@
       - section2.17.1
 
   - name: 2.17.2 Set Sticky Bit on All World-Writable Directories (Scored)
-    file: path={{ item }} mode="a+t"
+    file: path='{{ item }}' mode="a+t"
     with_items: sticky_bit_dirs.stdout_lines
     tags:
       - section2

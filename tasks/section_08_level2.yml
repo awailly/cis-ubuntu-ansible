@@ -101,7 +101,7 @@
   - name: 8.1.4 Record Events That Modify Date and Time Information (Scored)
     lineinfile: >
       dest=/etc/audit/audit.rules
-      line={{ item }}
+      line='{{ item }}'
       state=present
       create=yes
     with_items:
@@ -235,7 +235,7 @@
   - name: 8.1.12 Collect Use of Privileged Commands (infos) (Scored)
     lineinfile: >
         dest=/etc/audit/audit.rules
-        line={{ item }}
+        line='{{ item }}'
         state=present
         create=yes
     with_items: audit_lines_for_find.stdout_lines
