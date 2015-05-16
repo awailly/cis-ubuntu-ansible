@@ -10,6 +10,9 @@ before_install:
   # Make sure everything's up to date. Not possible with sudo: false
   - sudo apt-get update -qq
   - sudo apt-get install aptitude
+  # Create hard to quote file for issue #13
+  - "echo hello >> hard'to\"quote$file"
+  - sudo chown 1234:4321 "hard'to\"quote$file"
 
 install:
   # Install Ansible.
