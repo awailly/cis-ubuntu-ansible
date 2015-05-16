@@ -18,7 +18,7 @@
       - section4
       - section4.5
       
-    - name: 4.5 Activate AppArmor (fix profiles) (Scored)
+  - name: 4.5 Activate AppArmor (fix profiles) (Scored)
     service: >
         name=rsyslog
         state=restarted
