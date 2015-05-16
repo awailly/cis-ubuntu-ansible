@@ -63,7 +63,7 @@
       - section12.8
 
   - name: 12.8 Find Un-owned Files and Directories (Scored)
-    debug: msg='{{ item }}'
+    debug: msg="{{ item }}"
     with_items:
         unowned_files.stdout_lines
     tags:
