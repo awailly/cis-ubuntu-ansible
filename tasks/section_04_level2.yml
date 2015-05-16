@@ -14,7 +14,15 @@
         name=apparmor
         state=started
     when: use_apparmor == True
-    notify: restart rsyslog
+    tags:
+      - section4
+      - section4.5
+      
+    - name: 4.5 Activate AppArmor (fix profiles) (Scored)
+    service: >
+        name=rsyslog
+        state=restarted
+    when: use_apparmor == True
     tags:
       - section4
       - section4.5
