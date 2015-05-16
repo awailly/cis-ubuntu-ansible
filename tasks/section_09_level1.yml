@@ -12,7 +12,8 @@
   - name: 9.1.1.2 Enable cron Daemon (Scored)
     service: >
         name=cron
-        state=enabled
+        state=started
+        enabled=yes
     when: not cron_conf_stat.stat.exists
     tags:
       - section9
