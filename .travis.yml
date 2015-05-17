@@ -13,6 +13,8 @@ before_install:
   # Create hard to quote file for issue #13
   - echo hello >> "hard'to\"quote$file"
   - sudo chown 1234:4321 "hard'to\"quote$file"
+  # Copy specific configuration file to default/main/yml
+  - cp tests/main.yml defaults/main.yml
 
 install:
   # Install Ansible.
@@ -26,10 +28,10 @@ script:
     # when installing AIDE. Thus it is not idempotent on the second launch
     # (but ok on the third). It may be a good idea to invert the section order
     # in the future.
-  - ansible-playbook -i tests/inventory tests/playbook.yml --syntax-check --extra-vars "travis_env=True"
-  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" --extra-vars "travis_env=True" -t level1
+  - ansible-playbook -i tests/inventory tests/playbook.yml --syntax-check
+  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1
   - >
-    ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" --extra-vars "travis_env=True" -t level1
+    ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)

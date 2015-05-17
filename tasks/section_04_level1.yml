@@ -12,7 +12,7 @@
         name=fs.suid_dumpable
         value=0
         state=present
-    when: travis_env == False
+    when: restrict_core_dumps == True
     tags:
       - section4
       - section4.1
