@@ -23,3 +23,6 @@ modify_user_homes: True
 
 # Set this flag to use AppArmor. It is useful to disable it when the system does not support the kernel module.
 use_apparmor: True
+
+# This variable will install and setup the pam_cracklib module, enforcing strong passwords settings.
+use_pam_cracklib: True
