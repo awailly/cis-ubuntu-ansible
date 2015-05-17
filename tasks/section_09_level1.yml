@@ -120,12 +120,21 @@
       - section9.1
       - section9.1.8
  
+  - name: 9.2.1 Set Password Creation Requirement Parameters Using pam_cracklib (install) (Scored)
+    apt: name=libpam-cracklib state=present
+    when: use_pam_cracklib == True
+    tags:
+      - section9
+      - section9.2
+      - section9.2.1
+      
   - name: 9.2.1 Set Password Creation Requirement Parameters Using pam_cracklib (Scored)
     lineinfile: >
         dest='/etc/pam.d/common-password'
         regexp="pam_cracklib.so"
         line="password required pam_cracklib.so retry=3 minlen=14 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1"
         state=present
+    when: use_pam_cracklib == True
     tags:
       - section9
       - section9.2
