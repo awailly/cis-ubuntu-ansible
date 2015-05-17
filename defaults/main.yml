@@ -2,9 +2,6 @@
 lock_shadow_accounts: no
 partitioning: false
 
-# Avoid time-consuming operation while in CI environment
-travis_env: false
-
 # Default root password: root
 root_password: $6$5Mklo2YKvXOM50Zj$E8w4oiykpG9WiElxwHLx85rFFFG0z/lu0vp0wiU0SAnMnw0CmYhmArxvLxBjWQ6XVHv88XQyfpTjX4CPH89hf1
 
