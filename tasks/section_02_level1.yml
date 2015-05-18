@@ -8,7 +8,7 @@
 
   - name: 2.2 - 4 Set nodev, nosuid, noexec option for /tmp Partition (Scored)
     mount: name="/tmp" state="mounted" opts="nodev,nosuid,noexec"
-    when: partitioning=="true"
+    when: partitioning == True
     tags:
       - section2
       - section2.2
@@ -23,7 +23,7 @@
 
   - name: 2.6 Bind Mount the /var/tmp directory to /tmp (Scored)
     mount: name="/var/tmp" src="/tmp" opts=bind state=mounted
-    when: partitioning=="true"
+    when: partitioning == True
     tags:
       - section2
       - section2.6
@@ -48,7 +48,7 @@
 
   - name: 2.10 Add nodev Option to /home (Scored)
     mount: name:/home state:mounted opts:remount,nodev
-    when: partitioning=="true"
+    when: partitioning == True
     tags:
       - section2
       - section2.10
