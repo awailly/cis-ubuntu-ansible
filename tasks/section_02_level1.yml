@@ -22,7 +22,7 @@
       - section2.5
 
   - name: 2.6 Bind Mount the /var/tmp directory to /tmp (Scored)
-    mount: name="/var/tmp" src="/tmp" opts=bind state=mounted
+    mount: name="/var/tmp" src="/tmp" opts=bind state=mounted fstype=ext4
     when: partitioning == True
     tags:
       - section2
