@@ -7,7 +7,7 @@
       - section2.1
 
   - name: 2.2 - 4 Set nodev, nosuid, noexec option for /tmp Partition (Scored)
-    mount: name="/tmp" state="mounted" opts="nodev,nosuid,noexec"
+    mount: name="/tmp" src="/tmp" state="mounted" opts="nodev,nosuid,noexec" fstype=ext4
     when: partitioning == True
     tags:
       - section2
