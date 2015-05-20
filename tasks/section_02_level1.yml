@@ -47,7 +47,7 @@
       - section2.9
 
   - name: 2.10 Add nodev Option to /home (Scored)
-    mount: name:/home state:mounted opts:remount,nodev
+    mount: name="/home" src="/home" state=mounted opts=remount,nodev fstype="ext4"
     when: partitioning == True
     tags:
       - section2
