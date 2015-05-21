@@ -18,6 +18,8 @@ take advantage of the latest functionality.
 Directories that are used for system-wide functions can be further protected by placing them on separate partitions. This provides protection for resource exhaustion and enables the use of mounting options that are applicable to the directory's intended use. It is recommended to store user's data on separate partitions and have stricter mount options.
 
 According to the CIS rules, the partitioning scheme would be the following :
+
+TEST TEST
 ```
 | partition       | mount options                 |
 |-----------------|-------------------------------|
