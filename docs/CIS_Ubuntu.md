@@ -19,9 +19,8 @@ Directories that are used for system-wide functions can be further protected by 
 
 According to the CIS rules, the partitioning scheme would be the following :
 
-TEST TEST
 ```
-| partition       | mount options                 |
+| Partition       | Mount options                 |
 |-----------------|-------------------------------|
 | /               | nodev, nosuid, noexec         |
 | /home           | nodev                         |
