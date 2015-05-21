@@ -17,10 +17,24 @@ take advantage of the latest functionality.
 
 Directories that are used for system-wide functions can be further protected by placing them on separate partitions. This provides protection for resource exhaustion and enables the use of mounting options that are applicable to the directory's intended use. It is recommended to store user's data on separate partitions and have stricter mount options.
 
+According to the CIS rules, the partitioning scheme would be the following :
+```
+| partition       | mount options                 |
+|-----------------|-------------------------------|
+| /               | nodev, nosuid, noexec         |
+| /home           | nodev                         |
+| /tmp            | bind mount /var/tmp to /tmp   |
+| /var            |                               |
+| /var/log        |                               |
+| /var/log/audit  |                               |
+```
+The section 2 is made to fulfill this particular scheme. If for any reason, you can not use this partitioning, then, you can disable partitioning checking by changing the file `default/main.yml` and set the value of `partitioning` to `False`
+
+
 ###
 #### 3 - Secure Boot Settings
 
-Malicious code try to start as early as possible during the boot process, so boot loader configuration files must be protected. Fixing permissions to read and write for root only prevents non-root users from seeing the boot parameters or changing them. Non-root users who read the boot parameters may be able to identify weaknesses in security upon boot and be able to exploit them. It is recommendated to protect boot loader with a boot password will prevent an unauthorized user from entering boot parameters or changing the boot partition. 
+Malicious code try to start as early as possible during the boot process, so boot loader configuration files must be protected. Fixing permissions to read and write for root only prevents non-root users from seeing the boot parameters or changing them. Non-root users who read the boot parameters may be able to identify weaknesses in security upon boot and be able to exploit them. It is recommendated to protect boot loader with a boot password will prevent an unauthorized user from entering boot parameters or changing the boot partition.
 
 ###
 #### 4 - Process Hardening
@@ -34,9 +48,9 @@ During execution the process offers a surface of vulnerability, this section aim
 
 
 ###
-#### 5 - OS Services 
+#### 5 - OS Services
 
-It order to prevent the exploitation of vulnerabilities, it is highly adviced to disable all services that are not required for normal system operation. If a service is not enabled, it cannot be exploited ! Therefore, legacy services (NIS, rsh client/server, telnet, ...) must be not active on the system. 
+It order to prevent the exploitation of vulnerabilities, it is highly adviced to disable all services that are not required for normal system operation. If a service is not enabled, it cannot be exploited ! Therefore, legacy services (NIS, rsh client/server, telnet, ...) must be not active on the system.
 
 ###
 #### 6 - Special Purpose Services
@@ -49,7 +63,7 @@ At last, it is likely that a service that is installed on a server specifically 
 ###
 #### 7 - Network Configuration and Firewalls
 
-This section tests aim to secure network and firewall configuration. If the system has at least two interfaces, it can act as a router, but the system must be considered as host only and not as a router, so, network parameters must be set to avoid any routing functions and all IP functionalities used on a router must be disable. The IPv6 networking protocol is replacing Ipv4, but it must be disable if IPv6 is not used. In case of wireless network is present but not used, wireless devices can be disabled to reduce the potential attack surface. 
+This section tests aim to secure network and firewall configuration. If the system has at least two interfaces, it can act as a router, but the system must be considered as host only and not as a router, so, network parameters must be set to avoid any routing functions and all IP functionalities used on a router must be disable. The IPv6 networking protocol is replacing Ipv4, but it must be disable if IPv6 is not used. In case of wireless network is present but not used, wireless devices can be disabled to reduce the potential attack surface.
 
 It is recommended to filter network access using TCP Wrapper: Hosts authorized and hosts not permitted to connect to the system must be specified.
 
@@ -61,13 +75,13 @@ Finally, it is encourage to activate the Firewall. IPtables is an application th
 ###
 #### 8 - Logging and Auditing
 
-Intrusions attempts and others suspicious system behavior must be monitor using log monitoring and auditing tools. It is recommended that rsyslog be used for logging and auditd be used for auditing. In addition to the local log files, it is also recommended that system collect copies of their system logs on a secure, centralized log server via an encrypted connection. Indeed, the attacker modifies the local log files on the affected system. 
+Intrusions attempts and others suspicious system behavior must be monitor using log monitoring and auditing tools. It is recommended that rsyslog be used for logging and auditd be used for auditing. In addition to the local log files, it is also recommended that system collect copies of their system logs on a secure, centralized log server via an encrypted connection. Indeed, the attacker modifies the local log files on the affected system.
 
 Because it is often necessary to correlate log information from many different systems it is recommended that the time be synchronized among systems and devices connected to the local network.
 
 
 ###
-#### 9 - System Access, Authentication and Authorization 
+#### 9 - System Access, Authentication and Authorization
 
 This section aims to reinforce system protection against the exploitation of software utilities or modules in Unix operating systems to gain elevated privileges.
 
@@ -79,7 +93,7 @@ It is strongly recommended that sites abandon older clear-text protocols such as
 
 
 ###
-#### 10 - User Accounts and Environment 
+#### 10 - User Accounts and Environment
 
 Setting up a secure defaults password policies for system, user accounts and their environment is a key point to secure servers. It is recommended to :
 
@@ -119,7 +133,7 @@ Users and groups are used on Linux to control access to the system's files, dire
 
 ####
  1 - Patching and Software Updates
- 
+
    -   1.1 Install Updates, Patches and Additional Security Software
 
 ####
@@ -128,7 +142,7 @@ Users and groups are used on Linux to control access to the system's files, dire
    -   2.1 Create Separate Partition for /tmp
    -   2.2 Set nodev option for /tmp Partition
    -   2.3 Set nosuid option for /tmp Partition  
-   -   2.4 Set noexec option for /tmp Partition 
+   -   2.4 Set noexec option for /tmp Partition
    -   2.5 Create Separate Partition for /var  
    -   2.6 Bind Mount the /var/tmp directory to /tmp  
    -   2.7 Create Separate Partition for /var/log  
@@ -140,7 +154,7 @@ Users and groups are used on Linux to control access to the system's files, dire
    -   2.13 Add nosuid Option to Removable Media Partitions  
    -   2.14 Add nodev Option to /run/shm Partition
    -   2.15 Add noexec Option to /run/shm Partition  
-   -   2.16 Add nosuid Option to /run/shm Partition    
+   -   2.16 Add nosuid Option to /run/shm Partition
    -   2.17 Set Sticky Bit on All World-Writable Directories (preparation)  
    -   2.18 Disable Mounting of cramfs Filesystems  
    -   2.19 Disable Mounting of freevxfs Filesystems  
@@ -153,7 +167,7 @@ Users and groups are used on Linux to control access to the system's files, dire
 
 ####
  3 - Secure Boot Settings
- 
+
    -   3 Check for /boot/grub/grub.cfg file
    -   3.1 Set User/Group Owner on bootloader config  
    -   3.2 Set Permissions on bootloader config  
@@ -165,7 +179,7 @@ Users and groups are used on Linux to control access to the system's files, dire
 
 ####
  4 - Process Hardening
-   
+
    -   4.1 Restrict Core Dumps  
    -   4.2 Enable XD/NX Support on 32-bit x86 Systems
    -   4.3 Enable Randomized Virtual Memory Region Placement  
@@ -177,9 +191,9 @@ Users and groups are used on Linux to control access to the system's files, dire
 
    -   5.1 Ensure NIS is not installed  
    -   5.2 Ensure rsh, rlogin, rexec, talk, telnet, chargen, daytime, echo, discard, time is not enabled  
-   -   5.3 Ensure rsh client is not installed 
+   -   5.3 Ensure rsh client is not installed
    -   5.4 Ensure talk server is not enabled
-   -   5.5 Ensure talk client is not installed 
+   -   5.5 Ensure talk client is not installed
    -   5.6 Ensure telnet server is not enabled
    -   5.7 Ensure tftp server is not enabled
    -   5.8 Ensure xinetd is not enabled
@@ -227,23 +241,23 @@ Users and groups are used on Linux to control access to the system's files, dire
    -   7.7 Ensure Firewall is active
 
 ####
- 8 - Logging and Auditing 
+ 8 - Logging and Auditing
 
    -   8.1.1 Configure Data Retention
    -   8.1.2 Install and Enable auditd Service  
    -   8.1.3 Enable Auditing for Processes That Start Prior to auditd  
    -   8.1.4 Record Events That Modify Date and Time Information  
    -   8.1.5 Record Events That Modify User/Group Information  
-   -   8.1.6 Record Events That Modify the System's Network Environment 
+   -   8.1.6 Record Events That Modify the System's Network Environment
    -   8.1.7 Record Events That Modify the System's Mandatory AccessControls  
    -   8.1.8 Collect Login and Logout Events  
    -   8.1.9 Collect Session Initiation Information  
    -   8.1.10 Collect Discretionary Access Control Permission ModificationEvents  
-   -   8.1.11 Collect Unsuccessful Unauthorized Access Attempts to Files 
+   -   8.1.11 Collect Unsuccessful Unauthorized Access Attempts to Files
    -   8.1.12 Collect Use of Privileged Commands  
    -   8.1.13 Collect Successful File System Mounts  
    -   8.1.14 Collect File Deletion Events by User  
-   -   8.1.15 Collect Changes to System Administration Scope (sudoers) 
+   -   8.1.15 Collect Changes to System Administration Scope (sudoers)
    -   8.1.16 Collect System Administrator Actions (sudolog)  
    -   8.1.17 Collect Kernel Module Loading and Unloading  
    -   8.1.18 Make the Audit Configuration Immutable  
@@ -265,8 +279,8 @@ Users and groups are used on Linux to control access to the system's files, dire
    -   9.1.2 Set User/Group Owner and Permission on /etc/crontab  
    -   9.1.3 Set User/Group Owner and Permission on /etc/cron.hourly  
    -   9.1.4 Set User/Group Owner and Permission on /etc/cron.daily  
-   -   9.1.5 Set User/Group Owner and Permission on /etc/cron.weekly 
-   -   9.1.6 Set User/Group Owner and Permission on /etc/cron.monthly 
+   -   9.1.5 Set User/Group Owner and Permission on /etc/cron.weekly
+   -   9.1.6 Set User/Group Owner and Permission on /etc/cron.monthly
    -   9.1.7 Set User/Group Owner and Permission on /etc/cron.d  
    -   9.1.8 Restrict at/cron to Authorized Users  
    -   9.2.1 Set Password Creation Requirement Parameters Usingpam_cracklib  
@@ -288,7 +302,7 @@ Users and groups are used on Linux to control access to the system's files, dire
    -   9.5 Restrict Access to the su Command  
 
 ####
-10 - User Accounts and Environment 
+10 - User Accounts and Environment
 
    -   10.1.1 Set Password Expiration Days  
    -   10.1.2 Set Password Change Minimum Number of Days  
