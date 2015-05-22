@@ -1,6 +1,5 @@
 # CIS Security Bencmarks for Ubuntu
 
-
 ### Recommendations
 
 This recommendations provide prescriptive guidance for system and application administrators who plan to develop, deploy,
@@ -29,13 +28,10 @@ According to the CIS rules, the partitioning scheme would be the following :
 ```
 The section 2 is made to fulfill this particular scheme. If for any reason, you can not use this partitioning, then, you can disable partitioning checking by changing the file `default/main.yml` and set the value of `partitioning` to `False`
 
-
-###
 #### 3 - Secure Boot Settings
 
 Malicious code try to start as early as possible during the boot process, so boot loader configuration files must be protected. Fixing permissions to read and write for root only prevents non-root users from seeing the boot parameters or changing them. Non-root users who read the boot parameters may be able to identify weaknesses in security upon boot and be able to exploit them. It is recommendated to protect boot loader with a boot password will prevent an unauthorized user from entering boot parameters or changing the boot partition.
 
-###
 #### 4 - Process Hardening
 
 During execution the process offers a surface of vulnerability, this section aims to reduce the risk to exploit vulnerabilty:
@@ -54,20 +50,16 @@ The apparmor installation enforce the new isolation profiles for known applicati
 
 We already provide the [rsyslog restart](https://github.com/awailly/cis-ubuntu-ansible/issues/7#issuecomment-102357799), but it is not possible to do this for all services. Check if the `sudo service <unconfined service name> restart` command solve the issue, and else fill an issue.
 
-###
 #### 5 - OS Services
 
 It order to prevent the exploitation of vulnerabilities, it is highly adviced to disable all services that are not required for normal system operation. If a service is not enabled, it cannot be exploited ! Therefore, legacy services (NIS, rsh client/server, telnet, ...) must be not active on the system.
 
-###
 #### 6 - Special Purpose Services
 
 Some services that are installed on servers need to be specifically actived. If any of these services are not required, it is recommended that they be disabled or deleted from the system to reduce the potential attack surface. The X Window system that provides a Graphical User Interface (GUI) to users is typically used on desktops where users login, but not on servers. Remove it if your organization not specifically requires graphical login access via X Windows. For the same reason, it is recommended to disable Avahi, a free zeroconf service discovery protocol, if this service is not needed.
 
 At last, it is likely that a service that is installed on a server specifically need to run this service, uninstall or disable others services : DHCP server, CUPS (Common Unix Print System) protocol, HTTP Proxy server, Samba, IMAP and POP server, LDAP, NFS and RPC, DNS server, FTP server, etc ...  .
 
-
-###
 #### 7 - Network Configuration and Firewalls
 
 This section tests aim to secure network and firewall configuration. If the system has at least two interfaces, it can act as a router, but the system must be considered as host only and not as a router, so, network parameters must be set to avoid any routing functions and all IP functionalities used on a router must be disable. The IPv6 networking protocol is replacing Ipv4, but it must be disable if IPv6 is not used. In case of wireless network is present but not used, wireless devices can be disabled to reduce the potential attack surface.
@@ -78,16 +70,12 @@ The Linux kernel modules support several network protocols that are not commonly
 
 Finally, it is encourage to activate the Firewall. IPtables is an application that allows a system administrator to configure the IPv4 tables, chains and rules provided by the Linux kernel firewall.
 
-
-###
 #### 8 - Logging and Auditing
 
 Intrusions attempts and others suspicious system behavior must be monitor using log monitoring and auditing tools. It is recommended that rsyslog be used for logging and auditd be used for auditing. In addition to the local log files, it is also recommended that system collect copies of their system logs on a secure, centralized log server via an encrypted connection. Indeed, the attacker modifies the local log files on the affected system.
 
 Because it is often necessary to correlate log information from many different systems it is recommended that the time be synchronized among systems and devices connected to the local network.
 
-
-###
 #### 9 - System Access, Authentication and Authorization
 
 This section aims to reinforce system protection against the exploitation of software utilities or modules in Unix operating systems to gain elevated privileges.
@@ -98,8 +86,6 @@ PAM (Pluggable Authentication Modules) is a service that implements modular auth
 
 It is strongly recommended that sites abandon older clear-text protocols such as telnet, ftp, rlogin, rsh and rcp and use SSH to prevent session hijacking and sniffing of sensitive data off the network. If the ssh server is used, it must be carefully configured to prevent security issues.
 
-
-###
 #### 10 - User Accounts and Environment
 
 Setting up a secure defaults password policies for system, user accounts and their environment is a key point to secure servers. It is recommended to :
@@ -111,15 +97,11 @@ Setting up a secure defaults password policies for system, user accounts and the
 - set a very secure default value for umask. This ensures that users, who creating files, make a conscious choice about their
   files permissions.
 
-
-###
 #### 11 - Warning Banners
 
 Warning messages inform users who are attempting to login to the system of their legal status regarding the system and must include the name of the organization that owns the system and any monitoring policies that are in place.
 Login banners also has the side effect of providing detailed system and patch level informations to attackers attempting to target specific exploits at a system.
 
-
-###
 #### 12 - Verify System File Permissions
 
 This section specifically focus on critical configuration files for the servers security: /etc/passwd and /etc/shadow.
@@ -128,14 +110,10 @@ The /etc/passwd file is a text-based database of information about users that ma
 
 The /etc/shadow is used to increase the security level of passwords by restricting all but highly privileged users' access to hashed password data. Typically, that data is kept in files owned by and accessible only by the super user.
 
-
-###
 #### 13 - Review User and Group Settings
 
 Users and groups are used on Linux to control access to the system's files, directories, and peripherals. Linux offers relatively simple access control mechanisms by default, it recommended to enforce permissions for user and group.
 
-
-###
 ### List of hardening audit tests
 
 ####
