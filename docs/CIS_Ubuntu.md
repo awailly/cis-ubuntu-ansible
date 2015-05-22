@@ -47,6 +47,14 @@ During execution the process offers a surface of vulnerability, this section aim
 - Make difficult to write memory page exploits using random placing virtual memory regions.
 - etc ...
 
+##### 4.5 - AppArmor Activation
+
+The apparmor installation enforce the new isolation profiles for known applications. A restart of the services is needed to completely setup the new policy. If the restart is not performed, the following error will appear:
+
+    1 processes are unconfined but have a profile defined.
+    /usr/sbin/rsyslogd
+
+We already provide the [rsyslog restart](https://github.com/awailly/cis-ubuntu-ansible/issues/7#issuecomment-102357799), but it is not possible to do this for all services. Check if the `sudo service <unconfined service name> restart` command solve the issue, and else fill an issue.
 
 ###
 #### 5 - OS Services
