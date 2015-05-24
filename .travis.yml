@@ -14,7 +14,7 @@ before_install:
   - echo hello >> "hard'to\"quote$file"
   - sudo chown 1234:4321 "hard'to\"quote$file"
   # Copy specific configuration file to default/main/yml
-  - cp tests/main.yml defaults/main.yml
+  - cp tests/travis_defaults.yml defaults/main.yml
 
 install:
   # Install Ansible.
