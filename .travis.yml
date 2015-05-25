@@ -17,11 +17,11 @@ before_install:
   - cp tests/travis_defaults.yml defaults/main.yml
 
 before_script:
-  - sudo aptitude install nis
+  - sudo apt-get install nis -qq
   - sudo mkdir -p /boot/grub
   - sudo touch /boot/grub/grub.cfg
   # Prepare section 04
-  - sudo aptitude install apport
+  - sudo apt-get install apport -qq
 
 install:
   # Install Ansible.
