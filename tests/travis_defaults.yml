@@ -10,7 +10,7 @@ Remote_Logs_Host_Address: 127.0.0.1
 
 # Enable the activate_ufw variable with True to install and enable service on boot.
 # NOTE: If not properly configured it may result in incorrect services behavior.
-activate_ufw: False
+activate_ufw: True
 
 # We focus a server installation, but we may be accept some desktops.
 remove_xserver: True
