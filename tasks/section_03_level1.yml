@@ -26,6 +26,7 @@
         regexp='^set superusers'
         line='set superusers="root"'
         state=present
+        create=yes
     when: grub_cfg_file.stat.exists == True and boot_superusers.rc == 1
     tags:
       - section3
