@@ -192,15 +192,6 @@
       - section7.2
       - section7.2.8
 
-  - name: 7.3 Configure IPv6
-    sysctl: >
-      name=net.ipv4.tcp_syncookies
-      value=0
-      state=present
-    tags:
-      - section7
-      - section7.3
-
   - name: 7.3.1.1 Disable IPv6 Router Advertisements (Not Scored)
     sysctl: >
       name=net.ipv6.conf.all.accept_ra
