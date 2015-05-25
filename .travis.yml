@@ -16,6 +16,9 @@ before_install:
   # Copy specific configuration file to default/main/yml
   - cp tests/travis_defaults.yml defaults/main.yml
 
+before_script:
+  - apt-get install nis
+
 install:
   # Install Ansible.
   - pip install ansible
