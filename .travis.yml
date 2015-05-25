@@ -18,8 +18,6 @@ before_install:
 
 before_script:
   - sudo apt-get install nis -qq
-  - sudo mkdir -p /boot/grub
-  - sudo touch /boot/grub/grub.cfg
   # Prepare section 04
   - sudo apt-get install apport -qq
 
