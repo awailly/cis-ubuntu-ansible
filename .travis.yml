@@ -17,7 +17,7 @@ before_install:
   - cp tests/travis_defaults.yml defaults/main.yml
 
 before_script:
-  - apt-get install nis
+  - sudo apt-get install nis
 
 install:
   # Install Ansible.
