@@ -18,6 +18,8 @@ before_install:
 
 before_script:
   - sudo apt-get install nis
+  - sudo mkdir -p /boot/grub
+  - sudo touch /boot/grub/grub.cfg
 
 install:
   # Install Ansible.
