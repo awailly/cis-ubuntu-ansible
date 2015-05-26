@@ -1,6 +1,6 @@
 image: go1.3
 git:
-      path: github.com/awailly/cis-ubuntu-ansible
+    path: github.com/awailly/cis-ubuntu-ansible
 notify:
   irc:
     channel: hdbot
