@@ -32,26 +32,6 @@
       - section7.1.2
       - section7.1.2.2
 
-  - name: 7.2.1 Modify Network Parameters (Host and Router)
-    sysctl: >
-      name=net.ipv4.conf.all.send_redirects
-      value=0
-      state=present
-    tags:
-      - section7
-      - section7.2
-      - section7.2.1
-
-  - name: 7.2.2 Modify Network Parameters (Host and Router)
-    sysctl: >
-      name=net.ipv4.conf.default.send_redirects
-      value=0
-      state=present
-    tags:
-      - section7
-      - section7.2
-      - section7.2.2
-
   - name: 7.2.1.1 Disable Source Routed Packet Acceptance (Scored)
     sysctl: >
       name=net.ipv4.conf.all.accept_source_route
@@ -121,7 +101,7 @@
   - name: 7.2.4.1 Log Suspicious Packets (Scored)
     sysctl: >
       name=net.ipv4.conf.all.log_martians
-      value=0
+      value=1
       state=present
     tags:
       - section7
@@ -132,7 +112,7 @@
   - name: 7.2.4.2 Log Suspicious Packets (Scored)
     sysctl: >
       name=net.ipv4.conf.default.log_martians
-      value=0
+      value=1
       state=present
     tags:
       - section7
@@ -143,7 +123,7 @@
   - name: 7.2.5 Enable Ignore Broadcast Requests (Scored)
     sysctl: >
       name=net.ipv4.icmp_echo_ignore_broadcasts
-      value=0
+      value=1
       state=present
     tags:
       - section7
@@ -153,7 +133,7 @@
   - name: 7.2.6 Enable Bad Error Message Protection (Scored)
     sysctl: >
       name=net.ipv4.icmp_ignore_bogus_error_responses
-      value=0
+      value=1
       state=present
     tags:
       - section7
@@ -163,7 +143,7 @@
   - name: 7.2.7.1 Enable RFC-recommended Source Route Validation (Scored)
     sysctl: >
       name=net.ipv4.conf.all.rp_filter
-      value=0
+      value=1
       state=present
     tags:
       - section7
@@ -174,7 +154,7 @@
   - name: 7.2.7.2 Enable RFC-recommended Source Route Validation (Scored)
     sysctl: >
       name=net.ipv4.conf.default.rp_filter
-      value=0
+      value=1
       state=present
     tags:
       - section7
@@ -185,7 +165,7 @@
   - name: 7.2.8 Enable TCP SYN Cookies (Scored)
     sysctl: >
       name=net.ipv4.tcp_syncookies
-      value=0
+      value=1
       state=present
     tags:
       - section7
