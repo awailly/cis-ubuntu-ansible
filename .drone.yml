@@ -1,5 +1,4 @@
-image: python2.7
-
+image: go1.3
 notify:
   irc:
     channel: hdbot
@@ -8,7 +7,6 @@ notify:
     on_started: true
     on_success: true
     on_failure: true
-
 script:
   - sudo apt-get update -qq
   - sudo apt-get install aptitude ufw
