@@ -52,6 +52,8 @@ before_script:
   - sudo sysctl net.ipv6.conf.default.accept_redirects=1
   - sudo chmod 777 /etc/hosts.allow
   - sudo chmod 777 /etc/hosts.deny
+  # Prepare section 08
+  - sudo chmod 777 /etc/rsyslog.conf
 
 install:
   # Install Ansible.

@@ -52,11 +52,15 @@ This section extends section 05 with other services.
 
 ## Section 07
 
-[![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
+This section forces sysctl values to correctly setup network and IPv6.
+
+[![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
 
 ## Section 08
 
-[![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
+This section configures logs and rights.
+
+[![Status: Partially Tested](https://img.shields.io/badge/Status-Partially tested-yellow.svg)]
 
 ## Section 09
 
