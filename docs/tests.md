@@ -35,6 +35,7 @@ This section hardens the grub related files, which is not available on the testi
 ## Section 04 - Additional process hardening
 
 This section looks for potential leaks and fix them. The build environment prohibid us from modifying some variables (such as *fs.suid_dumpable*).
+
 [![Status: Partially Tested](https://img.shields.io/badge/Status-Partially tested-yellow.svg)]
 
 ## Section 05 - OS services
@@ -43,43 +44,37 @@ This section disables unneeded services on the system to reduce the attack surfa
 
 [![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
 
-## Section 06
+## Section 06 - Special purposes services
 
-[![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
-[![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
+This section extends section 05 with other services.
+
+[![Status: Partially Tested](https://img.shields.io/badge/Status-Partially tested-yellow.svg)]
 
 ## Section 07
 
 [![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
-[![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
 
 ## Section 08
 
 [![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
-[![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
 
 ## Section 09
 
 [![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
-[![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
 
 ## Section 010
 
 [![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
-[![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
 
 ## Section 011
 
 [![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
-[![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
 
 ## Section 012
 
 [![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
-[![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
 
 ## Section 013
 
 [![Status: Skipped](https://img.shields.io/badge/Status-Skipped-red.svg)]
-[![Status: Tested](https://img.shields.io/badge/Status-Tested-brightgreen.svg)]
 
