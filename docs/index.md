@@ -1,6 +1,5 @@
 # Welcome to Hardwatt documentation
 
-
 This documentation provides a description of the Hardwatt project. Hardwatt project provides a tool for establishing a secure configuration posture for server hosted in Openwatt infrastruture.
 
 The secure configuration recommandations are based on the 
@@ -22,12 +21,9 @@ performed before hardening the system.
 
 >- [CIS Security Benchmarks for Ubuntu server](CIS_Ubuntu.md)
 
-
-
 ## Contacts
 
 If you need help, please contact:
 
 Aurélien WAILLY : aurélien.wailly@orange.com
-
 Pascal LEGOUGE : pascal.legouge@orange.com
