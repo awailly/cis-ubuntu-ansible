@@ -1,6 +1,6 @@
 image: go1.3
 git:
-    path: github.com/awailly/cis-ubuntu-ansible
+  path: github.com/awailly/cis-ubuntu-ansible
 notify:
   irc:
     channel: hdbot
@@ -24,4 +24,4 @@ script:
   - coverage-badge `cat results.txt | grep ok=.*changed=.*unreachable=.*failed= | awk -F '[= ]+' '{printf("%2.0f", $6/175*100)}'` ./coverage.png
   - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1 > results_indempotence.txt
   - cat results_indempotence.txt
-  - cat results_indempotence.txt | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+  - cat results_indempotence.txt | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test:pass' && exit 0) || (echo 'Idempotence test:fail' && exit 1)
