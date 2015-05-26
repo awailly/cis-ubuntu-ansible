@@ -2,4 +2,5 @@ site_name: hardwatt
 pages:  
   - [index.md, Home]
   - [CIS_Ubuntu.md]
+  - [tests.md, Tests]
   - [contacts.md, Contacts]
