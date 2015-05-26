@@ -21,12 +21,14 @@ before_script:
   # Prepare section 04
   - sudo apt-get install apport -qq
   # Prepare section 05
-  - sudo apt-get install rsh-client rsh-redone-client talk
+  - sudo apt-get install rsh-client rsh-redone-client talk -qq
   - sudo touch /etc/inetd.conf
   - echo 'shell.bla' > /tmp/inetd
   - sudo cp /tmp/inetd /etc/inetd.conf
   - echo 'start on runlevel [2345]' > /tmp/runxinit
   - sudo cp /tmp/runxinit /etc/init/xinetd.conf
+  # Prepare section 06
+  - sudo apt-get install avahi-daemon cups isc-dhcp-server isc-dhcp-server6 ntp slapd rpcbind nfs-kernel-server bind9 biosdevname
 
 install:
   # Install Ansible.
