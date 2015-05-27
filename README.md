@@ -1,7 +1,7 @@
 CIS for Ubuntu 14.04
 ====================
 
-[![Build Status](https://travis-ci.org/awailly/cis-ubuntu-ansible.svg?branch=master)](https://travis-ci.org/awailly/cis-ubuntu-ansible)  [![Build Status](https://drone.io/github.com/awailly/cis-ubuntu-ansible/status.png)](https://drone.io/github.com/awailly/cis-ubuntu-ansible/latest)  [![Documentation Status](https://readthedocs.org/projects/cis-ubuntu-ansible/badge/?version=latest)](https://readthedocs.org/projects/cis-ubuntu-ansible/?badge=latest)  [![Code coverage](https://drone.io/github.com/awailly/cis-ubuntu-ansible/files/coverage.png)](https://drone.io/github.com/awailly/cis-ubuntu-ansible)
+[![Build Status](https://travis-ci.org/awailly/cis-ubuntu-ansible.svg?branch=master)](https://travis-ci.org/awailly/cis-ubuntu-ansible)  [![Build Status](https://drone.io/github.com/awailly/cis-ubuntu-ansible/status.png)](https://drone.io/github.com/awailly/cis-ubuntu-ansible/latest)  [![Documentation Status](https://readthedocs.org/projects/cis-ubuntu-ansible/badge/?version=latest)](https://readthedocs.org/projects/cis-ubuntu-ansible/?badge=latest)  [![Code coverage](https://drone.io/github.com/awailly/cis-ubuntu-ansible/files/coverage.png?version=latest)](https://drone.io/github.com/awailly/cis-ubuntu-ansible)
 
 Usage
 -----
