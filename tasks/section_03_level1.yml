@@ -1,7 +1,7 @@
 ---
 #sections 3.3 and 3.4 have to happen before as the latter overwrite 3.1 and 3.2
 
-  - name: 3 Check for /boot/grub/grub.cfg file
+  - name: 3.0 Check for /boot/grub/grub.cfg file
     stat: path=/boot/grub/grub.cfg
     register: grub_cfg_file
     tags:

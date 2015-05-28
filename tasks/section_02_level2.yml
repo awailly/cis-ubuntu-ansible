@@ -1,6 +1,6 @@
 ---
 
-  - name: Check the presence of the file "cis.conf" under modprobe.d
+  - name: 2.0.1 Check the presence of the file "cis.conf" under modprobe.d
     stat: >
         path=/etc/modprobe.d/CIS.conf
     register: cis_conf_file
@@ -8,7 +8,7 @@
       - section2
       - section2.18
 
-  - name: Create the file "cis.conf" under modprobe.d if doesn't exist
+  - name: 2.0.2 Create the file "cis.conf" under modprobe.d if doesn't exist
     file: >
         dest=/etc/modprobe.d/CIS.conf state=touch
     when: not cis_conf_file.stat.exists

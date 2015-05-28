@@ -274,7 +274,7 @@
       - section7.4
       - section7.4.5
 
-  - name: Check the presence of the file "cis.conf" under modprobe.d
+  - name: 7.5.0 Check the presence of the file "cis.conf" under modprobe.d
     stat: >
         path=/etc/modprobe.d/CIS.conf
     register: cis_conf_file
@@ -282,7 +282,7 @@
       - section7
       - section7.5
 
-  - name: Create the file "cis.conf" under modprobe.d if doesn't exist
+  - name: 7.5.0 Create the file "cis.conf" under modprobe.d if doesn't exist
     file: >
         dest=/etc/modprobe.d/CIS.conf state=touch
     when: not cis_conf_file.stat.exists
