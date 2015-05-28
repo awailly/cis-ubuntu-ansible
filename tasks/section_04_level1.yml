@@ -78,14 +78,14 @@
       - section4.3
 
   - name: 4.4 Disable Prelink (check) (Scored)
-    stat: path=/usr/bin/prelink
+    stat: path=/usr/sbin/prelink
     register: prelink_rc
     tags:
       - section4
       - section4.4
 
   - name: 4.4 Disable Prelink (restore) (Scored)
-    command: '/usr/bin/prelink -ua'
+    command: '/usr/sbin/prelink -ua'
     when: prelink_rc.stat.exists == True
     tags:
       - section4
