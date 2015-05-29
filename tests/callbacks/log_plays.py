@@ -18,8 +18,8 @@ import time
 import json
 import hashlib
 
-ROLE_PATH = 'roles/cis'
 ROLE_PATH = '.'
+ROLE_PATH = 'roles/cis'
 
 class TestBook(object):
     def __init__(self):
@@ -80,11 +80,12 @@ class TestTask(object):
             self.level = 2
 
         self.line_start = num
-        while num<len(data) and data[num] != '\n':
+        while num<len(data)-1 and data[num] != '\n':
             num+= 1
         self.line_size = num - self.line_start
         teststat = int(data[self.line_start+1].split(':')[0].strip() == 'stat')
-        for n in range(self.line_start, self.line_start + self.line_size):
+        for n in range(self.line_start, self.line_start + self.line_size + 1):
+            print(n)
             if 'changed_when: False' in data[n]:
                 teststat = 1
         self.isalwaysok = teststat
