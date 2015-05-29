@@ -55,7 +55,7 @@ class TestBook(object):
                 s[tname]["coverage"] = [0] * len(data.split('\n'))
 
             for n in range(t.line_start, t.line_start + t.line_size + 1):
-                s[tname]["coverage"][n] = int(t.status == 'CHANGED')
+                s[tname]["coverage"][n] = t.isalwaysok or int(t.status == 'CHANGED')
 
         for se in s:
             d['source_files'].append(s[se])
@@ -83,6 +83,8 @@ class TestTask(object):
         while num<len(data) and data[num] != '\n':
             num+= 1
         self.line_size = num - self.line_start
+        teststat = int(data[self.line_start+1].split(':')[0].strip() == 'stat')
+        self.isalwaysok = teststat
 
     def update(self, status):
         self.status = status

@@ -1,7 +1,7 @@
 sudo apt-get install nis -qq
 
 #Prepare section 04
-sudo apt-get install apport -qq
+sudo apt-get install apport prelink whoopsie -qq
 
 #Prepare section 05
 sudo apt-get install rsh-client rsh-redone-client talk -qq
