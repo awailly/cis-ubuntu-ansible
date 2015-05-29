@@ -87,6 +87,8 @@ class TestTask(object):
         for n in range(self.line_start, self.line_start + self.line_size + 1):
             if 'changed_when: False' in data[n]:
                 teststat = 1
+            if 'debug:' in data[n]:
+                teststat = 1
         self.isalwaysok = teststat
 
     def update(self, status):
