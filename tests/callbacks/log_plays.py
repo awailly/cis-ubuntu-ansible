@@ -18,8 +18,8 @@ import time
 import json
 import hashlib
 
-ROLE_PATH = '.'
 ROLE_PATH = 'roles/cis'
+ROLE_PATH = '.'
 
 class TestBook(object):
     def __init__(self):
