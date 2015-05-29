@@ -84,6 +84,9 @@ class TestTask(object):
             num+= 1
         self.line_size = num - self.line_start
         teststat = int(data[self.line_start+1].split(':')[0].strip() == 'stat')
+        for n in range(self.line_start, self.line_start + self.line_size + 1):
+            if 'changed_when: False' in data[n]:
+                teststat = 1
         self.isalwaysok = teststat
 
     def update(self, status):
