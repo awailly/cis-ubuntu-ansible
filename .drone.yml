@@ -14,7 +14,7 @@ script:
   - sudo apt-get install aptitude ufw
   - sudo npm install -g coverage-badge
   - sudo ln -s /usr/bin/env /bin/env
-  - cp tests/drone_defaults.yml defaults/main.yml
+  - cp tests/drone_defaults.yml vars/main.yml
   - pip install ansible
   - echo '[defaults]' > ansible.cfg
   - echo 'roles_path = ../' >> ansible.cfg
