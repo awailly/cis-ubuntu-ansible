@@ -245,7 +245,7 @@
     file: >
         path='{{ item }}'
         state=absent
-    when: item.stat.exists == True
+    when: item is defined and item.stat.exists == True
     with_items: netrc_files.results
     tags:
       - section13
