@@ -167,6 +167,7 @@
       name=net.ipv4.tcp_syncookies
       value=1
       state=present
+    when: enable_tcp_syncookies
     tags:
       - section7
       - section7.2
