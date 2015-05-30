@@ -4,7 +4,7 @@
     command: awk -F':' '($2 == "" ) { print $1 }' /etc/shadow
     register: awk_empty_shadow
     changed_when: False
-    failed_when: awk_empty_shadow.stdout != '' and lock_shadow_accounts == 'no'
+    failed_when: awk_empty_shadow.stdout != '' and not lock_shadow_accounts
     tags:
       - section13
       - section13.1

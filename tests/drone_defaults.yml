@@ -1,5 +1,5 @@
 # This variable defines if accounts without password have to be locked
-lock_shadow_accounts: no
+lock_shadow_accounts: False
 partitioning: False
 
 # Default root password: root
