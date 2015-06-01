@@ -1,4 +1,4 @@
-image: go1.3
+image: python2.7
 git:
   path: github.com/awailly/cis-ubuntu-ansible
 notify:
@@ -18,8 +18,8 @@ script:
   - pip install ansible
   - echo '[defaults]' > ansible.cfg
   - echo 'roles_path = ../' >> ansible.cfg
-  - ansible-playbook -i tests/inventory tests/playbook.yml --syntax-check --extra-vars "travis_env=True"
-  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1 > results.txt || ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1 > results.txt
+  - ansible-playbook -i tests/inventory tests/playbook.yml --syntax-check
+  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1 > results.txt
   - cat results.txt
   - coverage-badge `cat results.txt | grep ok=.*changed=.*unreachable=.*failed= | awk -F '[= ]+' '{printf("%2.0f", $6/175*100)}'` ./coverage.png
   - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1 > results_indempotence.txt
