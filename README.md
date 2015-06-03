@@ -12,7 +12,7 @@ CIS for Ubuntu 14.04
 Prerequisites
 -----
 
-Install dependencies (on Ubuntu 14.04)
+Install dependencies (on Ubuntu 14.04):
 
     $ sudo apt-get install ansible
 
