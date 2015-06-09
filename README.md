@@ -35,7 +35,7 @@ Create a playbook in the roles-ubuntu folder:
     ---
     - hosts: all
       roles:
-        - { role:cis, when: "ansible_version.full | version_compare('1.8', '>=')" }
+        - { role: cis, when: "ansible_version.full | version_compare('1.8', '>=')" }
     EOF
 
 Create a file containing hosts:
