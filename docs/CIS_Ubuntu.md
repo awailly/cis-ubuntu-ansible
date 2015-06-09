@@ -86,6 +86,10 @@ PAM (Pluggable Authentication Modules) is a service that implements modular auth
 
 It is strongly recommended that sites abandon older clear-text protocols such as telnet, ftp, rlogin, rsh and rcp and use SSH to prevent session hijacking and sniffing of sensitive data off the network. If the ssh server is used, it must be carefully configured to prevent security issues.
 
+#### Ignoring errors for 9.3.13
+
+The tasks 9.3.13.X check for allowed users and groups to connect on the system. We cannot define the allowed users without risking to lock the system. You can define the `AllowUsers`, `AllowGroups`, `DenyUsers` and `DenyGroups` to respect your current security rules.
+
 ### 10 - User Accounts and Environment
 
 Setting up a secure defaults password policies for system, user accounts and their environment is a key point to secure servers. It is recommended to :
