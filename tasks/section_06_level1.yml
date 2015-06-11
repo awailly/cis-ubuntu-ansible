@@ -173,7 +173,7 @@
     service: >
         name=nfs-kernel-server
         enabled=no
-    when: nfs_present.rc == 0
+    when: nfs_present is defined and nfs_present.rc == 0
     register: nfs_service_result
     failed_when: "nfs_service_result|failed and 'service not found' not in nfs_service_result.msg"
     tags:

@@ -1,26 +1,11 @@
 ---
 
-  - name: 2.0.1 Check the presence of the file "cis.conf" under modprobe.d
-    stat: >
-        path=/etc/modprobe.d/CIS.conf
-    register: cis_conf_file
-    tags:
-      - section2
-      - section2.18
-
-  - name: 2.0.2 Create the file "cis.conf" under modprobe.d if doesn't exist
-    file: >
-        dest=/etc/modprobe.d/CIS.conf state=touch
-    when: not cis_conf_file.stat.exists
-    tags:
-      - section2
-      - section2.18
-
   - name: 2.18 Disable Mounting of cramfs Filesystems (Not Scored)
     lineinfile: >
         dest=/etc/modprobe.d/CIS.conf
         line='install cramfs /bin/true'
         state=present
+        create=yes
     tags:
       - section2
       - section2.18
@@ -30,6 +15,7 @@
         dest=/etc/modprobe.d/CIS.conf
         line='install freevxfs /bin/true'
         state=present
+        create=yes
     tags:
       - section2
       - section2.19
@@ -39,6 +25,7 @@
         dest=/etc/modprobe.d/CIS.conf
         line='install jffs2 /bin/true'
         state=present
+        create=yes
     tags:
       - section2
       - section2.20
@@ -48,6 +35,7 @@
         dest=/etc/modprobe.d/CIS.conf
         line='install hfs /bin/true'
         state=present
+        create=yes
     tags:
       - section2
       - section2.21
@@ -57,6 +45,7 @@
         dest=/etc/modprobe.d/CIS.conf
         line='install hfsplus /bin/true'
         state=present
+        create=yes
     tags:
       - section2
       - section2.22
@@ -66,6 +55,7 @@
         dest=/etc/modprobe.d/CIS.conf
         line='install squashfs /bin/true'
         state=present
+        create=yes
     tags:
       - section2
       - section2.23
@@ -75,6 +65,7 @@
         dest=/etc/modprobe.d/CIS.conf
         line='install udf /bin/true'
         state=present
+        create=yes
     tags:
       - section2
       - section2.24
