@@ -1,5 +1,4 @@
-CIS for Ubuntu 14.04
-====================
+# CIS for Ubuntu 14.04
 
 [![Build Status](https://travis-ci.org/awailly/cis-ubuntu-ansible.svg?branch=master)](https://travis-ci.org/awailly/cis-ubuntu-ansible)
 [![Build Status](https://drone.io/github.com/awailly/cis-ubuntu-ansible/status.png)](https://drone.io/github.com/awailly/cis-ubuntu-ansible/latest)
@@ -8,17 +7,18 @@ CIS for Ubuntu 14.04
 [![Coverage Status](https://coveralls.io/repos/awailly/cis-ubuntu-ansible/badge.svg?branch=master)](https://coveralls.io/r/awailly/cis-ubuntu-ansible?branch=master)
 
 
-
-Prerequisites
------
+## Prerequisites
 
 Install dependencies (on Ubuntu 14.04):
 
-    $ sudo apt-get install ansible
+    $ sudo apt-get install pip
+    $ sudo pip install ansible==1.9.0.1
 
-Usage
------
+## Usage
 
+### Setting up the environment
+
+The following commands are only needed if you never
 Create a placeholder:
 
     $ mkdir ansible
@@ -45,11 +45,13 @@ Create a file containing hosts:
     172.30.3.7
     EOF
 
+### Running the role
+
 Run the playbook with a version of ansible higher than 1.8:
 
     $ ansible-playbook -e "pipelining=True" -s -u ubuntu --private-key=~/.ssh/id_rsa -i ./inventory.txt playbook.yml
 
-CONTRIBUTING
-------------
+Contributions
+-------------
 
 I need your github handle!
