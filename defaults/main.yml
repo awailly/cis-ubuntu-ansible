@@ -38,3 +38,6 @@ run_shm_read_only: False
 
 # Set this flag if the kernel has TCP syncookies support.
 enable_tcp_syncookies: True
+
+# Set this flag to randomize virtual memory region placement.
+enable_aslr: True
