@@ -9,6 +9,8 @@
 
 ## Prerequisites
 
+The role is focused on hardening an Ubuntu 14.04 system. However it has been successfully tested on other Debian based systems (Debian 8, Raspbian).
+
 Install dependencies (on Ubuntu 14.04):
 
     $ sudo apt-get install pip
@@ -51,7 +53,12 @@ Run the playbook with a version of ansible higher than 1.8:
 
     $ ansible-playbook -e "pipelining=True" -s -u ubuntu --private-key=~/.ssh/id_rsa -i ./inventory.txt playbook.yml
 
-Contributions
--------------
+Note that this command will perform modifications on the target. Add the `-C` option to only check for modifications and audit the system. However, some tasks cannot be audited as they need to register a variable on the target and thus modify the system.
+
+## Documentation
+
+The details of each tasks operated on the target system is available in the [online documentation](http://cis-ubuntu-ansible.readthedocs.org/en/latest/). It is build on every commit based on the `docs/` repository content.
+
+## Contributions
 
 I need your github handle!
