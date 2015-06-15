@@ -73,6 +73,7 @@
        name=kernel.randomize_va_space
        value=2
        state=present
+    when: enable_aslr
     tags:
       - section4
       - section4.3
