@@ -16,6 +16,7 @@ Install dependencies (on Ubuntu 14.04):
     $ sudo apt-get install pip
     $ sudo pip install ansible==1.9.0.1
 
+
 ## Usage
 
 ### Setting up the environment
@@ -47,6 +48,7 @@ Create a file containing hosts:
     172.30.3.7
     EOF
 
+
 ### Running the role
 
 Run the playbook with a version of ansible higher than 1.8:
@@ -55,10 +57,12 @@ Run the playbook with a version of ansible higher than 1.8:
 
 Note that this command will perform modifications on the target. Add the `-C` option to only check for modifications and audit the system. However, some tasks cannot be audited as they need to register a variable on the target and thus modify the system.
 
+
 ## Documentation
 
 The details of each tasks operated on the target system is available in the [online documentation](http://cis-ubuntu-ansible.readthedocs.org/en/latest/). It is build on every commit based on the `docs/` repository content.
 
-## Contributions
 
-I need your github handle!
+## License
+
+This project is under [GPL license](LICENSE).
