@@ -41,3 +41,8 @@ enable_tcp_syncookies: True
 
 # Set this flag to randomize virtual memory region placement.
 enable_aslr: True
+
+# Set this flag if you have a remote rsyslog server to send logs.
+# WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage
+#
+send_rsyslog_remote: True

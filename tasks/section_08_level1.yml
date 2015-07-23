@@ -116,7 +116,7 @@
        line="*.* @@{{Remote_Logs_Host_Address}}"
        insertafter=EOF
        state=present
-    when: remoteloghost.rc == 1
+    when: send_rsyslog_remote == True and remoteloghost.rc == 1
     tags:
       - section8
       - section8.2
@@ -142,7 +142,7 @@
     with_items:
         - '$ModLoad imtcp'
         - '$InputTCPServerRun 514'
-    when: moadloadpresent.rc == 1
+    when: send_rsyslog_remote == True and moadloadpresent.rc == 1
     changed_when: False
     notify: restart rsyslog
     tags:
