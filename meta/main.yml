@@ -7,7 +7,7 @@ galaxy_info:
   author: Aurélien Wailly
   description: Ansible role to meet CIS (Center for Internet Security) requirements on ubuntu
   license: GPLv2
-  min_ansible_version: 1.6
+  min_ansible_version: 1.9.0.1
   platforms:
     - name: Ubuntu
       versions:
