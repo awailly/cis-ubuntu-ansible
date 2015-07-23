@@ -53,10 +53,11 @@ Create a file containing hosts:
 
 Run the playbook with a version of ansible higher than 1.8:
 
-    $ ansible-playbook -e "pipelining=True" -s -u ubuntu --private-key=~/.ssh/id_rsa -i ./inventory.txt playbook.yml
+    $ ansible-playbook -e "pipelining=True" -b -u ubuntu --private-key=~/.ssh/id_rsa -i ./inventory.txt playbook.yml
 
 Note that this command will perform modifications on the target. Add the `-C` option to only check for modifications and audit the system. However, some tasks cannot be audited as they need to register a variable on the target and thus modify the system.
 
+If the user you are using is not privileged you have to use the `-b` (`become`) option to perform privilege escalation. The password required to become superuser can be specified with the `--ask-become-pass` option.
 
 ## Documentation
 
