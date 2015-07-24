@@ -8,7 +8,7 @@
 
 ## Prerequisites
 
-The role is focused on hardening an Ubuntu 14.04 system. However it has been successfully tested on other Debian based systems (Debian 8, Raspbian).
+The role is focused on hardening an Ubuntu 14.04 system. However it has been successfully tested on other Debian based systems (Debian 8, Raspbian). The minimum requirements are `ssh`, `aptitude` and `python2`.
 
 Install dependencies (on Ubuntu 14.04):
 
