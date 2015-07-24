@@ -68,6 +68,12 @@ If the user you are using is not privileged you have to use the `-b` (`become`) 
 
 The details of each tasks operated on the target system is available in the [online documentation](http://cis-ubuntu-ansible.readthedocs.org/en/latest/). It is build on every commit based on the `docs/` repository content.
 
+## Contributing
+
+We accept modifications through pull requests. Please note that CI tests and code coverage are being performed automatically. All tests have to pass before accepting the contribution.
+
+Issues are welcome too, and we expect reproductible steps to have efficient discussions.
+
 ## License
 
 This project is under [GPL license](LICENSE).
