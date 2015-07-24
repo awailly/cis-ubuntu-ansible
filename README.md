@@ -6,8 +6,9 @@
 [![Code coverage](https://drone.io/github.com/awailly/cis-ubuntu-ansible/files/coverage.png?version=latest)](https://drone.io/github.com/awailly/cis-ubuntu-ansible)
 [![Coverage Status](https://coveralls.io/repos/awailly/cis-ubuntu-ansible/badge.svg?branch=master)](https://coveralls.io/r/awailly/cis-ubuntu-ansible?branch=master)
 
-
 ## Prerequisites
+
+The role is focused on hardening an Ubuntu 14.04 system. However it has been successfully tested on other Debian based systems (Debian 8, Raspbian). The minimum requirements are `ssh`, `aptitude` and `python2`.
 
 Install dependencies (on Ubuntu 14.04):
 
@@ -45,13 +46,34 @@ Create a file containing hosts:
     172.30.3.7
     EOF
 
+### Tuning the environment
+
+You have to tune the environment to match your security requirements. The default is very restrictive and will perform strong modifications on the system. All requirements are enabled and may not work. For example the rsyslog server address have to be defined to respect the CIS rule.
+
+*Read `default/main.yml` file and set your variables in `vars/main.yml`*
+
+For the CI tests we only create specific files for the environment (see `tests/travis_defaults.yml`) in the `vars/` directory.
+
 ### Running the role
 
 Run the playbook with a version of ansible higher than 1.8:
 
-    $ ansible-playbook -e "pipelining=True" -s -u ubuntu --private-key=~/.ssh/id_rsa -i ./inventory.txt playbook.yml
+    $ ansible-playbook -e "pipelining=True" -b -u ubuntu --private-key=~/.ssh/id_rsa -i ./inventory.txt playbook.yml
 
-Contributions
--------------
+Note that this command will perform modifications on the target. Add the `-C` option to only check for modifications and audit the system. However, some tasks cannot be audited as they need to register a variable on the target and thus modify the system.
 
-I need your github handle!
+If the user you are using is not privileged you have to use the `-b` (`become`) option to perform privilege escalation. The password required to become superuser can be specified with the `--ask-become-pass` option.
+
+## Documentation
+
+The details of each tasks operated on the target system is available in the [online documentation](http://cis-ubuntu-ansible.readthedocs.org/en/latest/). It is build on every commit based on the `docs/` repository content.
+
+## Contributing
+
+We accept modifications through pull requests. Please note that CI tests and code coverage are being performed automatically. All tests have to pass before accepting the contribution.
+
+Issues are welcome too, and we expect reproductible steps to have efficient discussions.
+
+## License
+
+This project is under [GPL license](LICENSE).
