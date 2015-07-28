@@ -113,7 +113,7 @@
   - name: 8.2.5.2 Configure rsyslog to Send Logs to a Remote Log Host (Scored)
     lineinfile:
        dest=/etc/rsyslog.conf
-       line="*.* @@{{Remote_Logs_Host_Address}}"
+       line="*.* @@{{remote_logs_host_address}}"
        insertafter=EOF
        state=present
     when: send_rsyslog_remote == True and remoteloghost.rc == 1
