@@ -9,3 +9,6 @@ restrict_core_dumps: False
 
 # Disable all ipv6 interfaces. Suggested if the protocol is not used.
 disable_ipv6: False
+
+# Not loosing coverage.
+send_rsyslog_remote: True

@@ -6,7 +6,6 @@ partitioning: False
 root_password: $6$5Mklo2YKvXOM50Zj$E8w4oiykpG9WiElxwHLx85rFFFG0z/lu0vp0wiU0SAnMnw0CmYhmArxvLxBjWQ6XVHv88XQyfpTjX4CPH89hf1
 
 
-
 # Enable the activate_ufw variable with True to install and enable service on boot.
 # NOTE: If not properly configured it may result in incorrect services behavior.
 activate_ufw: True
@@ -26,7 +25,7 @@ use_pam_cracklib: True
 # The execution is faster without packages upgrade.
 apt_upgrade: True
 
-# Modify the kernel behavior to disallow dump of suid binaries
+# Modify the kernel behavior to disallow dump of suid binaries.
 restrict_core_dumps: True
 
 # Disable all ipv6 interfaces. Suggested if the protocol is not used.
@@ -49,7 +48,8 @@ enable_aslr: True
 max_log_file_auditd: 200
 
 # Set this flag if you have a remote rsyslog server to send logs.
-send_rsyslog_remote: True
+# WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage.
+send_rsyslog_remote: False
 
 # Set rsyslog's logs remote server address to send logs. 
 # WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage
