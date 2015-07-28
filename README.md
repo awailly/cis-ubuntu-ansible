@@ -77,3 +77,7 @@ Issues are welcome too, and we expect reproductible steps to have efficient disc
 ## License
 
 This project is under [GPL license](LICENSE).
+
+## Contact
+
+We have a dedicated IRC channel for the project on chat.freenode.net. Join us on ##cis-ansible or with the [direct link](https://kiwiirc.com/client/irc.freenode.net/?nick=GuestAnsib|?##cis-ansible).

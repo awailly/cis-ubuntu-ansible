@@ -5,10 +5,6 @@ partitioning: False
 # Default root password: root
 root_password: $6$5Mklo2YKvXOM50Zj$E8w4oiykpG9WiElxwHLx85rFFFG0z/lu0vp0wiU0SAnMnw0CmYhmArxvLxBjWQ6XVHv88XQyfpTjX4CPH89hf1
 
-Max_Log_File_Auditd: 200
-
-# Remote rsyslog server.
-Remote_Logs_Host_Address: 127.0.0.1
 
 # Enable the activate_ufw variable with True to install and enable service on boot.
 # NOTE: If not properly configured it may result in incorrect services behavior.
@@ -44,6 +40,17 @@ enable_tcp_syncookies: True
 # Set this flag to randomize virtual memory region placement.
 enable_aslr: True
 
+
+
+# Section 08
+
+# Set auditd logs file size in /var/log/auditd
+max_log_file_auditd: 200
+
 # Set this flag if you have a remote rsyslog server to send logs.
 # WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage.
 send_rsyslog_remote: False
+
+# Set rsyslog's logs remote server address to send logs. 
+# WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage
+remote_logs_host_address: 127.0.0.1

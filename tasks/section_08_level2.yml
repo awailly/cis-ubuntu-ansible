@@ -38,7 +38,7 @@
         state=present
         create=yes
     with_items:
-      - { rxp: '^max_log_file ', line: 'max_log_file = {{ Max_Log_File_Auditd }}' }
+      - { rxp: '^max_log_file ', line: 'max_log_file = {{ max_log_file_auditd }}' }
       - { rxp: '^space_left_action', line: 'space_left_action = email' }
       - { rxp: '^action_mail_acct', line: 'action_mail_acct = root' }
       - { rxp: '^admin_space_left_action', line: 'admin_space_left_action = halt' }
