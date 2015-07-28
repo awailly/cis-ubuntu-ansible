@@ -6,6 +6,8 @@ partitioning: False
 root_password: $6$5Mklo2YKvXOM50Zj$E8w4oiykpG9WiElxwHLx85rFFFG0z/lu0vp0wiU0SAnMnw0CmYhmArxvLxBjWQ6XVHv88XQyfpTjX4CPH89hf1
 
 Max_Log_File_Auditd: 200
+
+# Remote rsyslog server.
 Remote_Logs_Host_Address: 127.0.0.1
 
 # Enable the activate_ufw variable with True to install and enable service on boot.
@@ -27,7 +29,7 @@ use_pam_cracklib: True
 # The execution is faster without packages upgrade.
 apt_upgrade: True
 
-# Modify the kernel behavior to disallow dump of suid binaries
+# Modify the kernel behavior to disallow dump of suid binaries.
 restrict_core_dumps: True
 
 # Disable all ipv6 interfaces. Suggested if the protocol is not used.
@@ -43,6 +45,5 @@ enable_tcp_syncookies: True
 enable_aslr: True
 
 # Set this flag if you have a remote rsyslog server to send logs.
-# WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage
-#
-send_rsyslog_remote: True
+# WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage.
+send_rsyslog_remote: False
