@@ -76,10 +76,9 @@ Intrusions attempts and others suspicious system behavior must be monitor using 
 
 Because it is often necessary to correlate log information from many different systems it is recommended that the time be synchronized among systems and devices connected to the local network.
 
-```
 (*) Warning : Do not configure the IP address for remote logs server with the localhost
     address (127.0.0.1), if so, rsyslog will hit 100% of the CPU usage
-```
+
 
 ### 9 - System Access, Authentication and Authorization
 
