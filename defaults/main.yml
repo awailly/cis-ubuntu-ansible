@@ -26,7 +26,7 @@ use_pam_cracklib: True
 # The execution is faster without packages upgrade.
 apt_upgrade: True
 
-# Modify the kernel behavior to disallow dump of suid binaries
+# Modify the kernel behavior to disallow dump of suid binaries.
 restrict_core_dumps: True
 
 # Disable all ipv6 interfaces. Suggested if the protocol is not used.
@@ -49,7 +49,8 @@ enable_aslr: True
 max_log_file_auditd: 200
 
 # Set this flag if you have a remote rsyslog server to send logs.
-send_rsyslog_remote: True
+# WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage.
+send_rsyslog_remote: False
 
 # Set rsyslog's logs remote server address to send logs. 
 # WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage
