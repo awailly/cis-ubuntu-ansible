@@ -12,8 +12,10 @@ The role is focused on hardening an Ubuntu 14.04 system. However it has been suc
 
 Install dependencies (on Ubuntu 14.04):
 
-    $ sudo apt-get install pip
-    $ sudo pip install ansible==1.9.0.1
+```bash
+$ sudo apt-get install pip
+$ sudo pip install ansible
+```
 
 ## Usage
 
@@ -22,29 +24,35 @@ Install dependencies (on Ubuntu 14.04):
 The following commands are only needed if you never
 Create a placeholder:
 
-    $ mkdir ansible
-    $ cd ansible
-    $ git clone https://github.com/awailly/cis-ubuntu-ansible.git
-    $ mkdir roles-ubuntu
-    $ cd roles-ubuntu
-    $ mkdir roles
-    $ ln -s ~/ansible/cis-ubuntu-ansible roles/cis
+```bash
+$ mkdir ansible
+$ cd ansible
+$ git clone https://github.com/awailly/cis-ubuntu-ansible.git
+$ mkdir roles-ubuntu
+$ cd roles-ubuntu
+$ mkdir roles
+$ ln -s ~/ansible/cis-ubuntu-ansible roles/cis
+```
 
 Create a playbook in the roles-ubuntu folder:
 
-    $ cat >>  playbook.yml << 'EOF'
-    ---
-    - hosts: all
-      roles:
-        - { role: cis, when: "ansible_version.full | version_compare('1.8', '>=')" }
-    EOF
+```bash
+$ cat >>  playbook.yml << 'EOF'
+---
+- hosts: all
+  roles:
+    - { role: cis, when: "ansible_version.full | version_compare('1.8', '>=')" }
+EOF
+```
 
 Create a file containing hosts:
 
-    $ cat >>  inventory.txt << 'EOF'
-    [projet]
-    172.30.3.7
-    EOF
+```bash
+$ cat >>  inventory.txt << 'EOF'
+[projet]
+172.30.3.7
+EOF
+```
 
 ### Tuning the environment
 
@@ -81,3 +89,4 @@ This project is under [GPL license](LICENSE).
 ## Contact
 
 We have a dedicated IRC channel for the project on chat.freenode.net. Join us on ##cis-ansible or with the [direct link](https://kiwiirc.com/client/irc.freenode.net/?nick=GuestAnsib|?##cis-ansible).
+
