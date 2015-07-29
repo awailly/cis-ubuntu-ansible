@@ -8,6 +8,14 @@
     stat: path=/extlinux.conf
     register: extlinux_cfg_file
 
+  - name: Determines if apparmor is already set in boot config
+    lineinfile: >
+        dest='/boot/config-{{ ansible_kernel }}'
+        regexp='CONFIG_DEFAULT_SECURITY_APPARMOR'
+        line="CONFIG_DEFAULT_SECURITY_APPARMOR=y"
+        state=present
+    register: boot_cfg_apparmor
+
   - name: 4.5 Activate AppArmor (install) (Scored)
     apt: >
         name=apparmor
@@ -33,11 +41,11 @@
         dest='/extlinux.conf'
         regexp="^append initrd="
         line="append initrd={{ ansible_cmdline['initrd'] }} root={{ ansible_cmdline['root'] }} console=tty0 console={{ ansible_cmdline['console'] }} apparmor=1 security=apparmor ro quiet"
-    when: use_apparmor == True and extlinux_cfg_file.stat.exists
+    when: (use_apparmor == True and extlinux_cfg_file.stat.exists) and boot_cfg_apparmor.changed != "False"
     tags:
       - section4
       - section4.5
-  
+
   - name: 4.5 Activate AppArmor (start) (Scored)
     service: >
         name=apparmor
@@ -51,7 +59,7 @@
 
   - name: Determine if Apparmor started without error
     fail: msg="Apparmor can not be started. This is normal behavior if you run the playbook for the first time. Please run it again to proceed with the rest of the playbook."
-    when: apparmor_status.state != "started"
+    when: apparmor_status.failed is defined
 
   - name: 4.5 Activate AppArmor (fix profiles) (Scored)
     service: >
