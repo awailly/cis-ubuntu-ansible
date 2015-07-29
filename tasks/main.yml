@@ -1,5 +1,9 @@
 ---
 
+  - name: Check if OS is Debian-based (we do not support others)
+    debug: "Check family"
+    failed_when: ansible_os_family != "Debian"
+
   - include: section_01.yml
     tags: section01
 
