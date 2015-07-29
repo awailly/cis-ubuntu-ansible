@@ -75,9 +75,6 @@ Finally, it is encourage to activate the Firewall. IPtables is an application th
 Intrusions attempts and others suspicious system behavior must be monitor using log monitoring and auditing tools. It is recommended that rsyslog be used for logging and auditd be used for auditing. In addition to the local log files, it is also recommended that system collect copies of their system logs on a secure, centralized log server via an encrypted connection (*). Indeed, the attacker modifies the local log files on the affected system.
 
 Because it is often necessary to correlate log information from many different systems it is recommended that the time be synchronized among systems and devices connected to the local network.
-```
-(*) Warning : Do not configure the IP address for remote logs server with the localhost address (127.0.0.1), if so, rsyslog will hit 100% of the CPU usage
-```
 
 ```
 (*) Warning : Do not configure the IP address for remote logs server with the localhost
