@@ -1,8 +1,6 @@
 ---
 
-  - name: Check if OS is Debian-based (we do not support others)
-    debug: "Check family"
-    failed_when: ansible_os_family != "Debian" or ansible_version.full | version_compare('1.8', '<')
+  - include: check_requirements.yml
 
   - include: section_01.yml
     tags: section01
