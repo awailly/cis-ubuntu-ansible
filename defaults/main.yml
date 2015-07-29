@@ -1,5 +1,10 @@
+# Section 13
+
 # This variable defines if accounts without password have to be locked
 lock_shadow_accounts: False
+
+# Section 02
+
 partitioning: False
 
 # Default root password: root
