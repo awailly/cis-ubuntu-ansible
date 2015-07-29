@@ -5,6 +5,7 @@ partitioning: False
 # Default root password: root
 root_password: $6$5Mklo2YKvXOM50Zj$E8w4oiykpG9WiElxwHLx85rFFFG0z/lu0vp0wiU0SAnMnw0CmYhmArxvLxBjWQ6XVHv88XQyfpTjX4CPH89hf1
 
+# Section 07
 
 # Enable the activate_ufw variable with True to install and enable service on boot.
 # NOTE: If not properly configured it may result in incorrect services behavior.
