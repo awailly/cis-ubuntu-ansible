@@ -1,5 +1,13 @@
 ---
 
+  - name: Determines if grub is used
+    stat: path=/boot/grub/grub.cfg
+    register: grub_cfg_file
+
+  - name: Determines if extlinux is used
+    stat: path=/extlinux.conf
+    register: extlinux_cfg_file
+
   - name: 4.5 Activate AppArmor (install) (Scored)
     apt: >
         name=apparmor
@@ -9,15 +17,42 @@
       - section4
       - section4.5
 
+  - name: 4.5 Activate AppArmor (Kernel LSM - grub)
+    lineinfile: >
+        dest='/etc/default/grub'
+        regexp='^GRUB_CMDLINE_LINUX=""'
+        line='GRUB_CMDLINE_LINUX=apparmor="1 security=apparmor"'
+        state=present
+    when: use_apparmor == True and grub_cfg_file.stat.exists
+    tags:
+      - section4
+      - section4.5
+
+  - name: 4.5 Activate AppArmor (Kernel LSM - extlinux)
+    lineinfile: >
+        dest='/extlinux.conf'
+        regexp="^append initrd="
+        line="append initrd={{ ansible_cmdline['initrd'] }} root={{ ansible_cmdline['root'] }} console=tty0 console={{ ansible_cmdline['console'] }} apparmor=1 security=apparmor ro quiet"
+    when: use_apparmor == True and extlinux_cfg_file.stat.exists
+    tags:
+      - section4
+      - section4.5
+  
   - name: 4.5 Activate AppArmor (start) (Scored)
     service: >
         name=apparmor
         state=started
     when: use_apparmor == True
+    register: apparmor_status
+    ignore_errors: True
     tags:
       - section4
       - section4.5
-      
+
+  - name: Determine if Apparmor started without error
+    fail: msg="Apparmor can not be started. This is normal behavior if you run the playbook for the first time. Please run it again to proceed with the rest of the playbook."
+    when: apparmor_status.state != "started"
+
   - name: 4.5 Activate AppArmor (fix profiles) (Scored)
     service: >
         name=rsyslog
