@@ -55,7 +55,7 @@ max_log_file_auditd: 200
 
 # Set this flag if you have a remote rsyslog server to send logs.
 # WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage.
-send_rsyslog_remote: False
+set_rsyslog_remote: False
 
 # Set rsyslog's logs remote server address to send logs. 
 # WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage

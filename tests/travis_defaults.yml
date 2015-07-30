@@ -11,4 +11,4 @@ restrict_core_dumps: False
 disable_ipv6: False
 
 # Not loosing coverage.
-send_rsyslog_remote: True
+set_rsyslog_remote: True
