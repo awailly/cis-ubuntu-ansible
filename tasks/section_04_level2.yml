@@ -1,5 +1,30 @@
 ---
 
+  - name: Check if the grub config file exists
+    stat: path=/etc/default/grub
+    register: grub_cfg_file
+
+  - name: Determines if apparmor is set in grub config
+    command: "grep 'GRUB_CMDLINE_LINUX' /etc/default/grub"
+    register: grub_apparmor
+    changed_when: False
+    when: grub_cfg_file.stat.exists
+
+  - name: Check if the extlinux config file exists
+    stat: path=/extlinux.conf
+    register: extlinux_cfg_file
+
+  - name: Determines if apparmor is set in extlinux
+    command: "grep 'apparmor' /extlinux.conf"
+    register: extlinux_apparmor
+    changed_when: False
+    when: extlinux_cfg_file.stat.exists
+
+  - name: Determines if apparmor is already set in boot config
+    command: "grep CONFIG_DEFAULT_SECURITY_APPARMOR /boot/config-{{ ansible_kernel }}"
+    register: boot_apparmor
+    changed_when: False
+
   - name: 4.5 Activate AppArmor (install) (Scored)
     apt: >
         name=apparmor
@@ -9,15 +34,42 @@
       - section4
       - section4.5
 
+  - name: 4.5 Activate AppArmor (Kernel LSM - grub)
+    lineinfile: >
+        dest='/etc/default/grub'
+        regexp='^GRUB_CMDLINE_LINUX=""'
+        line='GRUB_CMDLINE_LINUX=apparmor="1 security=apparmor"'
+        state=present
+    when: "(use_apparmor == True) and grub_cfg_file.stat.exists and ('apparmor' not in grub_apparmor['stdout']) and ('not set' in boot_apparmor['stdout'])"
+    tags:
+      - section4
+      - section4.5
+
+  - name: 4.5 Activate AppArmor (Kernel LSM - extlinux)
+    lineinfile: >
+        dest='/extlinux.conf'
+        regexp="^append initrd="
+        line="append initrd={{ ansible_cmdline['initrd'] }} root={{ ansible_cmdline['root'] }} console=tty0 console={{ ansible_cmdline['console'] }} apparmor=1 security=apparmor ro quiet"
+    when: "(use_apparmor == True) and extlinux_cfg_file.stat.exists and ('apparmor' not in extlinux_apparmor['stdout']) and ('not set' in boot_cfg_apparmor['stdout'])"
+    tags:
+      - section4
+      - section4.5
+
   - name: 4.5 Activate AppArmor (start) (Scored)
     service: >
         name=apparmor
         state=started
     when: use_apparmor == True
+    register: apparmor_status
+    ignore_errors: True
     tags:
       - section4
       - section4.5
-      
+
+  - name: Determine if Apparmor started without error
+    fail: msg="Apparmor can not be started. This is normal behavior if you run the playbook for the first time.\nPlease reboot the machine and run it again to proceed with the rest of the playbook."
+    when: apparmor_status.failed is defined
+
   - name: 4.5 Activate AppArmor (fix profiles) (Scored)
     service: >
         name=rsyslog
