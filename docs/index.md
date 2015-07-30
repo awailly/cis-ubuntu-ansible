@@ -10,7 +10,7 @@ To obtain the latest version of the CIS Security Benchmarks please visit http://
 ## Contents
 
 * [Hardwatt homepage](www.hardwatt-project.orange.com) - Start the security hardening of a server.
-* [Secwatt library homepage](www.hardwatt-project.orange.com) - Download secure Docker instance.
+* [Secwatt library homepage](https://registry.hub.docker.com/u/awailly/cis-ubuntu-ansible/) - Download secure Docker instances.
 
 !! Caution !!
 
