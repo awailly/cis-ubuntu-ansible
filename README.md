@@ -41,7 +41,7 @@ $ cat >>  playbook.yml << 'EOF'
 ---
 - hosts: all
   roles:
-    - { role: cis, when: "ansible_version.full | version_compare('1.8', '>=')" }
+    - cis
 EOF
 ```
 
