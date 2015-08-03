@@ -66,9 +66,20 @@
       - section4
       - section4.5
 
-  - name: Determine if Apparmor started without error
+  - name: 4.5 Determine if Apparmor started without error
     fail: msg="Apparmor can not be started. This is normal behavior if you run the playbook for the first time.\nPlease reboot the machine and run it again to proceed with the rest of the playbook."
     when: apparmor_status.failed is defined
+
+  - name: 4.5 Fix rsyslog /run/utmp permissions
+    lineinfile: >
+        dest="/etc/apparmor.d/usr.sbin.rsyslogd"
+        line="  /run/utmp rk,"
+        insertbefore="  /var/spool/rsyslog/ r,"
+        state=present
+    when: use_apparmor == True
+    tags:
+      - section4
+      - section4.5
 
   - name: 4.5 Activate AppArmor (fix profiles) (Scored)
     service: >
