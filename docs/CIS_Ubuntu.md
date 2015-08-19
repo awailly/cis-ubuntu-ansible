@@ -89,6 +89,13 @@ PAM (Pluggable Authentication Modules) is a service that implements modular auth
 
 It is strongly recommended that sites abandon older clear-text protocols such as telnet, ftp, rlogin, rsh and rcp and use SSH to prevent session hijacking and sniffing of sensitive data off the network. If the ssh server is used, it must be carefully configured to prevent security issues.
 
+#### SSH fingerprint
+
+The section 9.13 affects SSH configuration. As a result of those configurations, the fingerprint of the SSH public key will be different on the next reboot of the system. This is normal behavior and you will be warned about the change of the fingerprint when you will try to connect to it again.
+
+To remove old fingerprint you can use the following command :
+`ssh-keygen -f "~/.ssh/known_hosts" -R {{ip_of_distant_system}}`
+
 #### Ignoring errors for 9.3.13
 
 The tasks 9.3.13.X check for allowed users and groups to connect on the system. We cannot define the allowed users without risking to lock the system. You can define the `AllowUsers`, `AllowGroups`, `DenyUsers` and `DenyGroups` to respect your current security rules.
