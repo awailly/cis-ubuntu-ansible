@@ -21,17 +21,12 @@ $ sudo pip install ansible
 
 ### Setting up the environment
 
-The following commands are only needed if you never
 Create a placeholder:
 
 ```bash
-$ mkdir ansible
-$ cd ansible
+$ mkdir -p ansible/roles-ubuntu/roles
+$ cd ansible/roles-ubuntu/roles
 $ git clone https://github.com/awailly/cis-ubuntu-ansible.git
-$ mkdir roles-ubuntu
-$ cd roles-ubuntu
-$ mkdir roles
-$ ln -s ~/ansible/cis-ubuntu-ansible roles/cis
 ```
 
 Create a playbook in the roles-ubuntu folder:
