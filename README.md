@@ -21,15 +21,15 @@ $ sudo pip install ansible
 
 ### Setting up the environment
 
-Create a placeholder:
+Create a placeholder to describe your machine:
 
 ```bash
 $ mkdir -p ansible/roles-ubuntu/roles
 $ cd ansible/roles-ubuntu/roles
-$ git clone https://github.com/awailly/cis-ubuntu-ansible.git
+$ git clone https://github.com/awailly/cis-ubuntu-ansible.git cis
 ```
 
-Create a playbook in the roles-ubuntu folder:
+Create a playbook in the _roles-ubuntu_ folder:
 
 ```bash
 $ cat >>  playbook.yml << 'EOF'
@@ -40,7 +40,7 @@ $ cat >>  playbook.yml << 'EOF'
 EOF
 ```
 
-Create a file containing hosts:
+Create a file containing hosts and replace the IP with the host to harden:
 
 ```bash
 $ cat >>  inventory.txt << 'EOF'
