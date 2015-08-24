@@ -224,39 +224,6 @@
       - section8.1.14
       - section8.1.17
 
-  - name: 8.1.12 Collect Use of Privileged Commands (Scored)
-    shell: find / -xdev \( -perm -4000 -o -perm -2000 \) -type f | awk '{print "-a always,exit -F path=" $1 " -F perm=x -F auid>=500 -F auid!=4294967295 -k privileged" }'
-    register: audit_lines_for_find
-    changed_when: False
-    tags:
-      - section8
-      - section8.1
-      - section8.1.12
-
-  - name: 8.1.12 Collect Use of Privileged Commands (infos) (Scored)
-    lineinfile: >
-        dest=/etc/audit/audit.rules
-        line='{{ item }}'
-        state=present
-        create=yes
-    with_items: audit_lines_for_find.stdout_lines
-    tags:
-      - section8
-      - section8.1
-      - section8.1.12
-
-  - name: 8.1.18 Make the Audit Configuration Immutable (Scored)
-    lineinfile: >
-        dest='/etc/audit/audit.rules'
-        line='-e 2'
-        insertafter=EOF
-        state=present
-        create=yes
-    tags:
-      - section8
-      - section8.1
-      - section8.1.18
-
   - name: 8.3.1 Install AIDE (Scored)
     apt: name=aide state=present
     register: aide_installed
@@ -299,3 +266,38 @@
       - section8
       - section8.3
       - section8.3.2
+
+  # We have to run the check after AIDE installation as postfix create new matched binaries
+  - name: 8.1.12 Collect Use of Privileged Commands (Scored)
+    shell: find / -xdev \( -perm -4000 -o -perm -2000 \) -type f | awk '{print "-a always,exit -F path=" $1 " -F perm=x -F auid>=500 -F auid!=4294967295 -k privileged" }'
+    register: audit_lines_for_find
+    changed_when: False
+    tags:
+      - section8
+      - section8.1
+      - section8.1.12
+
+  - name: 8.1.12 Collect Use of Privileged Commands (infos) (Scored)
+    lineinfile: >
+        dest=/etc/audit/audit.rules
+        line='{{ item }}'
+        state=present
+        create=yes
+    with_items: audit_lines_for_find.stdout_lines
+    tags:
+      - section8
+      - section8.1
+      - section8.1.12
+
+  - name: 8.1.18 Make the Audit Configuration Immutable (Scored)
+    lineinfile: >
+        dest='/etc/audit/audit.rules'
+        line='-e 2'
+        insertafter=EOF
+        state=present
+        create=yes
+    tags:
+      - section8
+      - section8.1
+      - section8.1.18
+

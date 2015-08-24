@@ -214,6 +214,7 @@
   - name: 6.15 Configure Mail Transfer Agent for Local-Only Mode (Scored)
     lineinfile: >
         dest=/etc/postfix/main.cf
+        regexp='^inet_interfaces ='
         line='inet_interfaces = localhost'
         state=present
     when: postfix_main_cf.stat.exists == True
