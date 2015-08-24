@@ -13,8 +13,8 @@ The role is focused on hardening an Ubuntu 14.04 system. However it has been suc
 Install dependencies on your host (on Ubuntu 14.04):
 
 ```bash
-$ sudo apt-get install python-pip git
-$ sudo pip install ansible
+$ sudo apt-get install python-pip git python-dev
+$ sudo pip install ansible markupsafe
 ```
 
 ## Usage
