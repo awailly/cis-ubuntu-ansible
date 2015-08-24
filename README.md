@@ -50,9 +50,9 @@ For the CI tests we only create specific files for the environment (see `tests/t
 
 ### Running the role
 
-Replace the target information (user, IPADDRESS) and run the playbook with a version of ansible higher than 1.8:
+Replace the target information (USER, IPADDRESS) and run the playbook with a version of ansible higher than 1.8:
 
-    $ ansible-playbook -b -u ubuntu -i 'IPADDRESS,' playbook.yml
+    $ ansible-playbook -b -u USER -i 'IPADDRESS,' playbook.yml
 
 Note that this command will perform modifications on the target. Add the `-C` option to only check for modifications and audit the system. However, some tasks cannot be audited as they need to register a variable on the target and thus modify the system.
 
