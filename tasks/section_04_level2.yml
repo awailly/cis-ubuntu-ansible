@@ -85,6 +85,7 @@
     service: >
         name=rsyslog
         state=restarted
+    changed_when: False
     when: use_apparmor == True
     tags:
       - section4
