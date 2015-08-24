@@ -8,9 +8,9 @@
 
 ## Prerequisites
 
-The role is focused on hardening an Ubuntu 14.04 system. However it has been successfully tested on other Debian based systems (Debian 8, Raspbian). The minimum requirements are `ssh`, `aptitude` and `python2`.
+The role is focused on hardening an Ubuntu 14.04 system. However it has been successfully tested on other Debian based systems (Debian 8, Raspbian). The minimum requirements of the targeted system are `ssh`, `aptitude` and `python2`.
 
-Install dependencies (on Ubuntu 14.04):
+Install dependencies on your host (on Ubuntu 14.04):
 
 ```bash
 $ sudo apt-get install python-pip git
@@ -25,8 +25,8 @@ Create a placeholder to describe your machine:
 
 ```bash
 $ mkdir -p ansible/roles-ubuntu/roles
-$ cd ansible/roles-ubuntu/roles
-$ git clone https://github.com/awailly/cis-ubuntu-ansible.git cis
+$ cd ansible/roles-ubuntu
+$ git clone https://github.com/awailly/cis-ubuntu-ansible.git roles/cis
 ```
 
 Create a playbook in the _roles-ubuntu_ folder:
@@ -40,15 +40,6 @@ $ cat >>  playbook.yml << 'EOF'
 EOF
 ```
 
-Create a file containing hosts and replace the IP with the host to harden:
-
-```bash
-$ cat >>  inventory.txt << 'EOF'
-[projet]
-172.30.3.7
-EOF
-```
-
 ### Tuning the environment
 
 You have to tune the environment to match your security requirements. The default is very restrictive and will perform strong modifications on the system. All requirements are enabled and may not work. For example the rsyslog server address have to be defined to respect the CIS rule.
@@ -59,13 +50,21 @@ For the CI tests we only create specific files for the environment (see `tests/t
 
 ### Running the role
 
-Run the playbook with a version of ansible higher than 1.8:
+Replace the target information (USER, IPADDRESS) and run the playbook with a version of ansible higher than 1.8:
 
-    $ ansible-playbook -e "pipelining=True" -b -u ubuntu --private-key=~/.ssh/id_rsa -i ./inventory.txt playbook.yml
+    $ ansible-playbook -b -u USER -i 'IPADDRESS,' playbook.yml
 
 Note that this command will perform modifications on the target. Add the `-C` option to only check for modifications and audit the system. However, some tasks cannot be audited as they need to register a variable on the target and thus modify the system.
 
 If the user you are using is not privileged you have to use the `-b` (`become`) option to perform privilege escalation. The password required to become superuser can be specified with the `--ask-become-pass` option.
+
+### Optimizations
+
+Ansible come with some great options that can improve your operations:
+
+- Add the `-e "pipelining=True"` option to the command line to speed up the hardening process.
+- Specify the private key to use with the `--private-key=~/.ssh/id_rsa` option.
+- The conventional method to specify hosts in ansible is to create an `inventory` file and feed it with a group of hosts to process.
 
 ## Documentation
 
