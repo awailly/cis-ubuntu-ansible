@@ -1,26 +1,26 @@
 ---
 
-  - name: Check if the grub config file exists
+  - name: Check if the grub config file exists (Not Scored)
     stat: path=/etc/default/grub
     register: grub_cfg_file
 
-  - name: Determines if apparmor is set in grub config
+  - name: Determines if apparmor is set in grub config (Not Scored)
     command: "grep 'GRUB_CMDLINE_LINUX' /etc/default/grub"
     register: grub_apparmor
     changed_when: False
     when: grub_cfg_file.stat.exists
 
-  - name: Check if the extlinux config file exists
+  - name: Check if the extlinux config file exists (Not Scored)
     stat: path=/extlinux.conf
     register: extlinux_cfg_file
 
-  - name: Determines if apparmor is set in extlinux
+  - name: Determines if apparmor is set in extlinux (Not Scored)
     command: "grep 'apparmor' /extlinux.conf"
     register: extlinux_apparmor
     changed_when: False
     when: extlinux_cfg_file.stat.exists
 
-  - name: Determines if apparmor is already set in boot config
+  - name: Determines if apparmor is already set in boot config (Not Scored)
     command: "grep CONFIG_DEFAULT_SECURITY_APPARMOR /boot/config-{{ ansible_kernel }}"
     register: boot_apparmor
     changed_when: False
@@ -34,7 +34,7 @@
       - section4
       - section4.5
 
-  - name: 4.5 Activate AppArmor (Kernel LSM - grub)
+  - name: 4.5 Activate AppArmor (Kernel LSM - grub) (Scored)
     lineinfile: >
         dest='/etc/default/grub'
         regexp='^GRUB_CMDLINE_LINUX=""'
@@ -45,7 +45,7 @@
       - section4
       - section4.5
 
-  - name: 4.5 Activate AppArmor (Kernel LSM - extlinux)
+  - name: 4.5 Activate AppArmor (Kernel LSM - extlinux) (Scored)
     lineinfile: >
         dest='/extlinux.conf'
         regexp="^append initrd="
@@ -66,11 +66,11 @@
       - section4
       - section4.5
 
-  - name: 4.5 Determine if Apparmor started without error
+  - name: 4.5 Determine if Apparmor started without error (Not Scored)
     fail: msg="Apparmor can not be started. This is normal behavior if you run the playbook for the first time.\nPlease reboot the machine and run it again to proceed with the rest of the playbook."
     when: apparmor_status.failed is defined
 
-  - name: 4.5 Fix rsyslog /run/utmp permissions
+  - name: 4.5 Fix rsyslog /run/utmp permissions (Not Scored)
     lineinfile: >
         dest="/etc/apparmor.d/usr.sbin.rsyslogd"
         line="  /run/utmp rk,"

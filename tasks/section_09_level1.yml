@@ -72,7 +72,7 @@
       - section9
       - section9.1
       - section9.1.8
-  
+
   - name: 9.1.8 Restrict at/cron to Authorized Users (preparation) (Scored)
     stat: path=/etc/cron.allow
     register: cron_allow_path
@@ -119,7 +119,7 @@
       - section9
       - section9.1
       - section9.1.8
- 
+
   - name: 9.2.1 Set Password Creation Requirement Parameters Using pam_cracklib (install) (Scored)
     apt: name=libpam-cracklib state=present
     when: use_pam_cracklib == True
@@ -127,7 +127,7 @@
       - section9
       - section9.2
       - section9.2.1
-      
+
   - name: 9.2.1 Set Password Creation Requirement Parameters Using pam_cracklib (Scored)
     lineinfile: >
         dest='/etc/pam.d/common-password'
@@ -141,13 +141,13 @@
       - section9.2.1
 
 #Note for section 9.2.2:
-#If a user has been locked out because they have reached the maximum consecutive failure count 
+#If a user has been locked out because they have reached the maximum consecutive failure count
 #defined by denied= in the pam_tally2.so module, the user can be unlocked by issuing the command
 #/sbin/pam_tally2 -u username --reset
 #This command sets the failed count to 0, effectively unlocking the user
   - name: 9.2.2 Set Lockout for Failed Password Attempts (Not Scored)
     lineinfile: >
-        dest='/etc/pam.d/login' 
+        dest='/etc/pam.d/login'
         regexp='pam_tally2'
         line="auth required pam_tally2.so onerr=fail audit silent deny=5 unlock_time=900"
         state=present
@@ -158,7 +158,7 @@
 
   - name: 9.2.3 Limit Password Reuse (Scored)
     lineinfile: >
-        dest='/etc/pam.d/common-password' 
+        dest='/etc/pam.d/common-password'
         regexp='remember=5'
         line="password sufficient pam_unix.so remember=5"
         state=present
@@ -167,7 +167,7 @@
       - section9.2
       - section9.2.3
 
-  - name: 9.3 Check if ssh is installed (check)
+  - name: 9.3 Check if ssh is installed (check) (Not Scored)
     stat: path='/etc/ssh/sshd_config'
     register: ssh_config_file
     tags:
@@ -178,7 +178,7 @@
 
   - name: 9.3.1 Set SSH Protocol to 2 (Scored)
     lineinfile: >
-        dest='/etc/ssh/sshd_config' 
+        dest='/etc/ssh/sshd_config'
         regexp='^Protocol'
         state=present
         line='Protocol 2'
@@ -190,7 +190,7 @@
 
   - name: 9.3.2 Set LogLevel to INFO (Scored)
     lineinfile: >
-        dest='/etc/ssh/sshd_config' 
+        dest='/etc/ssh/sshd_config'
         regexp='^LogLevel'
         state=present
         line='LogLevel INFO'
@@ -215,7 +215,7 @@
         regexp='^{{ item }}'
         line='{{ item }} no'
         state=present
-    with_items: 
+    with_items:
       - X11Forwarding
       - HostbasedAuthentication
       - PermitRootLogin
