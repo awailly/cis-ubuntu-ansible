@@ -11,8 +11,8 @@ if [ -z "$IP" ]; then
   sudo apt-get install aptitude
 fi
 
-sudo apt-get install -y python-pip git
-sudo pip install ansible
+sudo apt-get install -y python-pip git python-dev
+sudo pip install ansible markupsafe
 
 mkdir -p ansible/roles-ubuntu/roles
 cd ansible/roles-ubuntu
