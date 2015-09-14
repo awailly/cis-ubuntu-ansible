@@ -2,6 +2,8 @@
 
 set -o errexit
 
+sudo apt-get update
+
 local_co=""
 if [ -z "$IP" ]; then
   IP="127.0.0.1"
