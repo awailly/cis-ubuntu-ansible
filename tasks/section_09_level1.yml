@@ -346,7 +346,7 @@
       - section9.3
       - section9.3.14
 
-  - name: 9.4 Restrict root Login to System Console (Not Scored)
+  - name: 9.4 Restrict root Login to System Console (stat securetty) (Not Scored)
     stat: path=/etc/securetty
     register: securetty_file
     tags:
