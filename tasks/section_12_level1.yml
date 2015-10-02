@@ -54,7 +54,7 @@
       - section12.7
 
   - name: 12.8 Find Un-owned Files and Directories (check) (Scored)
-    shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls
+    shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls
     changed_when: False
     failed_when: False
     register: unowned_files
