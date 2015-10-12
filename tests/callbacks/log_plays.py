@@ -43,7 +43,7 @@ class TestBook(object):
         s = {}
         for i in self.tasks:
             # Notifies
-            if self.tasks.section == None:
+            if self.tasks[i].section == None:
                 continue
 
             t = self.tasks[i]
