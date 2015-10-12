@@ -341,6 +341,7 @@
         regexp='^Banner'
         line='Banner /etc/issue.net'
         state=present
+    notify: restart ssh
     tags:
       - section9
       - section9.3
