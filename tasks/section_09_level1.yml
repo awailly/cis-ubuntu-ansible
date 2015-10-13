@@ -183,6 +183,7 @@
         state=present
         line='Protocol 2'
     when: ssh_config_file.stat.exists == True
+    notify: restart ssh
     tags:
       - section9
       - section9.3
@@ -195,6 +196,7 @@
         state=present
         line='LogLevel INFO'
     when: ssh_config_file.stat.exists == True
+    notify: restart ssh
     tags:
       - section9
       - section9.3
@@ -203,6 +205,7 @@
   - name: 9.3.3 Set Permissions on /etc/ssh/sshd_config (Scored)
     file: path='/etc/ssh/sshd_config' owner=root group=root mode=600
     when: ssh_config_file.stat.exists == True
+    notify: restart ssh
     tags:
       - section9
       - section9.3
@@ -221,6 +224,7 @@
       - PermitRootLogin
       - PermitEmptyPasswords
       - PermitUserEnvironment
+    notify: restart ssh
     tags:
       - section9
       - section9.3
@@ -236,6 +240,7 @@
         regexp='^MaxAuthTries'
         line='MaxAuthTries 4'
         state=present
+    notify: restart ssh
     tags:
       - section9
       - section9.3
@@ -247,6 +252,7 @@
         regexp='^IgnoreRhosts'
         line='IgnoreRhosts yes'
         state=present
+    notify: restart ssh
     tags:
       - section9
       - section9.3
@@ -258,6 +264,7 @@
         regexp='^Ciphers'
         line='Ciphers aes128-ctr,aes192-ctr,aes256-ctr'
         state=present
+    notify: restart ssh
     tags:
       - section9
       - section9.3
@@ -281,6 +288,7 @@
         regexp='^ClientAliveCountMax'
         line='ClientAliveCountMax 0'
         state=present
+    notify: restart ssh
     tags:
       - section9
       - section9.3
@@ -329,6 +337,7 @@
     failed_when: allow_rc.rc == 1
     changed_when: False
     ignore_errors: True
+    notify: restart ssh
     tags:
       - section9
       - section9.3
