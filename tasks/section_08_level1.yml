@@ -28,7 +28,7 @@
       - section8.2
       - section8.2.5
 
-  - name: 8.2.5.2 Configure rsyslog to Send Logs to a Remote Log Host (Scored)
+  - name: 8.2.5.2 Configure rsyslog to Send Logs to a Remote Log Host (start rsyslog) (Scored)
     lineinfile:
        dest=/etc/rsyslog.conf
        line='start on filesystem'

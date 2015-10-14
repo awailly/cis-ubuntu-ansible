@@ -42,6 +42,10 @@ class TestBook(object):
 
         s = {}
         for i in self.tasks:
+            # Notifies
+            if self.tasks[i].section == None:
+                continue
+
             t = self.tasks[i]
             with open("%s/tasks/section_%s_level%s.yml" % (ROLE_PATH, t.section, t.level)) as f:
                 data = f.read()
@@ -66,30 +70,35 @@ class TestTask(object):
     def __init__(self, name):
         self.name = name
         self.status = 'null'
-        self.section = "%02d" % int(self.name.split('.')[0])
-
         try:
-            with open("%s/tasks/section_%s_level1.yml" % (ROLE_PATH, self.section)) as f:
-                data = f.readlines()
-            num = data.index([ n for n in data if self.name in n ][0])
-            self.level = 1
-        except:
-            with open("%s/tasks/section_%s_level2.yml" % (ROLE_PATH, self.section)) as f:
-                data = f.readlines()
-            num = data.index([ n for n in data if self.name in n ][0])
-            self.level = 2
+            self.section = "%02d" % int(self.name.split('.')[0])
+        # Notifies are executed
+        except ValueError:
+            self.section = None
 
-        self.line_start = num
-        while num<len(data)-1 and data[num] != '\n':
-            num+= 1
-        self.line_size = num - self.line_start
-        teststat = int(data[self.line_start+1].split(':')[0].strip() == 'stat')
-        for n in range(self.line_start, self.line_start + self.line_size + 1):
-            if 'changed_when: False' in data[n]:
-                teststat = 1
-            if 'debug:' in data[n]:
-                teststat = 1
-        self.isalwaysok = teststat
+        if self.section != None:
+            try:
+                with open("%s/tasks/section_%s_level1.yml" % (ROLE_PATH, self.section)) as f:
+                    data = f.readlines()
+                num = data.index([ n for n in data if self.name in n ][0])
+                self.level = 1
+            except:
+                with open("%s/tasks/section_%s_level2.yml" % (ROLE_PATH, self.section)) as f:
+                    data = f.readlines()
+                num = data.index([ n for n in data if self.name in n ][0])
+                self.level = 2
+
+            self.line_start = num
+            while num<len(data)-1 and data[num] != '\n':
+                num+= 1
+            self.line_size = num - self.line_start
+            teststat = int(data[self.line_start+1].split(':')[0].strip() == 'stat')
+            for n in range(self.line_start, self.line_start + self.line_size + 1):
+                if 'changed_when: False' in data[n]:
+                    teststat = 1
+                if 'debug:' in data[n]:
+                    teststat = 1
+            self.isalwaysok = teststat
 
     def update(self, status):
         self.status = status
