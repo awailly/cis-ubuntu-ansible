@@ -23,7 +23,7 @@ $ sudo pip install ansible markupsafe
 
 The following will automatically install Ansible, download and run the playbook on your local system.
 ```
-$ \curl -sSL http://git.io/vZw8S | bash
+$ \curl -sSL http://git.io/vZw8S > /tmp/cis.sh && bash /tmp/cis.sh
 ```
 To apply the playbook on a remote system:
 ```
