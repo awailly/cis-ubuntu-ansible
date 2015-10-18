@@ -42,14 +42,14 @@
       - section9.1
       - section9.1.4
 
-  - name: 9.1.5 Set User/Group Owner and Permission on /etc/cron.weekly(Scored)
+  - name: 9.1.5 Set User/Group Owner and Permission on /etc/cron.weekly (Scored)
     file: path=/etc/cron.weekly owner=root group=root mode="og-rwx"
     tags:
       - section9
       - section9.1
       - section9.1.5
 
-  - name: 9.1.6 Set User/Group Owner and Permission on /etc/cron.monthly(Scored)
+  - name: 9.1.6 Set User/Group Owner and Permission on /etc/cron.monthly (Scored)
     file: path=/etc/cron.monthly owner=root group=root mode="og-rwx"
     tags:
       - section9
@@ -73,6 +73,13 @@
       - section9.1
       - section9.1.8
 
+  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation create cron) (Scored)
+    shell: touch /etc/cron.allow
+    tags:
+      - section9
+      - section9.1
+      - section9.1.8
+
   - name: 9.1.8 Restrict at/cron to Authorized Users (stat cron allow) (Scored)
     stat: path=/etc/cron.allow
     register: cron_allow_path
@@ -81,17 +88,16 @@
       - section9.1
       - section9.1.8
 
-
-  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation create cron) (Scored)
-    shell: touch /etc/cron.allow
-    when: cron_allow_path.stat.exists == False
+  - name: 9.1.8 Restrict at/cron to Authorized Users (create cron allow) (Scored)
+    file: path=/etc/cron.allow owner=root group=root mode="og-rwx"
+    when: cron_allow_path.stat.exists
     tags:
       - section9
       - section9.1
       - section9.1.8
 
-  - name: 9.1.8 Restrict at/cron to Authorized Users (create cron allow) (Scored)
-    file: path=/etc/cron.allow owner=root group=root mode="og-rwx"
+  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation create at) (Scored)
+    shell: touch /etc/at.allow
     tags:
       - section9
       - section9.1
@@ -105,16 +111,9 @@
       - section9.1
       - section9.1.8
 
-  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation create at) (Scored)
-    shell: touch /etc/at.allow
-    when: at_allow_path.stat.exists == False
-    tags:
-      - section9
-      - section9.1
-      - section9.1.8
-
   - name: 9.1.8 Restrict at/cron to Authorized Users (create at allow) (Scored)
     file: path=/etc/at.allow owner=root group=root mode="og-rwx"
+    when: at_allow_path.stat.exists
     tags:
       - section9
       - section9.1
