@@ -47,10 +47,15 @@ class TestBook(object):
                 continue
 
             t = self.tasks[i]
-            with open("%s/tasks/section_%s_level%s.yml" % (ROLE_PATH, t.section, t.level)) as f:
-                data = f.read()
 
-            tname = "tasks/section_%s_level%s.yml" % (t.section, t.level)
+            if t.sublevel != None:
+                with open("%s/tasks/section_%s_level%s_%s.yml" % (ROLE_PATH, t.section, t.level, t.subsection)) as f:
+                    data = f.read()
+                tname = "tasks/section_%s_level%s_%s.yml" % (t.section, t.level, t.subsection)
+            else:
+                with open("%s/tasks/section_%s_level%s.yml" % (ROLE_PATH, t.section, t.level)) as f:
+                    data = f.read()
+                tname = "tasks/section_%s_level%s.yml" % (t.section, t.level)
 
             if not tname in s:
                 s[tname] = {}
@@ -70,23 +75,38 @@ class TestTask(object):
     def __init__(self, name):
         self.name = name
         self.status = 'null'
+        self.level = None
+        self.sublevel = None
         try:
             self.section = "%02d" % int(self.name.split('.')[0])
         # Notifies are executed
         except ValueError:
             self.section = None
 
+        try:
+            self.subsection = "%02d" % int(self.name.split('.')[1])
+        # Notifies are executed
+        except:
+            self.subsection = None
+
         if self.section != None:
             try:
-                with open("%s/tasks/section_%s_level1.yml" % (ROLE_PATH, self.section)) as f:
+                with open("%s/tasks/section_%s_level1_%s.yml" % (ROLE_PATH, self.section, self.subsection)) as f:
                     data = f.readlines()
                 num = data.index([ n for n in data if self.name in n ][0])
                 self.level = 1
+                self.sublevel = self.subsection
             except:
-                with open("%s/tasks/section_%s_level2.yml" % (ROLE_PATH, self.section)) as f:
-                    data = f.readlines()
-                num = data.index([ n for n in data if self.name in n ][0])
-                self.level = 2
+                try:
+                    with open("%s/tasks/section_%s_level1.yml" % (ROLE_PATH, self.section)) as f:
+                        data = f.readlines()
+                    num = data.index([ n for n in data if self.name in n ][0])
+                    self.level = 1
+                except:
+                    with open("%s/tasks/section_%s_level2.yml" % (ROLE_PATH, self.section)) as f:
+                        data = f.readlines()
+                    num = data.index([ n for n in data if self.name in n ][0])
+                    self.level = 2
 
             self.line_start = num
             while num<len(data)-1 and data[num] != '\n':
