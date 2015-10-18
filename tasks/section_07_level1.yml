@@ -276,8 +276,10 @@
       - section7.4.5
 
   - name: 7.5.0 Create the file "cis.conf" under modprobe.d if doesn't exist (Not Scored)
-    file: >
-        dest=/etc/modprobe.d/CIS.conf state=touch
+    copy:
+        dest: /etc/modprobe.d/CIS.conf
+        content: ""
+        force: no
     tags:
       - section7
       - section7.5

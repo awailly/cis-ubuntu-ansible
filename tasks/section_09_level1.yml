@@ -73,47 +73,27 @@
       - section9.1
       - section9.1.8
 
-  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation create cron) (Scored)
-    shell: touch /etc/cron.allow
-    tags:
-      - section9
-      - section9.1
-      - section9.1.8
-
-  - name: 9.1.8 Restrict at/cron to Authorized Users (stat cron allow) (Scored)
-    stat: path=/etc/cron.allow
-    register: cron_allow_path
-    tags:
-      - section9
-      - section9.1
-      - section9.1.8
-
   - name: 9.1.8 Restrict at/cron to Authorized Users (create cron allow) (Scored)
-    file: path=/etc/cron.allow owner=root group=root mode="og-rwx"
-    when: cron_allow_path.stat.exists
-    tags:
-      - section9
-      - section9.1
-      - section9.1.8
-
-  - name: 9.1.8 Restrict at/cron to Authorized Users (preparation create at) (Scored)
-    shell: touch /etc/at.allow
-    tags:
-      - section9
-      - section9.1
-      - section9.1.8
-
-  - name: 9.1.8 Restrict at/cron to Authorized Users (stat at allow) (Scored)
-    stat: path=/etc/at.allow
-    register: at_allow_path
+    copy:
+        dest: /etc/cron.allow
+        owner: root
+        group: root
+        mode: "og-rwx"
+        content: ""
+        force: no
     tags:
       - section9
       - section9.1
       - section9.1.8
 
   - name: 9.1.8 Restrict at/cron to Authorized Users (create at allow) (Scored)
-    file: path=/etc/at.allow owner=root group=root mode="og-rwx"
-    when: at_allow_path.stat.exists
+    copy:
+        dest: /etc/at.allow
+        owner: root
+        group: root
+        mode: "og-rwx"
+        content: ""
+        force: no
     tags:
       - section9
       - section9.1
