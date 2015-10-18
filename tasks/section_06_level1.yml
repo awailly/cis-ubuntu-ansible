@@ -90,48 +90,17 @@
       - section6.5
       - section6.5.1
 
-  - name: 6.5.2 Configure Network Time Protocol (restrict4) (NTP) (Scored)
-    lineinfile: >
-        dest='/etc/ntp.conf'
-        line='restrict -4 default kod nomodify notrap nopeer noquery'
-        regexp='^restrict -4 default'
-        state=present
+  - name: 6.5.1 Check if /etc/ntp.conf file exists (stat)
+    stat:
+        path: /etc/ntp.conf
+    register: ntp_conf_file
     tags:
       - section6
       - section6.5
-      - section6.5.2
+      - section6.5.1
 
-  - name: 6.5.3 Configure Network Time Protocol (restrict6) (NTP) (Scored)
-    lineinfile: >
-        dest='/etc/ntp.conf'
-        line='restrict -6 default kod nomodify notrap nopeer noquery'
-        regexp='^restrict -6 default'
-        state=present
-    tags:
-      - section6
-      - section6.5
-      - section6.5.3
-
-  - name: 6.5.4 Configure Network Time Protocol (server check) (NTP) (Scored)
-    command: 'grep "^server" /etc/ntp.conf'
-    register: ntp_server_rc
-    changed_when: False
-    always_run: True
-    tags:
-      - section6
-      - section6.5
-      - section6.5.4
-
-  - name: 6.5.4 Configure Network Time Protocol (server add) (NTP) (Scored)
-    lineinfile: >
-        dest='/etc/ntp.conf'
-        line='server 0.fr.pool.ntp.org'
-        state=present
-    when: ntp_server_rc.rc == 1
-    tags:
-      - section6
-      - section6.5
-      - section6.5.4
+  - include: section_06_level1_05.yml
+    when: ntp_conf_file.stat.exists == True
 
   - name: 6.6 Ensure LDAP is not enabled (Not Scored)
     apt: name=slapd purge=yes state=absent
