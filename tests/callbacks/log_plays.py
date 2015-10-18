@@ -79,21 +79,21 @@ class TestTask(object):
 
         if self.section != None:
             try:
-                with open("%s/tasks/section_%s_level1.yml" % (ROLE_PATH, self.section)) as f:
+                with open("%s/tasks/section_%s_level1_%s.yml" % (ROLE_PATH, self.section, self.subsection)) as f:
                     data = f.readlines()
                 num = data.index([ n for n in data if self.name in n ][0])
                 self.level = 1
             except IOError:
                 try:
+                    with open("%s/tasks/section_%s_level1.yml" % (ROLE_PATH, self.section)) as f:
+                        data = f.readlines()
+                    num = data.index([ n for n in data if self.name in n ][0])
+                    self.level = 1
+                except IOError:
                     with open("%s/tasks/section_%s_level2.yml" % (ROLE_PATH, self.section)) as f:
                         data = f.readlines()
                     num = data.index([ n for n in data if self.name in n ][0])
                     self.level = 2
-                except IOError:
-                    with open("%s/tasks/section_%s_level1_%s.yml" % (ROLE_PATH, self.section, self.subsection)) as f:
-                        data = f.readlines()
-                    num = data.index([ n for n in data if self.name in n ][0])
-                    self.level = 1 
 
             self.line_start = num
             while num<len(data)-1 and data[num] != '\n':
