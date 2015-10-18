@@ -90,11 +90,11 @@
 
   - name: 8.2.4.3 Create and Set Permissions on rsyslog Log Files (Scored)
     file:
-        path: "{{ item }}'"
+        path: "{{ item }}"
         owner: root 
         group: root 
         mode: "og-rwx" 
-    when: "(rsyslog_files_created.results|length > 0) and ('check mode not supported' not in rsyslog_files_created.results[0].msg)"
+    when: "(rsyslog_files_created.results|length > 0) and ('skipped' not in rsyslog_files_created.results[0])"
     with_items: result.stdout_lines
     tags:
       - section8
