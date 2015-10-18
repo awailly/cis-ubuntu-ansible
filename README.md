@@ -10,16 +10,27 @@
 
 The role is focused on hardening an Ubuntu 14.04 system. However it has been successfully tested on other Debian based systems (Debian 8, Raspbian). The minimum requirements of the targeted system are `ssh`, `aptitude` and `python2`.
 
+## Usage
+
+### One liner installation & execution
+
+The following will automatically install Ansible, download and run the playbook on your local system.
+```
+$ \curl -sSL http://git.io/vZw8S > /tmp/cis.sh && bash /tmp/cis.sh
+```
+To apply the playbook on a remote system:
+```
+$ IP=[remote host's IP] USER=[remote user] \curl -sSL http://git.io/vZw8S | bash
+```
+
+### Manual installation
+
 Install dependencies on your host (on Ubuntu 14.04):
 
 ```bash
 $ sudo apt-get install python-pip git python-dev
 $ sudo pip install ansible markupsafe
 ```
-
-## Usage
-
-### Setting up the environment
 
 Create a placeholder to describe your machine:
 
