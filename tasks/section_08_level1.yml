@@ -42,9 +42,9 @@
 
   - name: 8.2.3 Configure /etc/rsyslog.conf (Not Scored)
     lineinfile:
-       dest=/etc/rsyslog.conf
-       line="{{ item }}"
-       insertafter=EOF
+        dest: /etc/rsyslog.conf
+        line: "{{ item }}"
+        insertafter: EOF
     with_items:
       - '*.emerg :omusrmsg:*'
       - 'mail.* -/var/log/mail'
@@ -82,17 +82,19 @@
     shell: 'mkdir -p -- "$(dirname -- {{ item }})"; touch -- {{ item }}' 
     with_items: result.stdout_lines          
     changed_when: False
+    register: rsyslog_files_created
     tags:
       - section8
       - section8.2
       - section8.2.4
 
   - name: 8.2.4.3 Create and Set Permissions on rsyslog Log Files (Scored)
-    file: >
-        path='{{item}}' 
-        owner=root 
-        group=root 
-        mode="og-rwx" 
+    file:
+        path: "{{ item }}"
+        owner: root 
+        group: root 
+        mode: "og-rwx" 
+    when: "(rsyslog_files_created.results|length > 0) and ('skipped' not in rsyslog_files_created.results[0])"
     with_items: result.stdout_lines
     tags:
       - section8
@@ -112,10 +114,10 @@
 
   - name: 8.2.5.2 Configure rsyslog to Send Logs to a Remote Log Host (Scored)
     lineinfile:
-       dest=/etc/rsyslog.conf
-       line="*.* @@{{remote_logs_host_address}}"
-       insertafter=EOF
-       state=present
+        dest: /etc/rsyslog.conf
+        line: "*.* @@{{remote_logs_host_address}}"
+        insertafter: EOF
+        state: present
     when: set_rsyslog_remote == True and remoteloghost.rc == 1
     tags:
       - section8
@@ -134,11 +136,11 @@
       - section8.2.6
 
   - name: 8.2.6.2 Accept Remote rsyslog Messages Only on Designated Log Hosts (Not Scored)
-    lineinfile: >
-        dest=/etc/rsyslog.conf
-        regexp='^#({{ item }})'
-        line='{{ item }}'
-        state=present
+    lineinfile:
+        dest: /etc/rsyslog.conf
+        regexp: "^#({{ item }})"
+        line: "{{ item }}"
+        state: present
     with_items:
         - '$ModLoad imtcp'
         - '$InputTCPServerRun 514'
