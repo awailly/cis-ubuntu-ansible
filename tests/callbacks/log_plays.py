@@ -79,7 +79,7 @@ class TestTask(object):
         try:
             self.subsection = "%02d" % int(self.name.split('.')[1])
         # Notifies are executed
-        except ValueError:
+        except:
             self.subsection = None
 
         if self.section != None:
