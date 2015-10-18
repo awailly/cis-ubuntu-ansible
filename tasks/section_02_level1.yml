@@ -1,7 +1,11 @@
 ---
 
   - name: 2.1 Create Separate Partition for /tmp (Scored)
-    debug: msg="/!\ Ensure there is a separate partition dedicated to /tmp"
+    command: grep '\s/tmp\s' /etc/fstab
+    register: tmp_partition
+    failed_when: tmp_partition.rc == 1
+    changed_when: False
+    ignore_errors: True
     tags:
       - section2
       - section2.1
@@ -16,7 +20,11 @@
       - section2.4
 
   - name: 2.5 Create Separate Partition for /var (Scored)
-    debug: msg="/!\ Ensure there is a separate partition dedicated to /var"
+    command: grep '\s/var\s' /etc/fstab
+    register: var_partition
+    failed_when: var_partition.rc == 1
+    changed_when: False
+    ignore_errors: True
     tags:
       - section2
       - section2.5
@@ -29,19 +37,31 @@
       - section2.6
 
   - name: 2.7 Create Separate Partition for /var/log (Scored)
-    debug: msg="/!\ Ensure there is a separate partition dedicated to /var/log"
+    command: grep '\s/var\/log\s' /etc/fstab
+    register: var_log_partition
+    failed_when: var_log_partition.rc == 1
+    changed_when: False
+    ignore_errors: True
     tags:
       - section2
       - section2.7
 
   - name: 2.8 Create Separate Partition for /var/log/audit (Scored)
-    debug: msg="/!\ Ensure there is a separate partition dedicated to /var/log/audit"
+    command: grep '\s/var\/log\/audit\s' /etc/fstab
+    register: var_log_audit_partition
+    failed_when: var_log_audit_partition.rc == 1
+    changed_when: False
+    ignore_errors: True
     tags:
       - section2
       - section2.8
 
   - name: 2.9 Create Separate Partition for /home (Scored)
-    debug: msg="/!\ Ensure there is a separate partition dedicated to /home"
+    command: grep '\s/home\s' /etc/fstab
+    register: home_partition
+    failed_when: home_partition.rc == 1
+    changed_when: False
+    ignore_errors: True
     tags:
       - section2
       - section2.9
@@ -92,7 +112,9 @@
       - section2.17.1
 
   - name: 2.17.2 Set Sticky Bit on All World-Writable Directories (Scored)
-    file: path='{{ item }}' mode="a+t"
+    file:
+        path: "{{ item }}"
+        mode: "a+t"
     with_items: sticky_bit_dirs.stdout_lines
     tags:
       - section2
