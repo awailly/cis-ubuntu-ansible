@@ -9,6 +9,7 @@
     register: grub_apparmor
     changed_when: False
     when: grub_cfg_file.stat.exists
+    always_run: True
 
   - name: Check if the extlinux config file exists (Not Scored)
     stat: path=/extlinux.conf
@@ -19,11 +20,13 @@
     register: extlinux_apparmor
     changed_when: False
     when: extlinux_cfg_file.stat.exists
+    always_run: True
 
   - name: Determines if apparmor is already set in boot config (Not Scored)
     command: "grep CONFIG_DEFAULT_SECURITY_APPARMOR /boot/config-{{ ansible_kernel }}"
     register: boot_apparmor
     changed_when: False
+    always_run: True
 
   - name: 4.5 Activate AppArmor (install) (Scored)
     apt: >
