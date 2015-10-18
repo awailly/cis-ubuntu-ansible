@@ -14,8 +14,10 @@ sudo cp /tmp/runxinit /etc/init/xinetd.conf
 #Prepare section 06
 sudo apt-get install avahi-daemon cups isc-dhcp-server slapd rpcbind nfs-kernel-server bind9 biosdevname
 sudo apt-get remove ntp
-sed '/server /d' /etc/ntp.conf 2>/dev/null
+sed -i '/server /d' /etc/ntp.conf 2>/dev/null
 sudo apt-get install vsftpd
+sed -i '/^Protocol .*/Protocol 1/g'
+sed -i '/^IgnoreRhosts .*/IgnoreRhosts No/g'
 
 #Prepare section 07
 sudo sysctl net.ipv4.ip_forward=1
