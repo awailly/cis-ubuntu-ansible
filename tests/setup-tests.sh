@@ -16,8 +16,8 @@ sudo apt-get install avahi-daemon cups isc-dhcp-server slapd rpcbind nfs-kernel-
 sudo apt-get remove ntp
 sed -i '/server /d' /etc/ntp.conf 2>/dev/null
 sudo apt-get install vsftpd
-sed -i '/^Protocol .*/Protocol 1/g'
-sed -i '/^IgnoreRhosts .*/IgnoreRhosts No/g'
+sed -i 's/^Protocol .*/Protocol 1/g' /etc/ssh/sshd_config
+sed -i 's/^IgnoreRhosts .*/IgnoreRhosts No/g' /etc/ssh/sshd_config
 
 #Prepare section 07
 sudo sysctl net.ipv4.ip_forward=1
