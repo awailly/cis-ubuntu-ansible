@@ -27,6 +27,7 @@
     register: ntp_server_rc
     changed_when: False
     always_run: True
+    ignore_errors: True
     tags:
       - section6
       - section6.5
