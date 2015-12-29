@@ -51,7 +51,7 @@
     lineinfile: >
         dest='/etc/grub.d/40_custom'
         regexp='^password'
-        line='password_pbkdf2 root grub.pbkdf2.sha512.10000.529DB4AF052F170948C1DB2A754CEA8A286804DA2D9A4EB5A7CCE4B8636775C83EAF8A1093CBDBC256954BCE789A58EFB3B75D23DFC76583C703922D5DADB69E.4D5BD1EC6736057095CA2EBF55C2DA02DFB0B0784F2105A396F1CEF11FEB1483D5C420F412E2E817E2570DDFC22ABCC329C5FF44091A0ACDE67171FF72E96CFD'
+        line="password_pbkdf2 root {{root_password_grub}}"
         state=present
     when: grub_cfg_file.stat.exists == True and boot_password.rc == 1
     tags:
