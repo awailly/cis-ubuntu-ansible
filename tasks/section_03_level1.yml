@@ -111,7 +111,7 @@
   - name: 3.2 Set Permissions on bootloader config (Scored)
     file: path=/boot/grub/grub.cfg mode="o-rwx,g-rwx"
     when: grub_cfg_file.stat.exists == True
-    sudo: yes
+    become: yes
     tags:
       - section3
       - section3.2
