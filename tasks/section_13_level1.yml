@@ -243,7 +243,7 @@
 
   - name: 13.18 Check for Presence of User .netrc Files (Scored)
     file: >
-        path='{{ item }}'
+        path='{{ item.stat.path }}'
         state=absent
     when: item is defined and item.stat.exists == True
     with_items: netrc_files.results
