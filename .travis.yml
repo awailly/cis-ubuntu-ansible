@@ -37,11 +37,12 @@ script:
   - ansible-playbook -i tests/inventory tests/playbook.yml --syntax-check
   - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1
   - cp /tmp/coveralls /tmp/firstcover
+  - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1 > /tmp/idempotence
   - >
-    ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1
+    cat /tmp/idempotence
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+    || (echo 'Idempotence test: fail' && cat /tmp/idempotence && exit 1)
 
 after_success:
   - COVERALLS_URL='https://coveralls.io/api/v1/jobs'
