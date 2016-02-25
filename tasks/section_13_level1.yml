@@ -127,6 +127,7 @@
   - name: 13.8.2 Check User Dot File Permissions (Scored)
     file: >
         path='{{ item }}'
+        follow=yes
         mode='o-w,g-w'
     with_items:
         home_dot_files.stdout_lines
