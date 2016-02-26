@@ -235,18 +235,16 @@
 
   - name: 13.18 Check for Presence of User .netrc Files (stat) (Scored)
     stat: path='{{ item }}/.netrc'
-    with_items: home_users.stdout_lines
+    with_items: '{{ home_users.stdout_lines }}'
     register: netrc_files
     tags:
       - section13
       - section13.18
 
   - name: 13.18 Check for Presence of User .netrc Files (Scored)
-    file: >
-        path='{{ item }}'
-        state=absent
+    debug: msg='Check if {{ item.stat.path}} is needed, and remove otherwise'
     when: item is defined and item.stat.exists == True
-    with_items: netrc_files.results
+    with_items: '{{ netrc_files.results }}'
     tags:
       - section13
       - section13.18
