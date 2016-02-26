@@ -36,7 +36,7 @@ script:
     # in the future.
   - ansible-playbook -i tests/inventory tests/playbook.yml --syntax-check
   - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1
-  - if [ ${ANSIBLE_VERSION} = "1.9.1"]; then cp /tmp/coveralls /tmp/firstcover; fi
+  - if [ ${ANSIBLE_VERSION} = "1.9.1" ]; then cp /tmp/coveralls /tmp/firstcover; fi
   - ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo -e "pipelining=True" -t level1 > /tmp/idempotence
   - >
     cat /tmp/idempotence
@@ -45,6 +45,6 @@ script:
     || (echo 'Idempotence test: fail' && cat /tmp/idempotence && exit 1)
 
 after_success:
-  - if [ ${ANSIBLE_VERSION} = "1.9.1"]; then COVERALLS_URL='https://coveralls.io/api/v1/jobs'; fi
-  - if [ ${ANSIBLE_VERSION} = "1.9.1"]; then curl -v -F 'json_file=@/tmp/firstcover' "$COVERALLS_URL"; fi
-  - if [ ${ANSIBLE_VERSION} = "1.9.1"]; then cat /tmp/firstcover; fi
+  - if [ ${ANSIBLE_VERSION} = "1.9.1" ]; then COVERALLS_URL='https://coveralls.io/api/v1/jobs'; fi
+  - if [ ${ANSIBLE_VERSION} = "1.9.1" ]; then curl -v -F 'json_file=@/tmp/firstcover' "$COVERALLS_URL"; fi
+  - if [ ${ANSIBLE_VERSION} = "1.9.1" ]; then cat /tmp/firstcover; fi
