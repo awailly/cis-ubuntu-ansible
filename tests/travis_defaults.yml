@@ -1,3 +1,6 @@
+# Better coverage with automatic account locking
+lock_shadow_accounts: True
+
 # Set this flag to use AppArmor. It is useful to disable it when the system does not support the kernel module.
 use_apparmor: False
 
