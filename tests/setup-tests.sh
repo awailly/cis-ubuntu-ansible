@@ -47,13 +47,16 @@ sudo chmod 777 /etc/hosts.deny
 sudo chmod 777 /etc/rsyslog.conf
 
 #Prepare section 13
+#section13.1
+sudo adduser --system --shell /bin/bash --disabled-password --home /home/git nopassuser
+sudo passwd -d nopassuser
 #section13.6
 mkdir /tmp/wordwritabledir
 chmod 777 /tmp/wordwritabledir
 echo 'export PATH=$PATH:/tmp/wordwritabledir' >> ~/.bashrc
 #section13.8.2
 mkdir ~/.dotpermissive
-eche 'secr3t' > ~/.dotpermissive/secr3t
+echo 'secr3t' > ~/.dotpermissive/secr3t
 chmod 777 ~/.dotpermissive
 #section13.10
 mkdir ~/.rhosts
