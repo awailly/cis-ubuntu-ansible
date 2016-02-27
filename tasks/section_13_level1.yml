@@ -4,7 +4,7 @@
     command: awk -F':' '($2 == "" ) { print $1 }' /etc/shadow
     register: awk_empty_shadow
     changed_when: False
-    failed_when: awk_empty_shadow.stdout != '' and not lock_shadow_accounts
+    failed_when: awk_empty_shadow.stdout != '' and lock_shadow_accounts == False
     tags:
       - section13
       - section13.1
@@ -13,7 +13,7 @@
     command: passwd -l '{{ item }}'
     with_items:
         awk_empty_shadow.stdout_lines
-    when: lock_shadow_accounts
+    when: lock_shadow_accounts == True
     tags:
       - section13
       - section13.1
