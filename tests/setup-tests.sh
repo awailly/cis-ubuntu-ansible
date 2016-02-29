@@ -53,7 +53,7 @@ sudo passwd -d nopassuser
 #section13.6
 mkdir /tmp/wordwritabledir
 chmod 777 /tmp/wordwritabledir
-echo 'export PATH=$PATH:/tmp/wordwritabledir' >> ~/.bashrc
+sudo sed -ri 's;^PATH="(.*)";PATH="\1:/tmp/wordwritabledir";' /etc/environment
 #section13.8.2
 mkdir ~/.dotpermissive
 echo 'secr3t' > ~/.dotpermissive/secr3t
