@@ -58,6 +58,7 @@ echo "export PATH=/tmp/wordwritabledir:\$PATH" >> ~/.bashrc
 echo "export PATH=/tmp/wordwritabledir:\$PATH" > /tmp/hackpath
 sudo cat /root/.bashrc /tmp/hackpath > /tmp/finalpath
 sudo cp /tmp/finalpath /root/.bashrc
+sudo sed -i.bak '/secure_path/d' /etc/sudoers
 #section13.8.2
 mkdir ~/.dotpermissive
 echo 'secr3t' > ~/.dotpermissive/secr3t
