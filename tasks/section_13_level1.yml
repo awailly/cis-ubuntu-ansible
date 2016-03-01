@@ -85,6 +85,7 @@
   - name: 13.6.4 Ensure root PATH Integrity (Scored)
     file: >
         path='{{ item }}'
+        follow=yes
         state=directory
         owner=root
         mode='o-w,g-w'
