@@ -73,7 +73,8 @@
       - section13.6
 
   - name: 13.6.3 Ensure root PATH Integrity (dot in path) (Scored)
-    shell: "echo $PATH | sed -e 's/::/:/' -e 's/:$//' -e 's/:/\\n/g'"
+    shell: "/bin/bash --login -c 'env | grep ^PATH=' | sed -e 's/PATH=//' -e 's/::/:/' -e 's/:$//' -e 's/:/\\n/g'"
+    become: yes
     register: dot_in_path
     changed_when: False
     failed_when: '"." in dot_in_path.stdout_lines'
