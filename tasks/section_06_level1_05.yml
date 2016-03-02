@@ -36,7 +36,7 @@
   - name: 6.5.4 Configure Network Time Protocol (server add) (NTP) (Scored)
     lineinfile: >
         dest='/etc/ntp.conf'
-        line='server 0.fr.pool.ntp.org'
+        line='server {{ ntp_server }}'
         state=present
     when: ntp_server_rc.rc == 1
     tags:
