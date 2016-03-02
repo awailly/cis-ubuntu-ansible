@@ -122,7 +122,7 @@ class TestTask(object):
 
     def update(self, status):
         # We cannot go back to OK after CHANGED
-        if (self.status != 'CHANGED') or (status != 'OK' and self.status == 'CHANGED'):
+        if not (self.status == 'CHANGED' and status == 'OK'):
             self.status = status
 
 class CallbackModule(object):
