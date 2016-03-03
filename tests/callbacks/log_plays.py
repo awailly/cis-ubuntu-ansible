@@ -121,7 +121,9 @@ class TestTask(object):
             self.isalwaysok = teststat
 
     def update(self, status):
-        self.status = status
+        # We cannot go back to OK after CHANGED
+        if not (self.status == 'CHANGED' and status == 'OK'):
+            self.status = status
 
 class CallbackModule(object):
     """

@@ -45,3 +45,24 @@ sudo chmod 777 /etc/hosts.deny
 
 #Prepare section 08
 sudo chmod 777 /etc/rsyslog.conf
+
+#Prepare section 13
+#section13.1
+sudo adduser --system --shell /bin/bash --disabled-password --home /home/git nopassuser
+sudo passwd -d nopassuser
+#section13.6
+mkdir /tmp/wordwritabledir
+chmod 777 /tmp/wordwritabledir
+sudo sed -ri 's;^PATH="(.*)";PATH="\1:/tmp/wordwritabledir";' /etc/environment
+echo "export PATH=/tmp/wordwritabledir:\$PATH" >> ~/.bashrc
+echo "export PATH=/tmp/wordwritabledir:\$PATH" > /tmp/hackpath
+sudo cat /root/.bashrc /tmp/hackpath > /tmp/finalpath
+sudo cp /tmp/finalpath /root/.bashrc
+sudo sed -i.bak '/secure_path/d' /etc/sudoers
+#section13.8.2
+mkdir ~/.dotpermissive
+echo 'secr3t' > ~/.dotpermissive/secr3t
+chmod 777 ~/.dotpermissive
+#section13.10
+mkdir ~/.rhosts
+mkdir ~/.forward
