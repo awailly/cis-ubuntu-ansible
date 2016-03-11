@@ -227,6 +227,7 @@
   - name: 8.3.1 Install AIDE (Scored)
     apt: name=aide state=present
     register: aide_installed
+    when: use_aide == True
     tags:
       - section8
       - section8.3
@@ -235,6 +236,7 @@
   - name: 8.3.1 Install AIDE (init) (Scored)
     command: aideinit
     when: aide_installed.changed == True
+    when: use_aide == True
     tags:
       - section8
       - section8.3
@@ -244,6 +246,7 @@
     stat: path=/var/lib/aide/aide.db.new
     register: aide_db_path
     when:
+      - use_aide == True
       - aide_installed.changed == True
     tags:
       - section8
@@ -253,6 +256,7 @@
   - name: 8.3.1 Install AIDE (copy db) (Scored)
     command: mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db
     when:
+      - use_aide == True
       - aide_installed.changed == True
       - aide_db_path.stat.exists == True
     tags:
@@ -262,6 +266,7 @@
 
   - name: 8.3.2 Implement Periodic Execution of File Integrity (Scored)
     cron: name="Check files integrity" minute="0" hour="5" job="/usr/sbin/aide --check"
+    when: use_aide == True
     tags:
       - section8
       - section8.3
