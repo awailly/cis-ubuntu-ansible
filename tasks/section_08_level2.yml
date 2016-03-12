@@ -235,8 +235,9 @@
 
   - name: 8.3.1 Install AIDE (init) (Scored)
     command: aideinit
-    when: aide_installed.changed == True
-    when: use_aide == True
+    when:
+      - use_aide == True
+      - aide_installed.changed == True
     tags:
       - section8
       - section8.3
