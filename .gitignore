@@ -56,3 +56,5 @@ target/
 *~
 *.swp
 site/
+
+.idea
