@@ -7,6 +7,9 @@
 # The execution is faster without packages upgrade.
 apt_upgrade: True
 
+# Only update apt cache if older than this value (in seconds)
+apt_cache_valid_time: 3600
+
 
 # Section 02
 

@@ -1,7 +1,7 @@
 ---
 
   - name: 1.1.1 Install Updates, Patches and Additional Security Software (Not Scored)
-    apt: update_cache=yes
+    apt: update_cache=yes cache_valid_time={{apt_cache_valid_time}}
     tags:
       - section1
       - section1.1
