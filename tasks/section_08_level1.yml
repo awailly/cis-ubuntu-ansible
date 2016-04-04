@@ -69,7 +69,7 @@
       - section8.2.3
 
   - name: 8.2.4.1 Create and Set Permissions on rsyslog Log Files (Scored)
-    shell: awk '{ print $NF }' /etc/rsyslog.d/* /etc/rsyslog.conf | grep /var/log | sed 's/^-//' | sed 's/)$//' 
+    shell: awk '{ print $NF }' /etc/rsyslog.d/* /etc/rsyslog.conf | grep -oiP "/var/log/[\w\.-]+"
     register: result
     changed_when: False
     always_run: True
