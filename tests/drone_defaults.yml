@@ -1,2 +1,0 @@
-# True if run/shm is write-protected.
-run_shm_read_only: True
