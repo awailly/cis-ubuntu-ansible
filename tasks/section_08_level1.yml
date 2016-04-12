@@ -92,7 +92,7 @@
     file:
         path: "{{ item }}"
         owner: root 
-        group: root 
+        group: "{{ rsyslog_log_files_group }}"
         mode: "og-rwx" 
     when: "(rsyslog_files_created.results|length > 0) and ('skipped' not in rsyslog_files_created.results[0])"
     with_items: result.stdout_lines
