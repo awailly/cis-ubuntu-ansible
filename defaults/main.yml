@@ -70,8 +70,9 @@ max_log_file_auditd: 200
 # WARNING: Update the IP address or rsyslog will hit 100% of the CPU usage.
 set_rsyslog_remote: False
 
-# Override to change the group of log files in 8.2.4 (eg, to 'adm')
+# Override to change the group and permissions of log files in 8.2.4 (eg, to 'adm' and 'g-wx,o-rwx' respectively)
 rsyslog_log_files_group: root
+rsyslog_log_files_permissions: og-rwx
 
 # Set rsyslog's logs remote server address to send logs. 
 # WARNING: Update the IP address without localhost address or rsyslog will hit 100% of the CPU usage

@@ -93,9 +93,10 @@
         path: "{{ item }}"
         owner: root 
         group: "{{ rsyslog_log_files_group }}"
-        mode: "og-rwx" 
+        mode: "{{ rsyslog_log_files_permissions }}"
     when: "(rsyslog_files_created.results|length > 0) and ('skipped' not in rsyslog_files_created.results[0])"
     with_items: result.stdout_lines
+    notify: restart rsyslog
     tags:
       - section8
       - section8.2
