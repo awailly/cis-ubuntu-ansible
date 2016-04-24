@@ -45,6 +45,12 @@ sudo chmod 777 /etc/hosts.deny
 
 #Prepare section 08
 sudo chmod 777 /etc/rsyslog.conf
+cat >> /etc/rsyslog.d/30-marathon.conf << 'EOF'
+if $programname == 'marathon' then {
+  action(type="omfile" asyncWriting="on" file="/var/log/marathon.log")
+  stop
+}
+EOF
 
 #Prepare section 13
 #section13.1
