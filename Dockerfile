@@ -94,7 +94,7 @@ RUN cat results_indempotence.txt | grep -q 'changed=0.*failed=0' && (echo 'Idemp
 
 
 
-FROM ubuntu:14.10
+FROM ubuntu:16.04
 MAINTAINER Paul Chaignon <paul.chaignon@gmail.com>
 
 ADD . /cis-ubuntu-ansible
