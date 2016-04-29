@@ -8,8 +8,8 @@ ADD . /cis-ubuntu-ansible
 WORKDIR /cis-ubuntu-ansible
 
 RUN apt-get update
-RUN apt-get -y install python-pip aptitude rsh-client rsh-redone-client talk avahi-daemon cups isc-dhcp-server ntp rpcbind nfs-kernel-server bind9 openssh-client openssh-server python-dev slapd nis
-RUN pip install ansible
+RUN apt-get -y install python-pip aptitude rsh-client rsh-redone-client talk avahi-daemon cups isc-dhcp-server ntp rpcbind nfs-kernel-server bind9 openssh-client openssh-server python-dev slapd nis libffi-dev libssl-dev
+RUN pip install --upgrade setuptools ansible
 RUN touch /etc/inetd.conf
 RUN echo 'shell.bla' > /tmp/inetd
 RUN cp /tmp/inetd /etc/inetd.conf
@@ -38,7 +38,7 @@ ADD . /cis-ubuntu-ansible
 WORKDIR /cis-ubuntu-ansible
 
 RUN apt-get update
-RUN apt-get -y install python-pip aptitude rsh-client rsh-redone-client talk avahi-daemon cups isc-dhcp-server ntp rpcbind nfs-kernel-server bind9 openssh-client openssh-server python-dev slapd nis sudo
+RUN apt-get -y install python-pip aptitude rsh-client rsh-redone-client talk avahi-daemon cups isc-dhcp-server ntp rpcbind nfs-kernel-server bind9 openssh-client openssh-server python-dev slapd nis sudo libffi-dev
 RUN pip install ansible
 RUN touch /etc/inetd.conf
 RUN echo 'shell.bla' > /tmp/inetd
@@ -69,9 +69,9 @@ ADD . /cis-ubuntu-ansible
 WORKDIR /cis-ubuntu-ansible
 
 RUN apt-get update
-RUN apt-get -y install python-pip aptitude rsh-client rsh-redone-client talk avahi-daemon cups isc-dhcp-server ntp rpcbind nfs-kernel-server bind9 openssh-client openssh-server python-dev sudo
+RUN apt-get -y install python-pip aptitude rsh-client rsh-redone-client talk avahi-daemon cups isc-dhcp-server ntp rpcbind nfs-kernel-server bind9 openssh-client openssh-server python-dev sudo libffi-dev libssl-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install slapd nis
-RUN pip install ansible
+RUN pip install --upgrade setuptools ansible
 RUN touch /etc/inetd.conf
 RUN echo 'shell.bla' > /tmp/inetd
 RUN cp /tmp/inetd /etc/inetd.conf
@@ -101,7 +101,8 @@ ADD . /cis-ubuntu-ansible
 WORKDIR /cis-ubuntu-ansible
 
 RUN apt-get update
-RUN apt-get -y install python-pip aptitude rsh-client rsh-redone-client talk avahi-daemon cups isc-dhcp-server ntp rpcbind nfs-kernel-server bind9 openssh-client openssh-server python-dev slapd nis
+RUN apt-get -y install python-pip aptitude rsh-client rsh-redone-client talk avahi-daemon cups isc-dhcp-server ntp rpcbind nfs-kernel-server bind9 openssh-client openssh-server python-dev libffi-dev libssl-dev
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install slapd nis
 RUN pip install ansible
 RUN touch /etc/inetd.conf
 RUN echo 'shell.bla' > /tmp/inetd
