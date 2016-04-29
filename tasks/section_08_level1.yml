@@ -80,7 +80,7 @@
 
   - name: 8.2.4.2 Create and Set Permissions on rsyslog Log Files (Scored)
     shell: 'mkdir -p -- "$(dirname -- {{ item }})"; touch -- {{ item }}' 
-    with_items: result.stdout_lines          
+    with_items: "{{result.stdout_lines}}"
     changed_when: False
     register: rsyslog_files_created
     tags:
@@ -95,7 +95,7 @@
         group: "{{ rsyslog_log_files_group }}"
         mode: "{{ rsyslog_log_files_permissions }}"
     when: "(rsyslog_files_created.results|length > 0) and ('skipped' not in rsyslog_files_created.results[0])"
-    with_items: result.stdout_lines
+    with_items: "{{result.stdout_lines}}"
     notify: restart rsyslog
     tags:
       - section8

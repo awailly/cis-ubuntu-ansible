@@ -41,7 +41,7 @@
 
   - name: 10.2 Disable System Accounts (Scored)
     command: /usr/sbin/usermod -s /usr/sbin/nologin {{ item }}
-    with_items: awk_etc_passwd.stdout_lines
+    with_items: "{{awk_etc_passwd.stdout_lines}}"
     tags:
       - section10
       - section10.2
