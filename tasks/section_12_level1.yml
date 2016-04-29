@@ -47,8 +47,7 @@
 
   - name: 12.7 Find World Writable Files (Not Scored)
     debug: msg="{{ item }}"
-    with_items:
-        world_files.stdout_lines
+    with_items: "{{world_files.stdout_lines}}"
     tags:
       - section12
       - section12.7
@@ -64,8 +63,7 @@
 
   - name: 12.8 Find Un-owned Files and Directories (Scored)
     debug: msg="{{ item }}"
-    with_items:
-        unowned_files.stdout_lines
+    with_items: "{{unowned_files.stdout_lines}}"
     tags:
       - section12
       - section12.9
@@ -82,8 +80,7 @@
   - name: 12.9 Find Un-grouped Files and Directories (Scored)
     debug: >
         msg="{{ item }}"
-    with_items:
-        ungrouped_files.stdout_lines
+    with_items: "{{ungrouped_files.stdout_lines}}"
     tags:
       - section12
       - section12.9
@@ -99,8 +96,7 @@
 
   - name: 12.10 Find SUID System Executables (Not Scored)
     debug: msg="{{ item }}"
-    with_items:
-        suid_files.stdout_lines
+    with_items: "{{suid_files.stdout_lines}}"
     tags:
       - section12
       - section12.10
@@ -116,8 +112,7 @@
 
   - name: 12.11 Find SGID System Executables (Not Scored)
     debug: msg="{{ item }}"
-    with_items:
-        gsuid_files.stdout_lines
+    with_items: "{{gsuid_files.stdout_lines}}"
     tags:
       - section12
       - section12.10
