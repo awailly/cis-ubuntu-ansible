@@ -3,8 +3,9 @@ language: python
 python: "2.7"
 
 env:
-  - ANSIBLE_VERSION=1.9.1
-  - ANSIBLE_VERSION=2.0
+  - ANSIBLE_VERSION="1.9.1"
+  - ANSIBLE_VERSION="2.0"
+  - ANSIBLE_VERSION="latest"
 
 notifications:
     irc: "chat.freenode.net##cis-ansible"
@@ -24,7 +25,8 @@ before_script:
 
 install:
   # Install Ansible.
-  - pip install ansible==$ANSIBLE_VERSION
+  - if [ ${ANSIBLE_VERSION} != "latest" ]; then pip install ansible==$ANSIBLE_VERSION; fi
+  - if [ ${ANSIBLE_VERSION} = "latest" ]; then pip install ansible; fi
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; echo 'callback_plugins = ./tests/callbacks/'; } >> ansible.cfg"
