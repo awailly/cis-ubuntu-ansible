@@ -27,6 +27,7 @@ install:
   # Install Ansible.
   - if [ ${ANSIBLE_VERSION} != "latest" ]; then pip install ansible==$ANSIBLE_VERSION; fi
   - if [ ${ANSIBLE_VERSION} = "latest" ]; then pip install ansible; fi
+  - ansible --version
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; echo 'callback_plugins = ./tests/callbacks/'; } >> ansible.cfg"
