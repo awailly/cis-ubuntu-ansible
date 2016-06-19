@@ -53,6 +53,10 @@ ntp_server: 0.fr.pool.ntp.org
 # Set this flag if the kernel has TCP syncookies support.
 enable_tcp_syncookies: True
 
+# A Docker host will need this set to 1 in order to route container traffic.
+# (https://docs.docker.com/engine/userguide/networking/default_network/container-communication) 
+net_ipv4_ip_forward: 0
+
 # Enable the activate_ufw variable with True to install and enable service on boot.
 # NOTE: If not properly configured it may result in incorrect services behavior.
 activate_ufw: True
