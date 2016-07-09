@@ -67,6 +67,7 @@
     shell: awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" &&$1!="halt" && $3<500 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print $1}' /etc/passwd
     register: awk_etc_passwd
     changed_when: False
+    always_run: True
     tags:
       - section10
       - section10.2

@@ -132,6 +132,7 @@
     command: dpkg -S nfs-kernel-server
     changed_when: False
     failed_when: False
+    always_run: True
     register: nfs_present
     tags:
       - section6
