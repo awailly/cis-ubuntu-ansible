@@ -55,7 +55,7 @@
   - name: 10.1.3 Set Password Expiring Warning Days (Scored)
     lineinfile: >
         dest='/etc/login.defs'
-        line='PASS_WARN_AGE'
+        line='PASS_WARN_AGE 7'
         regexp='^PASS_WARN_AGE'
     when: pass_warn_age.stdout_lines < 7
     tags:
