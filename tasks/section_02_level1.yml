@@ -100,7 +100,7 @@
       - section2.15
       - section2.16
 
-  - name: 2.17.1 Set Sticky Bit on All World-Writable Directories (preparation) (Scored)
+  - name: 2.17.1 Set Sticky Bit on All World-Writable Directories (check) (Scored)
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 -print 2>/dev/null
     failed_when: False
     changed_when: False
@@ -109,7 +109,6 @@
     tags:
       - section2
       - section2.17
-      - section2.17.1
 
   - name: 2.17.2 Set Sticky Bit on All World-Writable Directories (Scored)
     file:
@@ -119,9 +118,8 @@
     tags:
       - section2
       - section2.17
-      - section2.17.2
 
-  - name: 2.25 Disable Automounting (stat) (Scored)
+  - name: 2.25.1 Disable Automounting (check) (Scored)
     stat: >
         path=/etc/init/autofs.conf
     register: autofs_file
@@ -129,7 +127,7 @@
       - section2
       - section2.25
       
-  - name: 2.25 Disable Automounting (Scored)
+  - name: 2.25.2 Disable Automounting (Scored)
     lineinfile: >
         dest=/etc/init/autofs.conf
         line='#start on runlevel [2345]'

@@ -9,7 +9,7 @@
       - section8.1.2
       - section8.1.2
 
-  - name: Check if the file auditd.conf exists (Not Scored)
+  - name: 8.1.1-3.1 Check if the file auditd.conf exists (Not Scored)
     stat: >
         path=/etc/audit/auditd.conf
     register: auditd_file
@@ -18,8 +18,10 @@
       - section8.1
       - section8.1.1
       - section8.1.1.1
+      - section8.1.1.2
+      - section8.1.1.3
 
-  - name: Create the audit directory if it does not exists (Not Scored)
+  - name: 8.1.1-3.2 Create the audit directory if it does not exists (Not Scored)
     file: >
         path=/etc/audit/
         state=directory
@@ -29,8 +31,10 @@
       - section8.1
       - section8.1.1
       - section8.1.1.1
+      - section8.1.1.2
+      - section8.1.1.3
 
-  - name: 8.1.1-3 Configure Data Retention (Not Scored)
+  - name: 8.1.1-3.3 Configure Data Retention (Not Scored)
     lineinfile: >
         dest=/etc/audit/auditd.conf
         regexp="{{ item.rxp }}"
@@ -52,7 +56,7 @@
       - section8.1.1.2
       - section8.1.1.3
 
-  - name: 8.1.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
+  - name: 8.1.3.1 Enable Auditing for Processes That Start Prior to auditd (Scored)
     stat: path=/etc/default/grub
     register: grubcfg_file
     tags:
@@ -60,7 +64,7 @@
       - section8.1
       - section8.1.3
 
-  - name: 8.1.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
+  - name: 8.1.3.2 Enable Auditing for Processes That Start Prior to auditd (Scored)
     file: >
         path=/etc/default/grub
         state=touch
@@ -70,7 +74,7 @@
       - section8.1
       - section8.1.3
 
-  - name: 8.1.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
+  - name: 8.1.3.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
     lineinfile: >
         dest=/etc/default/grub
         line='GRUB_CMDLINE_LINUX="audit=1"'
@@ -80,7 +84,7 @@
       - section8.1
       - section8.1.3
 
-  - name: 8.1.4 Record Events That Modify Date and Time Information (Scored)
+  - name: 8.1.4.1 Record Events That Modify Date and Time Information (Scored)
     lineinfile: >
       dest=/etc/audit/audit.rules
       line='{{ item }}'
@@ -99,7 +103,7 @@
       - section8.1
       - section8.1.4
 
-  - name: 8.1.4 Record Events That Modify Date and Time Information (Scored)
+  - name: 8.1.4.2 Record Events That Modify Date and Time Information (Scored)
     lineinfile: >
       dest=/etc/audit/audit.rules
       line='{{ item }}'
@@ -152,7 +156,7 @@
       - section8.1.16
       - section8.1.17
 
-  - name: 8.1.6,10,11,13,14,17 Record Events That Modify the System's Network Environment (64b) (Scored)
+  - name: 8.1.6,10,11,13,14,17.1 Record Events That Modify the System's Network Environment (64b) (Scored)
     lineinfile: >
       dest=/etc/audit/audit.rules
       line='{{ item }}'
@@ -192,7 +196,7 @@
       - section8.1.14
       - section8.1.17
 
-  - name: 8.1.6,10,11,13,14,17 Record Events That Modify the System's Network Environment (32b) (Scored)
+  - name: 8.1.6,10,11,13,14,17.2 Record Events That Modify the System's Network Environment (32b) (Scored)
     lineinfile: >
       dest=/etc/audit/audit.rules
       line='{{ item }}'
@@ -224,7 +228,7 @@
       - section8.1.14
       - section8.1.17
 
-  - name: 8.3.1 Install AIDE (Scored)
+  - name: 8.3.1.1 Install AIDE (Scored)
     apt: name=aide state=present
     register: aide_installed
     when: use_aide == True
@@ -233,7 +237,7 @@
       - section8.3
       - section8.3.1
 
-  - name: 8.3.1 Install AIDE (init) (Scored)
+  - name: 8.3.1.2 Install AIDE (init) (Scored)
     command: aideinit
     when:
       - use_aide == True
@@ -243,7 +247,7 @@
       - section8.3
       - section8.3.1
 
-  - name: 8.3.1 Install AIDE (Scored)
+  - name: 8.3.1.3 Install AIDE (Scored)
     stat: path=/var/lib/aide/aide.db.new
     register: aide_db_path
     when:
@@ -254,7 +258,7 @@
       - section8.3
       - section8.3.1
 
-  - name: 8.3.1 Install AIDE (copy db) (Scored)
+  - name: 8.3.1.4 Install AIDE (copy db) (Scored)
     command: mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db
     when:
       - use_aide == True
@@ -274,7 +278,7 @@
       - section8.3.2
 
   # We have to run the check after AIDE installation as postfix create new matched binaries
-  - name: 8.1.12 Collect Use of Privileged Commands (Scored)
+  - name: 8.1.12.1 Collect Use of Privileged Commands (Scored)
     shell: find / -xdev \( -perm -4000 -o -perm -2000 \) -type f | awk '{print "-a always,exit -F path=" $1 " -F perm=x -F auid>=500 -F auid!=4294967295 -k privileged" }'
     register: audit_lines_for_find
     changed_when: False
@@ -283,7 +287,7 @@
       - section8.1
       - section8.1.12
 
-  - name: 8.1.12 Collect Use of Privileged Commands (infos) (Scored)
+  - name: 8.1.12.2 Collect Use of Privileged Commands (infos) (Scored)
     lineinfile: >
         dest=/etc/audit/audit.rules
         line='{{ item }}'

@@ -7,14 +7,14 @@
       - section6
       - section6.1
 
-  - name: 6.2 Ensure Avahi Server is not enabled (check) (Scored)
+  - name: 6.2.1 Ensure Avahi Server is not enabled (check) (Scored)
     stat: path='/etc/init/avahi-daemon.conf'
     register: avahi_stat
     tags:
       - section6
       - section6.2
 
-  - name: 6.2 Ensure Avahi Server is not enabled (Scored)
+  - name: 6.2.2 Ensure Avahi Server is not enabled (Scored)
     lineinfile: >
         line='#start on (filesystem'
         state=present
@@ -25,14 +25,14 @@
       - section6
       - section6.2
 
-  - name: 6.3 Ensure print server is not enabled (check) (Not Scored)
+  - name: 6.3.1 Ensure print server is not enabled (check) (Not Scored)
     stat: path='/etc/init/cups.conf'
     register: cups_stat
     tags:
       - section6
       - section6.3
 
-  - name: 6.3 Ensure print server is not enabled (Not Scored)
+  - name: 6.3.2 Ensure print server is not enabled (Not Scored)
     lineinfile: >
         line='#start on (filesystem'
         state=present
@@ -43,7 +43,7 @@
       - section6
       - section6.3
 
-  - name: 6.4.1 Ensure DHCP Server is not enabled (check) (Scored)
+  - name: 6.4.1.1 Ensure DHCP Server is not enabled (check) (Scored)
     stat: path='/etc/init/isc-dhcp-server.conf'
     register: dhcp_stat
     tags:
@@ -51,7 +51,7 @@
       - section6.4
       - section6.4.1
 
-  - name: 6.4.1 Ensure DHCP Server is not enabled (Scored)
+  - name: 6.4.1.2 Ensure DHCP Server is not enabled (Scored)
     lineinfile: >
         line='#start on runlevel [2345]'
         state=present
@@ -63,7 +63,7 @@
       - section6.4
       - section6.4.1
 
-  - name: 6.4.2 Ensure DHCP Server is not enabled (check) (Scored)
+  - name: 6.4.2.1 Ensure DHCP Server is not enabled (check) (Scored)
     stat: path='/etc/init/isc-dhcp-server6.conf'
     register: dhcp6_stat
     tags:
@@ -71,7 +71,7 @@
       - section6.4
       - section6.4.2
 
-  - name: 6.4.2 Ensure DHCP Server is not enabled (Scored)
+  - name: 6.4.2.2 Ensure DHCP Server is not enabled (Scored)
     lineinfile: >
         line='#start on runlevel [2345]'
         state=present
@@ -83,14 +83,14 @@
       - section6.4
       - section6.4.2
 
-  - name: 6.5.1 Configure Network Time Protocol (install) (NTP) (Scored)
+  - name: 6.5.1.1 Configure Network Time Protocol (install) (NTP) (Scored)
     apt: name=ntp state=present
     tags:
       - section6
       - section6.5
       - section6.5.1
 
-  - name: 6.5.1 Check if /etc/ntp.conf file exists (stat)
+  - name: 6.5.1.2 Check if /etc/ntp.conf file exists (stat)
     stat:
         path: /etc/ntp.conf
     register: ntp_conf_file
@@ -116,7 +116,7 @@
       - section6.7
       - section6.7.1
 
-  - name: 6.7.2 Ensure NFS and RPC are not enabled (Not Scored)
+  - name: 6.7.2.1 Ensure NFS and RPC are not enabled (Not Scored)
     lineinfile: >
         dest=/etc/init/rpcbind-boot.conf
         line='#start on virtual-filesystems and net-device-up IFACE=lo'
@@ -128,17 +128,18 @@
       - section6.7
       - section6.7.2
 
-  - name: 6.7.2 Ensure NFS and RPC are not enabled (check) (Not Scored)
+  - name: 6.7.2.2 Ensure NFS and RPC are not enabled (check) (Not Scored)
     command: dpkg -S nfs-kernel-server
     changed_when: False
     failed_when: False
+    always_run: True
     register: nfs_present
     tags:
       - section6
       - section6.7
       - section6.7.2
 
-  - name: 6.7.2 Ensure NFS and RPC are not enabled (rc.d) (Not Scored)
+  - name: 6.7.2.3 Ensure NFS and RPC are not enabled (rc.d) (Not Scored)
     service: >
         name=nfs-kernel-server
         enabled=no
@@ -173,14 +174,14 @@
       - section6.13
       - section6.14
 
-  - name: 6.15 Configure Mail Transfer Agent for Local-Only Mode (stat) (Scored)
+  - name: 6.15.1 Configure Mail Transfer Agent for Local-Only Mode (check) (Scored)
     stat: path=/etc/postfix/main.cf
     register: postfix_main_cf
     tags:
       - section6
       - section6.15
 
-  - name: 6.15 Configure Mail Transfer Agent for Local-Only Mode (Scored)
+  - name: 6.15.2 Configure Mail Transfer Agent for Local-Only Mode (Scored)
     lineinfile: >
         dest=/etc/postfix/main.cf
         regexp='^inet_interfaces ='
@@ -191,14 +192,14 @@
       - section6
       - section6.15
 
-  - name: 6.16 Ensure rsync service is not enabled (stat) (Scored)
+  - name: 6.16.1 Ensure rsync service is not enabled (check) (Scored)
     stat: path=/etc/default/rsync
     register: default_rsync
     tags:
       - section6
       - section6.16
 
-  - name: 6.16 Ensure rsync service is not enabled (Scored)
+  - name: 6.16.2 Ensure rsync service is not enabled (Scored)
     lineinfile: >
         dest='/etc/default/rsync'
         regexp='^RSYNC_ENABLE'

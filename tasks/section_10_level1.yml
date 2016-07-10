@@ -1,6 +1,6 @@
 ---
 
-  - name: 10.1.1 Set Password Expiration Days (check) (Scored)
+  - name: 10.1.1.1 Set Password Expiration Days (check) (Scored)
     command: grep -oP '(?<=^PASS_MAX_DAYS\s)[0-9]+' /etc/login.defs
     register: pass_max_days
     changed_when: False
@@ -10,7 +10,7 @@
       - section10.1
       - section10.1.1
 
-  - name: 10.1.1 Set Password Expiration Days (Scored)
+  - name: 10.1.1.2 Set Password Expiration Days (Scored)
     lineinfile: >
         dest='/etc/login.defs'
         line='PASS_MAX_DAYS 90'
@@ -21,7 +21,7 @@
       - section10.1
       - section10.1.1
 
-  - name: 10.1.2 Set Password Change Minimum Number of Days (check) (Scored)
+  - name: 10.1.2.1 Set Password Change Minimum Number of Days (check) (Scored)
     command: grep -oP '(?<=^PASS_MIN_DAYS\s)[0-9]+' /etc/login.defs
     register: pass_min_days
     changed_when: False
@@ -31,7 +31,7 @@
       - section10.1
       - section10.1.2
 
-  - name: 10.1.2 Set Password Change Minimum Number of Days (Scored)
+  - name: 10.1.2.2 Set Password Change Minimum Number of Days (Scored)
     lineinfile: >
         dest='/etc/login.defs'
         line='PASS_MIN_DAYS 7'
@@ -42,7 +42,7 @@
       - section10.1
       - section10.1.2
 
-  - name: 10.1.3 Set Password Expiring Warning Days (check) (Scored)
+  - name: 10.1.3.1 Set Password Expiring Warning Days (check) (Scored)
     command: grep -oP '(?<=^PASS_WARN_AGE\s)[0-9]+' /etc/login.defs
     register: pass_warn_age
     changed_when: False
@@ -52,7 +52,7 @@
       - section10.1
       - section10.1.3
 
-  - name: 10.1.3 Set Password Expiring Warning Days (Scored)
+  - name: 10.1.3.2 Set Password Expiring Warning Days (Scored)
     lineinfile: >
         dest='/etc/login.defs'
         line='PASS_WARN_AGE 7'
@@ -63,15 +63,16 @@
       - section10.1
       - section10.1.3
 
-  - name: 10.2 Disable System Accounts (check) (Scored)
+  - name: 10.2.1.1 Disable System Accounts (check) (Scored)
     shell: awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" &&$1!="halt" && $3<500 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print $1}' /etc/passwd
     register: awk_etc_passwd
     changed_when: False
+    always_run: True
     tags:
       - section10
       - section10.2
 
-  - name: 10.2 Disable System Accounts (Scored)
+  - name: 10.2.2.2 Disable System Accounts (Scored)
     command: /usr/sbin/usermod -s /usr/sbin/nologin {{ item }}
     with_items: "{{awk_etc_passwd.stdout_lines}}"
     tags:
@@ -96,7 +97,7 @@
       - section10
       - section10.4
 
-  - name: 10.5 Lock Inactive User Accounts (check) (Scored)
+  - name: 10.5.1 Lock Inactive User Accounts (check) (Scored)
     command: grep INACTIVE /etc/login.defs
     changed_when: False
     failed_when: False
@@ -106,7 +107,7 @@
       - section10
       - section10.5
         
-  - name: 10.5 Lock Inactive User Accounts (Scored)
+  - name: 10.5.2 Lock Inactive User Accounts (Scored)
     lineinfile: >
         dest=/etc/login.defs
         line='INACTIVE=35'

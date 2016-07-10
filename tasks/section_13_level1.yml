@@ -1,15 +1,16 @@
 ---
 
-  - name: 13.1 Ensure Password Fields are Not Empty (Scored)
+  - name: 13.1.1 Ensure Password Fields are Not Empty (check) (Scored)
     command: awk -F':' '($2 == "" ) { print $1 }' /etc/shadow
     register: awk_empty_shadow
     changed_when: False
+    always_run: True
     failed_when: awk_empty_shadow.stdout != '' and lock_shadow_accounts == False
     tags:
       - section13
       - section13.1
 
-  - name: 13.1 Ensure Password Fields are Not Empty (locking accounts) (Scored)
+  - name: 13.1.2 Ensure Password Fields are Not Empty (locking accounts) (Scored)
     command: passwd -l '{{ item }}'
     with_items: "{{awk_empty_shadow.stdout_lines}}"
     when: lock_shadow_accounts == True
@@ -57,6 +58,7 @@
     shell: 'echo $PATH | grep ::'
     register: path_colon
     changed_when: False
+    always_run: True
     failed_when: path_colon.rc == 0
     tags:
       - section13
@@ -66,6 +68,7 @@
     shell: 'echo $PATH | grep :$'
     register: path_colon_end
     changed_when: False
+    always_run: True
     failed_when: path_colon_end.rc == 0
     tags:
       - section13
@@ -76,6 +79,7 @@
     become: yes
     register: dot_in_path
     changed_when: False
+    always_run: True
     failed_when: '"." in dot_in_path.stdout_lines'
     tags:
       - section13
@@ -98,6 +102,7 @@
     register: home_users
     changed_when: False
     failed_when: False
+    always_run: True
     tags:
       - section13
       - section13.7
@@ -113,7 +118,7 @@
       - section13
       - section13.7
 
-  - name: 13.8.1 Check User Dot File Permissions (gather dotfiles) (Scored)
+  - name: 13.8.1 Check User Dot File Permissions (check) (Scored)
     shell: for pth in `/bin/egrep -v '(root|halt|sync|shutdown)' /etc/passwd | /usr/bin/awk -F':' '($7 != "/usr/sbin/nologin") { print $6 }'`; do ls -d -A -1 $pth/.* | egrep -v '[..]$'; done
     changed_when: False
     failed_when: False
@@ -153,7 +158,7 @@
       - section13
       - section13.10
 
-  - name: 13.11 Check Groups in /etc/passwd (preparation) (Scored)
+  - name: 13.11.1 Check Groups in /etc/passwd (check) (Scored)
     command: cut -s -d':' -f4 /etc/passwd
     register: groups_id_cut
     changed_when: False
@@ -162,7 +167,7 @@
       - section13
       - section13.11
 
-  - name: 13.11 Check Groups in /etc/passwd (Scored)
+  - name: 13.11.2 Check Groups in /etc/passwd (Scored)
     command: grep -q -P "^.*?:[^:]*:{{ item }}:" /etc/group
     with_items: "{{groups_id_cut.stdout_lines}}"
     register: groups_present
@@ -228,15 +233,17 @@
       - section13
       - section13.17
 
-  - name: 13.18 Check for Presence of User .netrc Files (stat) (Scored)
+  - name: 13.18.1 Check for Presence of User .netrc Files (check) (Scored)
     stat: path='{{ item }}/.netrc'
     with_items: '{{ home_users.stdout_lines }}'
+    always_run: True
+    changed_when: False
     register: netrc_files
     tags:
       - section13
       - section13.18
 
-  - name: 13.18 Check for Presence of User .netrc Files (Scored)
+  - name: 13.18.2 Check for Presence of User .netrc Files (Scored)
     debug: msg='Check if {{ item.stat.path}} is needed, and remove otherwise'
     when: item is defined and item.stat.exists == True
     with_items: '{{ netrc_files.results }}'
@@ -253,7 +260,7 @@
       - section13
       - section13.19
 
-  - name: 13.20.1 Ensure shadow group is empty (Scored)
+  - name: 13.20.1 Ensure shadow group is empty (check) (Scored)
     shell: grep '^shadow' /etc/group | cut -f4 -d':'
     register: shadow_group_empty
     failed_when: shadow_group_empty.stdout != ''
@@ -264,7 +271,7 @@
       - section13.20
       - section13.20.1
 
-  - name: 13.20.2 Ensure shadow group is empty (preparation) (Scored)
+  - name: 13.20.2 Ensure shadow group is empty (check) (Scored)
     shell: grep '^shadow' /etc/group | cut -f1 -d':'
     register: shadow_group_id
     failed_when: False
@@ -275,7 +282,7 @@
       - section13.20
       - section13.20.1
 
-  - name: 13.20.2 Ensure shadow group is empty (Scored)
+  - name: 13.20.3 Ensure shadow group is empty (check) (Scored)
     shell: awk -F':' '($4 == "{{ item }}") { print }' /etc/passwd
     register: awk_passwd_shadow
     with_items: "{{shadow_group_id.stdout_lines}}"

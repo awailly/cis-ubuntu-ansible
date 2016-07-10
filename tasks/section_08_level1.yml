@@ -68,7 +68,7 @@
       - section8.2
       - section8.2.3
 
-  - name: 8.2.4.1 Create and Set Permissions on rsyslog Log Files (Scored)
+  - name: 8.2.4.1 Create and Set Permissions on rsyslog Log Files (check) (Scored)
     shell: awk '{ print $NF }' /etc/rsyslog.d/* /etc/rsyslog.conf | grep -oiP "/var/log/[\w\.-]+"
     register: result
     changed_when: False
@@ -125,7 +125,7 @@
       - section8.2
       - section8.2.5
 
-  - name: 8.2.6.1 Accept Remote rsyslog Messages Only on Designated Log Hosts (Not Scored)
+  - name: 8.2.6.1 Accept Remote rsyslog Messages Only on Designated Log Hosts (check) (Not Scored)
     command: grep '^$ModLoad imtcp' /etc/rsyslog.conf
     register: moadloadpresent
     changed_when: False

@@ -36,48 +36,51 @@
       - section12
       - section12.6
 
-  - name: 12.7 Find World Writable Files (check) (Not Scored)
+  - name: 12.7.1 Find World Writable Files (check) (Not Scored)
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002 -print
     changed_when: False
     failed_when: False
+    always_run: True
     register: world_files
     tags:
       - section12
       - section12.7
 
-  - name: 12.7 Find World Writable Files (Not Scored)
+  - name: 12.7.2 Find World Writable Files (Not Scored)
     debug: msg="{{ item }}"
     with_items: "{{world_files.stdout_lines}}"
     tags:
       - section12
       - section12.7
 
-  - name: 12.8 Find Un-owned Files and Directories (check) (Scored)
+  - name: 12.8.1 Find Un-owned Files and Directories (check) (Scored)
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls
     changed_when: False
     failed_when: False
+    always_run: True
     register: unowned_files
     tags:
       - section12
       - section12.8
 
-  - name: 12.8 Find Un-owned Files and Directories (Scored)
+  - name: 12.8.2 Find Un-owned Files and Directories (Scored)
     debug: msg="{{ item }}"
     with_items: "{{unowned_files.stdout_lines}}"
     tags:
       - section12
       - section12.9
 
-  - name: 12.9 Find Un-grouped Files and Directories (check) (Scored)
+  - name: 12.9.1 Find Un-grouped Files and Directories (check) (Scored)
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls
     changed_when: False
     failed_when: False
+    always_run: True
     register: ungrouped_files
     tags:
       - section12
       - section12.9
 
-  - name: 12.9 Find Un-grouped Files and Directories (Scored)
+  - name: 12.9.2 Find Un-grouped Files and Directories (Scored)
     debug: >
         msg="{{ item }}"
     with_items: "{{ungrouped_files.stdout_lines}}"
@@ -85,32 +88,34 @@
       - section12
       - section12.9
 
-  - name: 12.10 Find SUID System Executables (check) (Not Scored)
+  - name: 12.10.1 Find SUID System Executables (check) (Not Scored)
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000 -print
     changed_when: False
     failed_when: False
+    always_run: True
     register: suid_files
     tags:
       - section12
       - section12.10
 
-  - name: 12.10 Find SUID System Executables (Not Scored)
+  - name: 12.10.2 Find SUID System Executables (Not Scored)
     debug: msg="{{ item }}"
     with_items: "{{suid_files.stdout_lines}}"
     tags:
       - section12
       - section12.10
 
-  - name: 12.11 Find SGID System Executables (check) (Not Scored)
+  - name: 12.11.1 Find SGID System Executables (check) (Not Scored)
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000 -print
     changed_when: False
     failed_when: False
+    always_run: True
     register: gsuid_files
     tags:
       - section12
       - section12.11
 
-  - name: 12.11 Find SGID System Executables (Not Scored)
+  - name: 12.11.2 Find SGID System Executables (Not Scored)
     debug: msg="{{ item }}"
     with_items: "{{gsuid_files.stdout_lines}}"
     tags:
