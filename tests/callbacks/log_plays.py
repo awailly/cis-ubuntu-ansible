@@ -17,6 +17,7 @@ import os
 import time
 import json
 import hashlib
+import re
 
 ROLE_PATH = 'roles/cis'
 ROLE_PATH = '.'
@@ -65,6 +66,13 @@ class TestBook(object):
 
             for n in range(t.line_start, t.line_start + t.line_size + 1):
                 s[tname]["coverage"][n] = t.isalwaysok or int(t.status == 'CHANGED')
+
+            n = 0
+            for line in data.splitlines():
+                match = re.match(r'\s*(---|tags:|- section.*|- (include|name): .*)?$', line)
+                if match:
+                    s[tname]["coverage"][n] = None
+                n += 1
 
         for se in s:
             d['source_files'].append(s[se])
