@@ -3,6 +3,9 @@
   - name: Check if the grub config file exists (Not Scored)
     stat: path=/etc/default/grub
     register: grub_cfg_file
+    tags:
+      - section4
+      - section4.5
 
   - name: Determines if apparmor is set in grub config (Not Scored)
     command: "grep 'GRUB_CMDLINE_LINUX' /etc/default/grub"
@@ -10,10 +13,16 @@
     changed_when: False
     when: grub_cfg_file.stat.exists
     always_run: True
+    tags:
+      - section4
+      - section4.5
 
   - name: Check if the extlinux config file exists (Not Scored)
     stat: path=/extlinux.conf
     register: extlinux_cfg_file
+    tags:
+      - section4
+      - section4.5
 
   - name: Determines if apparmor is set in extlinux (Not Scored)
     command: "grep 'apparmor' /extlinux.conf"
@@ -21,12 +30,18 @@
     changed_when: False
     when: extlinux_cfg_file.stat.exists
     always_run: True
+    tags:
+      - section4
+      - section4.5
 
   - name: Determines if apparmor is already set in boot config (Not Scored)
     command: "grep CONFIG_DEFAULT_SECURITY_APPARMOR /boot/config-{{ ansible_kernel }}"
     register: boot_apparmor
     changed_when: False
     always_run: True
+    tags:
+      - section4
+      - section4.5
 
   - name: 4.5 Activate AppArmor (install) (Scored)
     apt: >
