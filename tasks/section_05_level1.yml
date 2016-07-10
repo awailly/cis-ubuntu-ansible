@@ -47,7 +47,6 @@
     - section5
     - section5.1
     - section5.1.3
-    - section5.1.3.1
 
   - name: 5.1.3.2 Ensure rsh client is not installed (Scored)
     apt: name=rsh-redone-client state=absent purge=yes
@@ -55,7 +54,6 @@
     - section5
     - section5.1
     - section5.1.3
-    - section5.1.3.2
 
   - name: 5.1.5 Ensure talk client is not installed (Scored)
     apt: name=talk state=absent purge=yes
