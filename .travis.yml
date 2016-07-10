@@ -3,8 +3,9 @@ language: python
 python: "2.7"
 
 env:
-  - ANSIBLE_VERSION=1.9.1
+  - ANSIBLE_VERSION=1.9.6
   - ANSIBLE_VERSION=2.0
+  - ANSIBLE_VERSION=2.1
 
 notifications:
     irc: "chat.freenode.net##cis-ansible"
