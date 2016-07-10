@@ -7,7 +7,7 @@
     - section5.1
     - section5.1.1
 
-  - name: 5.1.2 Ensure rsh, rlogin, rexec, talk, telnet, chargen, daytime, echo, discard, time is not enabled (stat inetd) (Scored)
+  - name: 5.1.2.1 Ensure rsh, rlogin, rexec, talk, telnet, chargen, daytime, echo, discard, time is not enabled (stat inetd) (Scored)
     stat: path=/etc/inetd.conf
     register: inetd_path
     tags:
@@ -15,7 +15,7 @@
     - section5.1
     - section5.1.2
 
-  - name: 5.1.2-.6 Ensure rsh, rlogin, rexec, talk, telnet, chargen, daytime, echo, discard, time is not enabled (Scored)
+  - name: 5.1.2.2 Ensure rsh, rlogin, rexec, talk, telnet, chargen, daytime, echo, discard, time is not enabled (Scored)
     lineinfile: >
         dest=/etc/inetd.conf
         regexp='^({{ item }}.*)'
@@ -62,7 +62,7 @@
     - section5.1
     - section5.1.5
 
-  - name: 5.1.8 Ensure xinetd is not enabled (stat xinetd) (Scored)
+  - name: 5.1.8.1 Ensure xinetd is not enabled (stat xinetd) (Scored)
     stat: path=/etc/init/xinetd.conf
     register: xinetd_path
     tags:
@@ -70,7 +70,7 @@
     - section5.1
     - section5.1.8
 
-  - name: 5.1.8 Ensure xinetd is not enabled (Scored)
+  - name: 5.1.8.2 Ensure xinetd is not enabled (Scored)
     lineinfile: >
         dest=/etc/init/xinetd.conf
         regexp='start on runlevel'

@@ -63,7 +63,7 @@
       - section9.1
       - section9.1.7
 
-  - name: 9.1.8 Restrict at/cron to Authorized Users (remove deny) (Scored)
+  - name: 9.1.8.1 Restrict at/cron to Authorized Users (remove deny) (Scored)
     file: path={{ item }} state=absent
     with_items:
         - /etc/cron.deny
@@ -73,7 +73,7 @@
       - section9.1
       - section9.1.8
 
-  - name: 9.1.8 Restrict at/cron to Authorized Users (create cron allow) (Scored)
+  - name: 9.1.8.2 Restrict at/cron to Authorized Users (create cron allow) (Scored)
     copy:
         dest: /etc/cron.allow
         owner: root
@@ -86,7 +86,7 @@
       - section9.1
       - section9.1.8
 
-  - name: 9.1.8 Restrict at/cron to Authorized Users (create at allow) (Scored)
+  - name: 9.1.8.3 Restrict at/cron to Authorized Users (create at allow) (Scored)
     copy:
         dest: /etc/at.allow
         owner: root
@@ -99,7 +99,7 @@
       - section9.1
       - section9.1.8
 
-  - name: 9.2.1 Set Password Creation Requirement Parameters Using pam_cracklib (install) (Scored)
+  - name: 9.2.1.1 Set Password Creation Requirement Parameters Using pam_cracklib (install) (Scored)
     apt: name=libpam-cracklib state=present
     when: use_pam_cracklib == True
     tags:
@@ -107,7 +107,7 @@
       - section9.2
       - section9.2.1
 
-  - name: 9.2.1 Set Password Creation Requirement Parameters Using pam_cracklib (Scored)
+  - name: 9.2.1.2 Set Password Creation Requirement Parameters Using pam_cracklib (Scored)
     lineinfile: >
         dest='/etc/pam.d/common-password'
         regexp="pam_cracklib.so"
@@ -157,14 +157,14 @@
   - include: section_09_level1_03.yml
     when: ssh_config_file.stat.exists == True
 
-  - name: 9.4 Restrict root Login to System Console (stat securetty) (Not Scored)
+  - name: 9.4.1 Restrict root Login to System Console (check) (Not Scored)
     stat: path=/etc/securetty
     register: securetty_file
     tags:
       - section9
       - section9.4
 
-  - name: 9.4 Restrict root Login to System Console (Not Scored)
+  - name: 9.4.2 Restrict root Login to System Console (Not Scored)
     debug: msg='*** Check /etc/securetty for console allowed for root access ***'
     when: securetty_file.stat.exists == True
     tags:

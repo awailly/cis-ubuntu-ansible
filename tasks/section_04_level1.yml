@@ -78,21 +78,21 @@
       - section4
       - section4.3
 
-  - name: 4.4 Disable Prelink (check) (Scored)
+  - name: 4.4.1 Disable Prelink (check) (Scored)
     stat: path=/usr/sbin/prelink
     register: prelink_rc
     tags:
       - section4
       - section4.4
 
-  - name: 4.4 Disable Prelink (restore) (Scored)
+  - name: 4.4.2 Disable Prelink (restore) (Scored)
     command: '/usr/sbin/prelink -ua'
     when: prelink_rc.stat.exists == True
     tags:
       - section4
       - section4.4
 
-  - name: 4.4 Disable Prelink (remove) (Scored)
+  - name: 4.4.3 Disable Prelink (remove) (Scored)
     apt: purge=yes name='prelink' state=absent
     when: prelink_rc.stat.exists == True
     tags:

@@ -22,7 +22,7 @@
       - section6.5
       - section6.5.3
 
-  - name: 6.5.4 Configure Network Time Protocol (server check) (NTP) (Scored)
+  - name: 6.5.4.1 Configure Network Time Protocol (server check) (NTP) (Scored)
     command: 'grep "^server" /etc/ntp.conf'
     register: ntp_server_rc
     changed_when: False
@@ -33,7 +33,7 @@
       - section6.5
       - section6.5.4
 
-  - name: 6.5.4 Configure Network Time Protocol (server add) (NTP) (Scored)
+  - name: 6.5.4.2 Configure Network Time Protocol (server add) (NTP) (Scored)
     lineinfile: >
         dest='/etc/ntp.conf'
         line='server {{ ntp_server }}'
