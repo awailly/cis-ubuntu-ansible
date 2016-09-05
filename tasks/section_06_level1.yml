@@ -189,7 +189,7 @@
         state=present
     with_items:
       - { regexp: '^inet_interfaces =', line: 'inet_interfaces = localhost' }
-      - { regexp: 'inet_protocols =', line: 'inet_protocols = ipv4' }
+      - { regexp: '^inet_protocols =', line: 'inet_protocols = ipv4' }
     when: postfix_main_cf.stat.exists == True
     tags:
       - section6
