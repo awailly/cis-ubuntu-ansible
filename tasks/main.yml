@@ -17,14 +17,14 @@
   - include: section_05.yml
     tags: section05
 
-  - include: section_06.yml
-    tags: section06
-
   - include: section_07.yml
     tags: section07
 
   - include: section_08.yml
     tags: section08
+
+  - include: section_06.yml
+    tags: section06
 
   - include: section_09.yml
     tags: section09
