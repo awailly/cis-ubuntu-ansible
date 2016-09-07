@@ -192,6 +192,17 @@
       - section6
       - section6.15
 
+  - name: 6.15.3 Configure Mail Transfer Agent for Local-Only Mode (Scored)
+    lineinfile: >
+        dest=/etc/postfix/main.cf
+        regexp='^inet_protocols ='
+        line='inet_protocols = ipv4'
+        state=present
+    when: postfix_main_cf.stat.exists == True and disable_ipv6 == True
+    tags:
+      - section6
+      - section6.15
+
   - name: 6.16.1 Ensure rsync service is not enabled (check) (Scored)
     stat: path=/etc/default/rsync
     register: default_rsync
