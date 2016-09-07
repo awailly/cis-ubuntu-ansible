@@ -110,6 +110,16 @@
       - section7.2
       - section7.2.4
 
+  - name: 7.2.4.3 Log Suspicious Packets (flushing tables) (Scored)
+    sysctl: >
+      name=net.ipv4.route.flush
+      value=1
+      state=present
+    tags:
+      - section7
+      - section7.2
+      - section7.2.4
+
   - name: 7.2.5 Enable Ignore Broadcast Requests (Scored)
     sysctl: >
       name=net.ipv4.icmp_echo_ignore_broadcasts
