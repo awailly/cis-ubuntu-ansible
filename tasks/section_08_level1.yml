@@ -17,7 +17,7 @@
       - section8.2
       - section8.2.1
 
-  - name: 8.2.2.1 Ensure the rsyslog Service is activated (Scored)
+  - name: 8.2.2.1 Ensure the rsyslog Service is activated (check) (Scored)
     command: grep 'start on filesystem' /etc/rsyslog.conf
     register: startonfilesystem
     changed_when: False
