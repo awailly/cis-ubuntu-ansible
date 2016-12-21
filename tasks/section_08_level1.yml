@@ -17,7 +17,7 @@
       - section8.2
       - section8.2.1
 
-  - name: 8.2.2 Ensure the rsyslog Service is activated (Scored)
+  - name: 8.2.2.1 Ensure the rsyslog Service is activated (check) (Scored)
     command: grep 'start on filesystem' /etc/rsyslog.conf
     register: startonfilesystem
     changed_when: False
@@ -26,9 +26,9 @@
     tags:
       - section8
       - section8.2
-      - section8.2.5
+      - section8.2.2
 
-  - name: 8.2.5.2 Configure rsyslog to Send Logs to a Remote Log Host (start rsyslog) (Scored)
+  - name: 8.2.2.2 Ensure the rsyslog Service is activated (Scored)
     lineinfile:
        dest=/etc/rsyslog.conf
        line='start on filesystem'
@@ -38,7 +38,7 @@
     tags:
       - section8
       - section8.2
-      - section8.2.5
+      - section8.2.2
 
   - name: 8.2.3 Configure /etc/rsyslog.conf (Not Scored)
     lineinfile:
