@@ -315,10 +315,22 @@
       - section7
       - section7.7
 
-  - name: 7.7.2 Ensure Firewall is active (Scored)
+  - name: 7.7.2 Ensure Firewall is active (started) (Scored)
     service: >
         name=ufw
         state=started
+    when: activate_ufw
+    tags:
+      - section7
+      - section7.7
+
+  - name: 7.7.3 Ensure Firewall is active (enabled) (Scored)
+    lineinfile: >
+        dest=/etc/ufw/ufw.conf
+        regexp='ENABLED='
+        line='ENABLED=yes'
+        state=present
+        create=yes
     when: activate_ufw
     tags:
       - section7
