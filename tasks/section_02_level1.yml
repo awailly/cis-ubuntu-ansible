@@ -109,7 +109,7 @@
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 -print 2>/dev/null
     failed_when: False
     changed_when: False
-    always_run: True
+    check_mode: False
     register: sticky_bit_dirs
     tags:
       - section2
@@ -119,7 +119,7 @@
     file:
         path: "{{ item }}"
         mode: "a+t"
-    with_items: "{{sticky_bit_dirs.stdout_lines}}"
+    with_items: "{{sticky_bit_dirs.stdout_lines | default([])}}"
     tags:
       - section2
       - section2.17

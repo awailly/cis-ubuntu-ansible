@@ -75,6 +75,7 @@ max_log_file_auditd: 200
 set_rsyslog_remote: False
 
 # Override to change the group and permissions of log files in 8.2.4 (eg, to 'adm' and 'g-wx,o-rwx' respectively)
+rsyslog_log_files_owner: root
 rsyslog_log_files_group: root
 rsyslog_log_files_permissions: og-rwx
 
