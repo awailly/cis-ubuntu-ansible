@@ -295,7 +295,7 @@
         line='{{ item }}'
         state=present
         create=yes
-    with_items: audit_lines_for_find.stdout_lines
+    with_items: "{{ audit_lines_for_find.stdout_lines }}"
     tags:
       - section8
       - section8.1
