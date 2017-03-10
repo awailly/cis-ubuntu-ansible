@@ -54,7 +54,7 @@ ntp_server: 0.fr.pool.ntp.org
 enable_tcp_syncookies: True
 
 # A Docker host will need this set to 1 in order to route container traffic.
-# (https://docs.docker.com/engine/userguide/networking/default_network/container-communication) 
+# (https://docs.docker.com/engine/userguide/networking/default_network/container-communication)
 net_ipv4_ip_forward: 0
 
 # Enable the activate_ufw variable with True to install and enable service on boot.
@@ -78,7 +78,7 @@ set_rsyslog_remote: False
 rsyslog_log_files_group: root
 rsyslog_log_files_permissions: og-rwx
 
-# Set rsyslog's logs remote server address to send logs. 
+# Set rsyslog's logs remote server address to send logs.
 # WARNING: Update the IP address without localhost address or rsyslog will hit 100% of the CPU usage
 remote_logs_host_address: X.X.X.X
 
@@ -91,6 +91,14 @@ use_aide: True
 
 # This variable will install and setup the pam_cracklib module, enforcing strong passwords settings.
 use_pam_cracklib: True
+
+
+# Section 10
+
+# The number of days after a password expires until the account is permanently
+# disabled. A value of 0 disables the account as soon as the password has
+# expired, and a value of -1 disables the feature.
+lock_user_inactive_days: 35
 
 
 # Section 13

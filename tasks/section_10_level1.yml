@@ -98,7 +98,7 @@
       - section10.4
 
   - name: 10.5.1 Lock Inactive User Accounts (check) (Scored)
-    command: grep INACTIVE /etc/login.defs
+    command: bash -c "useradd -D | grep -oP '(?<=^INACTIVE=)-?[0-9]+'"
     changed_when: False
     failed_when: False
     always_run: True
@@ -106,14 +106,10 @@
     tags:
       - section10
       - section10.5
-        
+
   - name: 10.5.2 Lock Inactive User Accounts (Scored)
-    lineinfile: >
-        dest=/etc/login.defs
-        line='INACTIVE=35'
-        state=present
-    when: lock_inactive_rc.rc == 1
+    command: useradd -D -f {{lock_user_inactive_days}}
+    when: lock_inactive_rc.stdout_lines|int > 35 or lock_inactive_rc.stdout_lines|int < 1
     tags:
       - section10
       - section10.5
-
