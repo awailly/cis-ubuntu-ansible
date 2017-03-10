@@ -11,8 +11,8 @@
       - section2
       - section2.1
 
-  - name: 2.2 - 4 Set nodev, nosuid, noexec option for /tmp Partition (Scored)
-    mount: name="/tmp" src="/tmp" state="mounted" opts="nodev,nosuid,noexec" fstype=ext4
+  - name: 2.2 - 4 Set nodev, nosuid, noexec Options for /tmp Partition (Scored)
+    mount: name="/tmp" src="/tmp" state="mounted" opts="defaults,nodev,nosuid,noexec" fstype=ext4
     when: partitioning == True
     tags:
       - section2
@@ -72,7 +72,7 @@
       - section2.9
 
   - name: 2.10 Add nodev Option to /home (Scored)
-    mount: name="/home" src="/home" state=mounted opts=remount,nodev fstype="ext4"
+    mount: name="/home" src="/home" state=mounted opts=defaults,nodev fstype="ext4"
     when: partitioning == True
     tags:
       - section2
@@ -96,8 +96,8 @@
       - section2
       - section2.13
 
-  - name: 2.14 - 16 Add nodev Option to /run/shm Partition (Scored)
-    mount: name="/run/shm" src="/run/shm" state="mounted" opts="nodev,nosuid,noexec" fstype="tmpfs"
+  - name: 2.14 - 16 Add nodev, nosuid, noexec Options to /run/shm Partition (Scored)
+    mount: name="/run/shm" src="/run/shm" state="mounted" opts="defaults,nodev,nosuid,noexec" fstype="tmpfs"
     when: run_shm_read_only == False
     tags:
       - section2
