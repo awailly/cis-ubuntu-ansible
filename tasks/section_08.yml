@@ -4,7 +4,7 @@
     tags:
       - section08
       - level1
-       
+
 
   - include: section_08_level2.yml
     tags:

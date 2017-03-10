@@ -121,7 +121,7 @@
     register: allow_rc
     failed_when: allow_rc.rc == 1
     changed_when: False
-    always_run: True
+    check_mode: no
     ignore_errors: True
     tags:
       - section9
@@ -134,7 +134,7 @@
     register: allow_rc
     failed_when: allow_rc.rc == 1
     changed_when: False
-    always_run: True
+    check_mode: no
     ignore_errors: True
     tags:
       - section9
@@ -147,7 +147,7 @@
     register: allow_rc
     failed_when: allow_rc.rc == 1
     changed_when: False
-    always_run: True
+    check_mode: no
     ignore_errors: True
     tags:
       - section9
@@ -160,7 +160,7 @@
     register: allow_rc
     failed_when: allow_rc.rc == 1
     changed_when: False
-    always_run: True
+    check_mode: no
     ignore_errors: True
     notify: restart ssh
     tags:

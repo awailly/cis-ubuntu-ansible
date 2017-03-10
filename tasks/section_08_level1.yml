@@ -22,7 +22,7 @@
     register: startonfilesystem
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section8
       - section8.2
@@ -72,7 +72,7 @@
     shell: awk '{ print $NF }' /etc/rsyslog.d/* /etc/rsyslog.conf | grep -oiP "/var/log/[\w\.-]+"
     register: result
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section8
       - section8.2
@@ -107,7 +107,7 @@
     register: remoteloghost 
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section8
       - section8.2
@@ -130,7 +130,7 @@
     register: moadloadpresent
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section8
       - section8.2
