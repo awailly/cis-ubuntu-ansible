@@ -28,7 +28,7 @@ Vagrant.configure(2) do |config|
     mkdir -p /home/vagrant/ansible/roles-ubuntu/roles
     cd /home/vagrant/ansible/roles-ubuntu
     cp -r /vagrant roles/cis
-    cat >>  playbook.yml << 'EOF'
+    cat >  playbook.yml << 'EOF'
 ---
 - hosts: 127.0.0.1
   connection: local
